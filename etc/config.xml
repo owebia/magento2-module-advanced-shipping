@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Owebia. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <owsh1>
+                <active>0</active>
+                <model>Owebia\ShippingFree\Model\Carrier</model>
+                <title>Owebia Shipping - Carrier #1</title>
+            </owsh1>
+        </carriers>
+    </default>
+</config>
