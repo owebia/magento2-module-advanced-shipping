@@ -2,6 +2,13 @@
 
 Shipping Module for Magento 2
 
+## Installation
+
+Use the following composer command:
+```shell
+composer require owebia/module-shipping-core:@dev owebia/module-shipping-free:@dev
+```
+
 ## Documentation
 
 http://htmlpreview.github.io/?https://github.com/owebia/module-shipping-core/blob/master/view/doc_en_US.html
