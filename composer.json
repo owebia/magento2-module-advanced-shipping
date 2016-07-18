@@ -3,11 +3,10 @@
     "description": "N/A",
     "require": {
         "php": "~5.5.0|~5.6.0|~7.0.0",
-        "magento/magento-composer-installer": "*",
-        "owebia/module-shipping-core": "dev-master"
+        "magento/magento-composer-installer": "^0.1.11",
+        "owebia/module-shipping-core": "^1.0"
     },
     "type": "magento2-module",
-    "version": "1.0.0",
     "license": [
         "proprietary"
     ],
