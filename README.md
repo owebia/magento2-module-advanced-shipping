@@ -6,7 +6,7 @@ Shipping Module for Magento 2
 
 Use the following composer command:
 ```shell
-composer require owebia/module-shipping-core:@dev owebia/module-shipping-free:@dev
+composer require owebia/module-shipping-free:^1.0
 ```
 
 ## Documentation
