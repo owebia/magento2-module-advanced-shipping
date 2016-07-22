@@ -3,7 +3,7 @@
  * Copyright © 2016 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Owebia\ShippingFree\Model;
+namespace Owebia\AdvancedShippingSetting\Model;
 
 use Magento\Quote\Model\Quote\Address\RateResult\Error;
 use Magento\Quote\Model\Quote\Address\RateRequest;
@@ -134,7 +134,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
      * @param string $methodId
      * @param \stdClass $method
      * @param string $msg
-     * @return \Owebia\ShippingFree\Model\Carrier
+     * @return \Owebia\AdvancedShippingSetting\Model\Carrier
      */
     protected function appendError(\Magento\Shipping\Model\Rate\Result $result, $methodId, \stdClass $method, $msg)
     {

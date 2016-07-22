@@ -1,12 +1,12 @@
 # Description
 
-Shipping Module for Magento 2
+Advanced Shipping Setting Module for Magento 2
 
 ## Installation
 
 Use the following composer command:
 ```shell
-composer require owebia/module-shipping-free:^1.0
+composer require owebia/magento2-module-advanced-shipping-setting:^1.0
 ```
 
 ## Documentation

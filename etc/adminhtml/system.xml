@@ -9,10 +9,10 @@
     <system>
         <section id="carriers">
             <group id="owsh1" translate="label" type="text" sortOrder="-10" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Owebia Shipping - Carrier #1</label>
+                <label>Advanced Shipping Setting by Owebia</label>
                 <field id="about" translate="label" type="label" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>About</label>
-                    <frontend_model>Owebia\ShippingFree\Block\System\Config\Form\Field\About</frontend_model>
+                    <frontend_model>Owebia\AdvancedShippingSetting\Block\System\Config\Form\Field\About</frontend_model>
                     <comment><![CDATA[To manage more carriers, you can get a license for <a href="https://en.store.owebia.com/magento2-module-unlimited-carriers.html" target="_blank">Unlimited Carriers</a> by Owebia]]></comment>
                 </field>
                 <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">

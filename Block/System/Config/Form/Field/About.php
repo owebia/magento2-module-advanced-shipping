@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Owebia\ShippingFree\Block\System\Config\Form\Field;
+namespace Owebia\AdvancedShippingSetting\Block\System\Config\Form\Field;
 
 class About extends \Owebia\ShippingCore\Block\System\Config\Form\Field\AbstractField
 {
@@ -36,7 +36,7 @@ class About extends \Owebia\ShippingCore\Block\System\Config\Form\Field\Abstract
         return "<p>"
             . "Owebia_ShippingCore " . $this->escapeHtml($this->packageInfo->getVersion('Owebia_ShippingCore'))
             . "<br>"
-            . "Owebia_ShippingFree " . $this->escapeHtml($this->packageInfo->getVersion('Owebia_ShippingFree'))
+            . "Owebia_AdvancedShippingSetting " . $this->escapeHtml($this->packageInfo->getVersion('Owebia_AdvancedShippingSetting'))
             . "</p>"
         ;
     }

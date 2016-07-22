@@ -10,8 +10,8 @@
         <carriers>
             <owsh1>
                 <active>0</active>
-                <model>Owebia\ShippingFree\Model\Carrier</model>
-                <title>Owebia Shipping - Carrier #1</title>
+                <model>Owebia\AdvancedShippingSetting\Model\Carrier</model>
+                <title>Advanced Shipping Setting by Owebia</title>
             </owsh1>
         </carriers>
     </default>
