@@ -2,6 +2,10 @@
 
 Advanced Shipping Setting Module for Magento 2
 
+## Add-ons for Advanced Shipping Setting
+
+You can find [add-ons for Advanced Shipping Setting on Owebia Store](https://en.store.owebia.com/magento2-module-advanced-shipping-setting.html).
+
 ## Installation
 
 Use the following composer command:
