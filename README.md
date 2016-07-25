@@ -6,7 +6,7 @@ Advanced Shipping Setting Module for Magento 2
 
 Use the following composer command:
 ```shell
-composer require owebia/magento2-module-advanced-shipping-setting:^1.0
+composer require owebia/magento2-module-advanced-shipping-setting:^2.0
 ```
 
 ## Documentation
