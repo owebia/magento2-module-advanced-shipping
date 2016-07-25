@@ -24,7 +24,7 @@
                 </field>
                 <field id="config" translate="label" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Configuration</label>
-                    <frontend_model>Owebia\ShippingCore\Block\System\Config\Form\Field\Config</frontend_model>
+                    <frontend_model>Owebia\AdvancedShippingSetting\Block\System\Config\Form\Field\Config</frontend_model>
                 </field>
                 <field id="showmethod" translate="label" type="select" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Show Method if Not Applicable</label>

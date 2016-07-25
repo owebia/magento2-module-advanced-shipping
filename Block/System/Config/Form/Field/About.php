@@ -6,7 +6,7 @@
 
 namespace Owebia\AdvancedShippingSetting\Block\System\Config\Form\Field;
 
-class About extends \Owebia\ShippingCore\Block\System\Config\Form\Field\AbstractField
+class About extends \Owebia\AdvancedSettingCore\Block\System\Config\Form\Field\AbstractField
 {
 
     /**
@@ -33,11 +33,6 @@ class About extends \Owebia\ShippingCore\Block\System\Config\Form\Field\Abstract
      */
     protected function _getElementHtml(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
-        return "<p>"
-            . "Owebia_ShippingCore " . $this->escapeHtml($this->packageInfo->getVersion('Owebia_ShippingCore'))
-            . "<br>"
-            . "Owebia_AdvancedShippingSetting " . $this->escapeHtml($this->packageInfo->getVersion('Owebia_AdvancedShippingSetting'))
-            . "</p>"
-        ;
+        return "";
     }
 }

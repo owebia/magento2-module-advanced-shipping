@@ -11,7 +11,7 @@ composer require owebia/magento2-module-advanced-shipping-setting:^1.0
 
 ## Documentation
 
-http://htmlpreview.github.io/?https://github.com/owebia/module-shipping-core/blob/master/view/doc_en_US.html
+http://htmlpreview.github.io/?https://github.com/owebia/magento2-module-advanced-shipping-setting/blob/master/view/doc_en_US.html
 
 ## License
 

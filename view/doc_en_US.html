@@ -1,0 +1,750 @@
+<!doctype html>
+<html>
+<head lang="en">
+    <meta charset="utf-8"/>
+    <title>Documentation of Advanced Shipping Setting extension for Magento 2 (Replacing Owebia Shipping)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/styles/github.min.css" rel="stylesheet">
+    <style>
+        h2{border-top:solid 1px #eee;padding-top:30px;margin-top:50px}
+        h4{margin-top:1.5em}
+        code.hljs{display:inline;background:#eee;padding:4px;}pre code.hljs{background:none;padding:0;}
+        .hljs-comment{color:gray;}.hljs-string{color:purple;}.hljs-keyword{color:blue;font-weight:bold}.hljs-variable{color:DarkBlue}.hljs-number{color:#f50}
+        .config-id .hljs-string{color:#09f}.config-attr .hljs-string{color:maroon}
+        p.bold{margin:20px 0 5px;font-weight:bold;}
+        a[href^="#"]{color:green}a[href^="#"]:hover,a[href^="#"]:focus,a[href^="#"]:active{color:DarkGreen}
+        ul.ventilated>li{padding:.5em 0;}
+        /* sidebar */
+        #sidebar{position:fixed;top:0;left:0;padding-top:10px;}
+        #sidebar a{display:block;color:#716b7a;padding:5px 20px;}#sidebar a:hover,#sidebar a:focus{text-decoration:none;background-color:#e5e3e9;}
+        #sidebar .nav .nav a{padding-top:3px;padding-bottom:3px;padding-left:30px;font-size:90%;}@media screen and (max-width: 1600px){#sidebar{display:none}}
+        .highlight{background:#ffa;padding:4px;line-height:2em;}
+        .highlight code{background:#ffa;}
+    </style>
+</head>
+<body>
+<div id="sidebar">
+    <!-- doc sidebar start -->
+    <ul class="nav sidenav">
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#quick_start">Quick start</a></li>
+        <li><a href="#formulas">Variables and functions</a>
+            <ul class="nav">
+                <li><a href="#formulas_variables">Variables</a></li>
+                <li><a href="#formulas_functions">Functions</a></li>
+            </ul>
+        </li>
+        <li><a href="#examples">Examples</a>
+            <ul class="nav">
+                <li><a href="#examples_simple">Free shipping</a></li>
+                <li><a href="#examples_using_address_filters">Filter on destination</a></li>
+                <li><a href="#examples_using_customer_groups">Filter on customer group</a></li>
+                <li><a href="#examples_using_formulas">Using formulas</a></li>
+                <li><a href="#examples_using_special_functions">Using special functions</a></li>
+                <li><a href="#examples_using_products">Using products</a></li>
+                <li><a href="#examples_using_categories">Using categories</a></li>
+            </ul>
+        </li>
+    </ul>
+    <!-- doc sidebar end -->
+</div>
+
+<div class="container">
+    <!-- doc content start -->
+    <h1>Documentation <small>of</small> Advanced Shipping Setting <small>extension by Owebia for Magento 2</small></h1>
+    <div id="introduction">
+        <h2>Introduction</h2>
+
+        <p><strong>Advanced Shipping Setting</strong> is an extension for the e-commerce solution <a href="http://www.magentocommerce.com/" target=_blank>Magento</a>.</p>
+
+        <p>The syntax using <a href="http://php.net/manual/en/" target=_blank>PHP 5.6</a> allows a great flexibility in setting delivery charges.</p>
+
+        <p class=bold>Technical Informations</p>
+        <p>The usage of the PHP syntax (with an <a href="http://en.wikipedia.org/wiki/Abstract_syntax_tree" target=_blank>Abstract Syntax Tree</a>) has been preferred to the usage of a JSON syntax (with regular expressions and the eval function) as in previous versions of the extension. This is the result of considerations on security and performance.</p>
+        <p>The PHP code defined in the configuration is not evaluated with the eval function for security reasons. The library <a href="https://github.com/nikic/PHP-Parser" target=_blank>PHP-Parser</a> is used to obtain an Abstract Syntax Tree (AST). The AST is browsed and only a limited set of functions and variables is allowed.</p>
+        <p>As the AST is not version-dependent, you can use the PHP 5.6 syntax even if your server uses a lower version of PHP.</p>
+
+        <div class="jumbotron">
+            <p><a href="https://en.store.owebia.com/magento2-module-advanced-shipping-setting.html" target=_blank>Advanced Shipping Setting</a> allows you to manage one carrier.<br/>To manage more carriers, you can get a license for <a href="https://en.store.owebia.com/magento2-module-unlimited-carriers.html" target=_blank>Unlimited Carriers add-on</a> by Owebia.</p>
+        </div>
+    </div>
+
+    <div id="whats_new">
+        <h2>What's new?</h2>
+        <ul>
+            <li><code class=php>$item->product->getAttributeText('attribute_code')</code> for product attributes of type select</li>
+        </ul>
+    </div>
+
+    <div id="quick_start">
+        <h2>Quick start</h2>
+        <p>
+            A call to <code>addMethod</code> function adds a shipping method.
+        </p>
+        <p><code class=php>object addMethod ( string $method_id , array $method_properties )</code></p>
+        <p>
+            List of method <strong>properties</strong>:<br/>
+        </p>
+        <ul>
+            <li id=property_title><code>title</code></li>
+            <li id=property_price><code>price</code></li>
+            <li id=property_description><code>description</code> (optional)</li>
+            <li id=property_enabled><code>enabled</code> (optional): conditions for displaying the shipping method</li>
+        </ul>
+        <p class=bold>Example</p>
+<pre class=php>
+// First shipping method
+addMethod('method1', [
+    'title' => "Standard Shipping",
+    'price' => 10,
+]);
+// Second shipping method
+addMethod('method2', [
+    'title' => "Express Shipping",
+    'price' => 20,
+]);
+</pre>
+        <p><a href="#examples">More examples</a></p>
+        <p class="alert alert-danger">
+            <strong><u>Warning</u>:</strong> to avoid conflicts, use only the characters <code>a-z</code>, <code>A-Z</code>, <code>0-9</code>, <code>-</code> and <code>_</code> for the method id.<br/>
+            You should also avoid identifiers that already correspond to variable names (<code>quote</code>, <code>request</code>…).
+        </p>
+    </div>
+
+
+    <div id="formulas">
+        <h2>Use Variables and Functions</h2>
+        <p>
+            You can use <a href="#formulas_variables">variables</a>, <a href="#formulas_functions">functions</a> and <a href="http://php.net/manual/en/language.operators.php" target=_blank>operators</a> to define a dynamic value (all operators are not supported).<br/>
+        </p>
+        <p class=bold>Example</p>
+<pre class=php>
+addMethod('method1', [
+    // Dynamic title using the variable $request->dest_country_id
+    'title' => "Delivery to " . $request->dest_country_id,
+    // Dynamic price using the variable $quote->subtotal
+    'price' => 0.2 * $quote->subtotal,
+]);
+addMethod('method2', [
+    'title'   => "Free Shipping",
+    // Dynamic enabled using the function substr() and the variable $quote->coupon_code
+    'enabled' => substr($quote->coupon_code, 0, 4) == 'free',
+    'price'   => 0,
+]);
+</pre>
+        <div id="formulas_variables">
+            <h3>1. Variables</h3>
+            <p>There are <a href="#formulas_variables_global">global variables</a> and local variables that you can access with array functions and callbacks.</p>
+            <p class="alert alert-info">
+                If you activate the debug option, you can see all data available for each object that you use.<br/>
+                Remember that you don't have access to all methods of the original objects because they are not accessed directly.
+            </p>
+
+            <div id="formulas_variables_global">
+                <h4>1.1. Global variables</h4>
+                <p>These variables are global variables and can be accessed everywhere (use the <code class=php>global</code> keyword when you are inside a function).</p>
+
+                <ul class=ventilated>
+                    <li id="formulas_variables_request">The <strong>request</strong> object (<code class=php>\Magento\Quote\Model\Quote\Address\RateRequest</code>) given by Magento:
+                        <ul class=ventilated>
+                            <li><code class=php>$request->all_items</code>: array of items in cart</li>
+                            <li>The source address:
+                                <ul>
+                                    <li><code class=php>$request->country_id</code> *</li>
+                                    <li><code class=php>$request->region_id</code></li>
+                                    <li><code class=php>$request->city</code></li>
+                                    <li><code class=php>$request->postcode</code></li>
+                                </ul>
+                            </li>
+                            <li>The destination address:
+                                <ul>
+                                    <li><code class=php>$request->dest_country_id</code> *</li>
+                                    <li><code class=php>$request->dest_region_id</code></li>
+                                    <li><code class=php>$request->dest_region_code</code></li>
+                                    <li><code class=php>$request->dest_street</code></li>
+                                    <li><code class=php>$request->dest_city</code></li>
+                                    <li><code class=php>$request->dest_postcode</code></li>
+                                </ul>
+                            </li>
+                            <li>The package:</p>
+                                <ul>
+                                    <li><code class=php>$request->package_value</code>: value of the package</li>
+                                    <li><code class=php>$request->package_value_with_discount</code>: value of the package with discount</li>
+                                    <li><code class=php>$request->package_weight</code>: weight of the package</li>
+                                    <li><code class=php>$request->package_qty</code>: number of products in the package</li>
+                                </ul>
+                            </li>
+                            <li>Other attributes:
+                                <ul>
+                                    <li><code class=php>$request->free_shipping</code>: free shipping calculated by Magento rules</li>
+                                    <li><code class=php>$request->*</code>: property of the request object</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li id="formulas_variables_quote">The <strong>quote</strong> (<code class=php>\Magento\Quote\Model\Quote</code>):
+                        <ul>
+                            <li><code class=php>$quote->subtotal</code>: subtotal (excluding tax)</li>
+                            <li><code class=php>$quote->subtotal_with_discount</code>: subtotal (excluding tax) with discount</li>
+                            <li><code class=php>$quote->grand_total</code>: total (including tax) with discount</li>
+                            <li><code class=php>$quote->base_subtotal</code>: subtotal (excluding tax) in base currency</li>
+                            <li><code class=php>$quote->base_subtotal_with_discount</code>: subtotal (excluding tax) with discount in base currency</li>
+                            <li><code class=php>$quote->base_grand_total</code>: total (including tax) with discount in base currency</li>
+                            <li><code class=php>$quote->coupon_code</code>: the coupon code used in cart</li>
+                            <li><code class=php>$quote->*</code>: property of the quote (ex: <code class=php>$quote->subtotal</code>)</li>
+                        </ul>
+                    </li>
+                    <li id="formulas_variables_customer_group">The <strong>customer group</strong> (<code class=php>\Magento\Customer\Model\Group</code>):
+                        <ul>
+                            <li><code class=php>$customer_group->id</code>: alias of <code class=php>$customer_group->customer_group_id</code></li>
+                            <li><code class=php>$customer_group->code</code>: alias of <code class=php>$customer_group->customer_group_code</code></li>
+                            <li><code class=php>$customer_group->name</code>: alias of <code class=php>$customer_group->customer_group_code</code></li>
+                            <li><code class=php>$customer_group->*</code>: property of the customer group (ex: <code class=php>$customer_group->tax_class_id</code>)</li>
+                        </ul>
+                    </li>
+                    <li id="formulas_variables_customer">The <strong>customer</strong> (<code class=php>\Magento\Customer\Model\Customer</code>):
+                        <ul>
+                            <li><code class=php>$customer->id</code>: alias of <code class=php>$customer->entity_id</code></li>
+                            <li><code class=php>$customer->*</code>: attribute of the customer (ex: email, lastname, firstname, group_id…)</li>
+                        </ul>
+                    </li>
+                    <li id="formulas_variables_customvar">Custom <strong>variables</strong> (<code class=php>\Magento\Variable\Model\Variable</code>):
+                        <ul>
+                            <li><code class=php>$variable->*</code>: custom variable defined in Magento (ex: <code class=php>$variable->my_var</code>)</li>
+                        </ul>
+                    </li>
+                    <li id="formulas_variables_store">The <strong>store</strong> (<code class=php>\Magento\Store\Model\Store</code>):
+                        <ul>
+                            <li><code class=php>$store->id</code> <code class=php>$store->code</code> <code class=php>$store->name</code> <code class=php>$store->address</code> <code class=php>$store->phone</code></li>
+                        </ul>
+                    </li>
+                </ul>
+                <p class="alert alert-warning">
+                    * Magento apparently uses the <a href="http://fr.wikipedia.org/wiki/ISO_3166-1" target=_blank>ISO 3166-1 alpha-2 codes</a>.<br/>
+                    Note that the country code for United Kingdom is GB and not UK.
+                </p>
+            </div>
+
+            <div id="formulas_variables_local">
+                <h4>1.2. Accessing items</h4>
+
+                <p class="alert alert-info">You can use <code class=php>$request->all_items</code> with array functions.</p>
+
+                <p class="bold">Example</p>
+                <pre class=php>
+addMethod('__auto__', [
+    'title'      => "If at least one product has the attribute 'name' equal to 'Cat'",
+    'enabled'    => count(
+                        array_filter($request->all_items, function ($item) {
+                            return $item->product->name == 'Cat';
+                        })
+                    ) > 0,
+    'price'      => 10
+]);
+</pre>
+                <ul class=ventilated>
+                    <li id="formulas_variables_item">The <strong>item</strong> (<code class=php>\Magento\Quote\Model\Quote\Item</code>):
+                        <ul>
+                            <li><code class=php>$item->qty</code>: quantity of the item</li>
+                            <li><code class=php>$item->weight</code>: weight of the item</li>
+                            <li><code class=php>$item->base_original_price</code>: price excluding tax without discount</li>
+                            <li><code class=php>$item->price_incl_tax</code>: price including tax without discount</li>
+                            <!--<li><code class=php>$item->price-tax+discount</code>: price excluding tax with discount</li>
+                            <li><code class=php>$item->price+tax+discount</code>: price including tax with discount</li>
+                            <li><code class=php>$item->price+tax-discount</code>: price including tax without discount</li>-->
+                            <li><code class=php>$item->options->*</code>: option (the available options depend on the product)</li>
+                        </ul>
+                    </li>
+                    <li id="formulas_variables_product">The <strong>product</strong> (<code class=php>\Magento\Catalog\Model\Product</code>):
+                        <ul class=ventilated>
+                            <li><code class=php>$item->product->*</code><br/>
+                                <ul>
+                                    <li><code class=php>sku</code></li>
+                                    <li><code class=php>name</code></li>
+                                    <li><code class=php>weight</code></li>
+                                    <li><code class=php>price</code> (as defined in Magento backoffice)</li>
+                                    <li><code class=php>special_price</code>: (as defined in Magento backoffice)</li>
+                                    <li><code class=php>tax_class_id</code>: the taxclass id</li>
+                                    <li><code class=php>getAttributeText('tax_class_id')</code>: the tax class name<br/>
+                                        <span class="highlight">To get the text value of an attribute of type select, use <code class=php>getAttributeText('attribute_code')</code></span>
+                                    </li>
+                                    <li>…</li>
+                                </ul>
+                            </li>
+                            <li>Categories of the product: (<code class=php>\Magento\Catalog\Model\Category</code>)
+                                <ul>
+                                    <li><code class=php>$item->product->category->*</code>: attribute of the first category<br/>
+                                        <ul>
+                                            <li><code class=php>id</code></li>
+                                            <li><code class=php>name</code></li>
+                                            <li><code class=php>is_active</code></li>
+                                            <li>…</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>All product categories (returns an array, <a href="#examples_using_categories">examples</a>):
+                                <ul>
+                                    <!--<li><code class=php>$item->product->categories</code>: array of categories</li>-->
+                                    <li><code class=php>$item->product->category_ids</code>: array of id of the categories</li>
+                                    <!--<li><code class=php>$item->product->category_names</code>: array of name of the categories</li>-->
+                                </ul>
+                            </li>
+                            <li>The attribute set (<code class=php>\Magento\Eav\Model\Entity\Attribute\Set</code>):
+                                <ul>
+                                    <li><code class=php>$item->product->attribute_set</code>: the attribute set</li>
+                                    <li><code class=php>$item->product->attribute_set->*</code>: attribute of the attribute set<br/>
+                                        <ul>
+                                            <li><code class=php>id</code></li>
+                                            <li><code class=php>attribute_set_name</code></li>
+                                            <li>…</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>The stock item (<code class=php>\Magento\CatalogInventory\Model\Stock\Item</code>):
+                                <ul>
+                                    <li><code class=php>$item->product->stock_item->*</code>: attribute of the product stock<br/>
+                                        <ul>
+                                            <li><code class=php>is_in_stock</code></li>
+                                            <li><code class=php>qty</code></li>
+                                            <li>…</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="formulas_functions">
+            <h3>2. Functions</h3>
+
+            <p class="alert alert-warning">Look at the PHP documentation if you want to know how to use these functions.</p>
+            <p>Functions allowed:</p>
+            <ul>
+                <li><a href="http://php.net/manual/en/function.abs.php" target=_blank>abs</a></li>
+                <li><a href="http://php.net/manual/en/function.array-filter.php" target=_blank>array_filter</a></li>
+                <li><a href="http://php.net/manual/en/function.array-intersect.php" target=_blank>array_intersect</a></li>
+                <li><a href="http://php.net/manual/en/function.array-map.php" target=_blank>array_map</a></li>
+                <li><a href="http://php.net/manual/en/function.array-reduce.php" target=_blank>array_reduce</a></li>
+                <li><a href="http://php.net/manual/en/function.array-sum.php" target=_blank>array_sum</a></li>
+                <li><a href="http://php.net/manual/en/function.array-unique.php" target=_blank>array_unique</a></li>
+                <li><a href="http://php.net/manual/en/function.ceil.php" target=_blank>ceil</a></li>
+                <li><a href="http://php.net/manual/en/function.count.php" target=_blank>count</a></li>
+                <li><a href="http://php.net/manual/en/function.preg-match.php" target=_blank>date</a>
+                <li><a href="http://php.net/manual/en/function.explode.php" target=_blank>explode</a></li>
+                <li><a href="http://php.net/manual/en/function.floor.php" target=_blank>floor</a></li>
+                <li><a href="http://php.net/manual/en/function.implode.php" target=_blank>implode</a></li>
+                <li><a href="http://php.net/manual/en/function.in-array.php" target=_blank>in_array</a></li>
+                <li><a href="http://php.net/manual/en/function.max.php" target=_blank>max</a></li>
+                <li><a href="http://php.net/manual/en/function.min.php" target=_blank>min</a></li>
+                <li><a href="http://php.net/manual/en/function.preg-match.php" target=_blank>preg_match</a></li>
+                <li><a href="http://php.net/manual/en/function.round.php" target=_blank>round</a></li>
+                <li><a href="http://php.net/manual/en/function.strtotime.php" target=_blank>strtotime</a></li>
+                <li><a href="http://php.net/manual/en/function.substr.php" target=_blank>substr</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="examples">
+        <h2>Examples</h2>
+
+        <div id="examples_simple">
+            <h3>Free shipping</h3>
+<pre class=php>
+addMethod('__auto__', [
+    'title'      => "Free shipping",
+    'price'      => 0,
+]);
+</pre>
+        </div>
+
+        <div id="examples_using_address_filters">
+            <h3>Filter on destination</h3>
+
+<pre class=php>
+addMethod('__auto__', [
+    'title'      => "France, Germany, Switzerland, Spain, Italy",
+    'enabled'    => in_array($request->dest_country_id, ['FR', 'DE', 'CH', 'ES', 'IT']),
+    'price'      => 10,
+]);
+addMethod('__auto__', [
+    'title'      => "Postcode starting with 25",
+    'enabled'    => $request->dest_country_id == 'FR' && substr($request->dest_postcode, 0, 2) == '25',
+    'price'      => 10,
+]);
+addMethod('__auto__', [
+    'title'      => "Regular expressions allowing postal codes beginning with 'PO' (case insensitive)",
+    'enabled'    => $request->dest_country_id == 'GB' && preg_match('/^PO.*$/i', $request->dest_postcode),
+    'price'      => 10,
+]);
+</pre>
+
+            <div id="examples_excluding_domtom_postcode">
+                <p class=bold>France excluding DOM/TOM</p>
+<pre class=php>
+// Regular Expression refusing delivery to France with postal codes
+// beginning with 97 and 98 (with or without interspersed zeros and spaces)
+addMethod('__auto__', [
+    'title'      => "France excluding DOM/TOM",
+    'enabled'    => $request->dest_country_id == 'FR'
+                        && !preg_match('/^[0\\s]*9\\s*[78]/', $request->dest_postcode),
+    'price'      => 10,
+]);
+</pre>
+            </div>
+
+            <div id="examples_using_customer_groups">
+                <h3>Filter on customer group</h3>
+                <p>You can use the name or ID of the customer groups.</p>
+<pre class=php>
+addMethod('__auto__', [
+    'title'      => "Retailer group",
+    'enabled'    => $customer_group->code == "Retailer",
+    'price'      => 10,
+]);
+addMethod('__auto__', [
+    'title'      => "NOT LOGGED IN and General groups",
+    'enabled'    => in_array($customer_group->code, ['NOT LOGGED IN', 'General']),
+    'price'      => 10,
+]);
+addMethod('__auto__', [
+    'title'      => "NOT LOGGED IN and General groups by their ID",
+    'enabled'    => in_array($customer_group->id, [0, 1]),
+    'price'      => 10,
+]);
+</pre>
+            </div>
+
+            <div id="examples_using_formulas">
+                <h3>Using formulas</h3>
+                <p>Formulas can be used to calculate the price of the delivery.</p>
+<pre class=php>
+addMethod('__auto__', [
+    'title'      => "Shipping",
+    'price'      => 0.1 * $quote->subtotal + 10.00,
+]);
+</pre>
+
+                <p class=bold>Using the configuration of another element</p>
+<pre class=php>
+$standard = addMethod('standard', [
+    'title'      => "Standard Shipping",
+    'enabled'    => $quote->subtotal < 1000.00,
+    'price'      => 10,
+]);
+addMethod('express', [
+    'title'      => "Express Shipping",
+    'enabled'    => $standard->enabled && $request->package_weight < 10,
+    'price'      => 12,
+]);
+</pre>
+
+            </div>
+
+            <div id="examples_using_special_functions">
+                <h3>Using special functions</h3>
+
+                <div id="examples_functions__table">
+                    <p class=bold>Defining a table</p>
+<pre class=php>
+// If the package weight is lower or equal to 0.5, the price will be 5.30
+// If the package weight is lower or equal to 1.0, the price will be 6.50
+// In others cases, the price will be 7.50
+addMethod('__auto__', [
+    'title'      => "Shipping",
+    'price'      => array_reduce([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ], function ($carry, $item) {
+                        global $request;
+                        if (isset($carry)) return $carry;
+                        if (isset($item[0]) && ($request->package_weight <= $item[0] || $item[0] == '*')) {
+                            $carry = $item[1];
+                        }
+                        return $carry;
+                    }),
+]);
+// You can exclude the upper limit value by adding an argument false
+addMethod('__auto__', [
+    'title'      => "Shipping",
+    'price'      => array_reduce([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ], function ($carry, $item) {
+                        global $request;
+                        if (isset($carry)) return $carry;
+                        if (isset($item[0]) && ($request->package_weight < $item[0] || $item[0] == '*')) {
+                            $carry = $item[1];
+                        }
+                        return $carry;
+                    }),
+]);
+</pre>
+                </div>
+
+                <div id="examples_functions__switch">
+                    <p class=bold>Using the function <code>_switch()</code> (associative table)</p>
+<pre class=php>
+// If the coupon code is equal to "coupon1", the price will be 5.30
+// If the coupon code is equal to "coupon2", the price will be 6.50
+// In others cases, the price will be 7.50
+addMethod('__auto__', [
+    'title'      => "Shipping",
+    'price'      => [ 'coupon1' => 5.30, 'coupon2' => 6.50 ][$quote->coupon_code] ?? 7.50,
+]);
+</pre>
+                </div>
+            </div>
+
+            <div id="examples_using_products">
+                <h3>Using the attributes and options of products</h3>
+
+<pre class=php>
+addMethod('__auto__', [
+    'title'      => "If at least one product has the attribute 'name' equal to 'Cat'",
+    'enabled'    => count(
+                        array_filter($request->all_items, function ($item) {
+                            return $item->product->name == 'Cat';
+                        })
+                    ) > 0,
+    'price'      => 10
+]);
+addMethod('__auto__', [
+    'title'      => "If all items have the option 'Size' greater or equal to 1",
+    'enabled'    => count(
+                        array_filter($request->all_items, function ($item) {
+                            return isset($item->options['Size']) && $item->options['Size']['value'] >= 1;
+                        })
+                    ) == $request->package_qty,
+    'price'      => 10
+]);
+addMethod('__auto__', [
+    'title'      => "More than 3 sku differents",
+    'enabled'    => count(
+                        array_unique(
+                            array_map(function ($item) {
+                                return $item->product->sku;
+                            }, $request->all_items)
+                        )
+                    ) > 3,
+    'price'      => 10
+]);
+addMethod('__auto__', [
+    'title'      => "Sum of all options 'Size' is greater than 30",
+    'enabled'    => array_sum(
+                        array_map(
+                            function ($item) {
+                                return $item->options['Size']['value'] ?? 0;
+                            },
+                            $request->all_items
+                        )
+                    ) > 30,
+    'price'      => 10
+]);
+addMethod('__auto__', [
+    'title'      => "Minimum price excluding tax without discount is greater to 10",
+    'enabled'    => min(
+                        array_map(
+                            function ($item) {
+                                return $item->base_original_price;
+                            },
+                            $request->all_items
+                        )
+                    ) > 10,
+    'price'      => 10
+]);
+addMethod('__auto__', [
+    'title'      => "Maximum value of the option 'Size' is lower than 50",
+    'enabled'    => max(
+                        array_map(
+                            function ($item) {
+                                return $item->options['Size']['value'] ?? 0;
+                            },
+                            $request->all_items
+                        )
+                    ) < 50,
+    'price'      => 10
+]);
+// shipping is a custom product attribute
+addMethod('__auto__', [
+    'title'      => "Calculate shipping fees by product",
+    'price'      => array_sum(
+                        array_map(
+                            function ($item) {
+                                return $item->product->shipping * $item->qty;
+                            },
+                            $request->all_items
+                        )
+                    ),
+]);
+addMethod('__auto__', [
+    'title'      => "5 x weight of products that are in categories 2 or 3",
+    'price'      => array_sum(
+                        array_map(
+                            function ($item) {
+                                return count(array_intersect($item->product->category_ids, [2, 3]))>= 1
+                                    ? $item->product->weight * $item->qty
+                                    : 0;
+                            },
+                            $request->all_items
+                        )
+                    ) * 5.0,
+]);
+addMethod('__auto__', [
+    'title'      => "5 x weight of products that are in both categories 2 and 3",
+    'price'      => array_sum(
+                        array_map(
+                            function ($item) {
+                                return count(array_intersect($item->product->category_ids, [2, 3])) == 2
+                                    ? $item->product->weight * $item->qty
+                                    : 0;
+                            },
+                            $request->all_items
+                        )
+                    ) * 5.0,
+]);
+</pre>
+                </div>
+
+                <div id="examples_using_categories">
+                    <h3>Using categories</h3>
+                    <p class="alert alert-danger">Warning: you must notice that in Magento, <strong>a product can be in multiple categories</strong>.<br/>So be particularly careful how you use this property.</p>
+<pre class=php>
+<!--addMethod('__auto__', [
+    'title'      => "Sum of weight attributes of products in category 'Test'",
+    'price'      => array_sum(
+                        array_map(
+                            function ($item) {
+                                return in_array('Test', $item->product->category_names)
+                                  ? $item->product->weight : 0;
+                            },
+                            $request->all_items
+                        )
+                    ),
+]);-->
+addMethod('__auto__', [
+    'title'      => "Sum of weight attributes of products in category 12",
+    'price'      => array_sum(
+                        array_map(
+                            function ($item) {
+                                return in_array(12, $item->product->category_ids)
+                                    ? $item->product->weight : 0;
+                            },
+                            $request->all_items
+                        )
+                    ),
+]);
+addMethod('__auto__', [
+    'title'      => "Sum of weight attributes of products in categories whose id is 11 and 12",
+    'price'      => array_sum(
+                        array_map(
+                            function ($item) {
+                                return count(array_intersect($item->product->category_ids, [11, 12])) >= 1
+                                    ? $item->product->weight : 0;
+                            },
+                            $request->all_items
+                        )
+                    ),
+]);
+<!--
+addMethod('__auto__', [
+    'title'      => "Sum of weights of products having for first category 'Test'",
+    'price'      => array_sum(
+                        array_map(
+                            function ($item) {
+                                return $item->product->category->name == 'Test'
+                                    ? $item->product->weight : 0;
+                            },
+                            $request->all_items
+                        )
+                    ),
+]);-->
+addMethod('__auto__', [
+    'title'      => "Sum of weights of products having for first category id 12",
+    'price'      => array_sum(
+                        array_map(
+                            function ($item) {
+                                return $item->product->category_id == 12
+                                    ? $item->product->weight : 0;
+                            },
+                            $request->all_items
+                        )
+                    ),
+]);
+</pre>
+                    <!--'__auto__', [
+                        'price' => $quote->subtotal
+                            + $quote->subtotal_with_discount
+                            + $quote->grand_total
+                            + $quote->base_subtotal
+                            + $quote->base_subtotal_with_discount
+                            + $quote->base_grand_total
+                            + $customer_group->id
+                            + $customer_group->code
+                            + $customer_group->name
+                            + $customer_group->customer_group_code
+                            + $customer_group->tax_class_id
+                            + $customer->id
+                            + $customer->entity_id
+                            + $customer->lastname
+                            + $customvar->my_var
+                            + $store->id
+                            + $store->code
+                            + $store->name
+                            + $store->address
+                            + $store->phone
+                            + $request->country_id
+                            + $request->region_id
+                            + $request->city
+                            + $request->postcode
+                            + $request->dest_country_id
+                            + $request->dest_region_id
+                            + $request->dest_region_code
+                            + $request->dest_street
+                            + $request->dest_city
+                            + $request->dest_postcode
+                            + $request->package_weight
+                            + $request->package_qty
+                            + $request->free_shipping
+                            + $request->store_id
+                    ],-->
+                </div>
+            </div>
+            <!-- doc content end -->
+            <p>&copy; 2016 <a href="http://www.owebia.com/">Owebia</a></p>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/languages/php.min.js"></script>
+        <script>
+            <!-- doc scripts start -->
+            $(function(){
+                $('a[href^="#"]').each(function (e) {
+                    var anchor = $(this).attr('href').replace('#', '');
+                    if (anchor == '') return;
+                    var jelem = $('#' + anchor);
+                    if (!jelem.length) {
+                        $(this).css('border', 'solid 1px red').css('padding', 3);
+                    }
+                });
+
+                var index = 0;
+                hljs.initHighlightingOnLoad();
+                $('pre.php').each(function(){
+                    var text = $(this).text();
+                    while (text.match(/'__auto__'/)) {
+                        text = text.replace(/'__auto__'/, '<span class="config-id">\'id_' + ('000' + index).slice(-3) + '\'</span>');
+                        index++;
+                    }
+                    while (text.match(/'(title|enabled|price)'(\s*)=>/)) {
+                        text = text.replace(/'(title|enabled|price)'(\s*)=>/, '<span class="config-attr">\'$1\'</span>$2=>');
+                    }
+                    $(this).html("<code class=php>" + text.trim() + "</code>");
+                });
+                $('code.php').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+            <!-- doc scripts end -->
+        </script>
+</body>
+</html>

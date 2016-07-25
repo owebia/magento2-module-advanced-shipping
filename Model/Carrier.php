@@ -14,6 +14,16 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
     const CODE = 'owsh1';
 
     /**
+     * @var array
+     */
+    protected $parsingResult = [];
+
+    /**
+     * @var string
+     */
+    protected $currentMethodId = null;
+
+    /**
      * Do not change variable name
      * @var string
      */
@@ -30,17 +40,17 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
     protected $rateMethodFactory = null;
 
     /**
-     * @var \Owebia\ShippingCore\Helper\Registry
+     * @var \Owebia\AdvancedSettingCore\Helper\Registry
      */
     protected $registryHelper = null;
 
     /**
-     * @var \Owebia\ShippingCore\Helper\Config
+     * @var \Owebia\AdvancedSettingCore\Helper\Config
      */
     protected $configHelper = null;
 
     /**
-     * @var \Owebia\ShippingCore\Logger\Logger
+     * @var \Owebia\AdvancedSettingCore\Logger\Logger
      */
     protected $debugLogger = null;
 
@@ -50,9 +60,9 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Shipping\Model\Rate\ResultFactory $rateFactory
      * @param \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory
-     * @param \Owebia\ShippingCore\Helper\Registry $registryHelper
-     * @param \Owebia\ShippingCore\Helper\Config $configHelper
-     * @param \Owebia\ShippingCore\Logger\Logger $debugLogger
+     * @param \Owebia\AdvancedSettingCore\Helper\Registry $registryHelper
+     * @param \Owebia\AdvancedSettingCore\Helper\Config $configHelper
+     * @param \Owebia\AdvancedSettingCore\Logger\Logger $debugLogger
      * @param array $data
      */
     public function __construct(
@@ -61,9 +71,9 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         \Psr\Log\LoggerInterface $logger,
         \Magento\Shipping\Model\Rate\ResultFactory $rateFactory,
         \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory,
-        \Owebia\ShippingCore\Helper\Registry $registryHelper,
-        \Owebia\ShippingCore\Helper\Config $configHelper,
-        \Owebia\ShippingCore\Logger\Logger $debugLogger,
+        \Owebia\AdvancedSettingCore\Helper\Registry $registryHelper,
+        \Owebia\AdvancedSettingCore\Helper\Config $configHelper,
+        \Owebia\AdvancedSettingCore\Logger\Logger $debugLogger,
         array $data = []
     ) {
         parent::__construct($scopeInterface, $rateErrorFactory, $logger, $data);
@@ -93,7 +103,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         $result = $this->rateFactory->create();
 
         if (!isset($config) || !is_array($config)) {
-            $this->_logger->debug("OWEBIA SHIPPING : Invalid config");
+            $this->_logger->debug("Owebia_AdvancedShippingSetting : Invalid config");
             return false;
         }
 
@@ -142,8 +152,9 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
             $error = $this->_rateErrorFactory->create();
             $error->setCarrier($this->_code);
             $error->setCarrierTitle($this->getConfigData('title'));
-            $methodTitle = isset($method->title) ? $method->title : "Method `$methodId`";
-            $error->setErrorMessage("$methodTitle - $msg");
+            $methodTitle = isset($method->title) ? $method->title
+                : (!empty($methodId) ? "Method `$methodId` - " : '');
+            $error->setErrorMessage("$methodTitle $msg");
             $result->append($error);
         }
         return $this;
@@ -158,7 +169,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
     {
         $config = $this->getConfig();
         if (!isset($config) || !is_array($config)) {
-            $this->_logger->debug("OWEBIA SHIPPING : Invalid config");
+            $this->_logger->debug("Owebia_AdavancedShippingSetting : Invalid config");
             return array();
         }
         $allowedMethods = array();
@@ -166,6 +177,14 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
             $allowedMethods[$methodId] = isset($method->title) ? $method->title : 'N/A';
         }
         return $allowedMethods;
+    }
+
+    public function initRegistry(RateRequest $request = null)
+    {
+        $this->registryHelper->init($request);
+        $this->registryHelper->register('info', $this->registryHelper->create('Info', [
+            'carrierCode' => $this->getCarrierCode()
+        ]));
     }
 
     /**
@@ -179,13 +198,15 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         }
         $config = null;
         try {
-            $this->registryHelper->init($this, $request);
+            $this->initRegistry($request);
             $configString = $this->getConfigData('config');
-            $config = $this->configHelper->parse(
+            $this->configHelper->parse(
                 $configString,
                 $this->registryHelper,
+                $this,
                 (bool) $this->getConfigData('debug')
             );
+            $config = $this->parsingResult;
         } catch (\Exception $e) {
             $this->_logger->debug($e);
             if ($this->isDebugEnabled()) {
@@ -196,6 +217,67 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
             $this->debugLogger->collapseClose();
         }
         return $config;
+    }
+
+    /**
+     * @return \Owebia\AdvancedSettingCore\Model\Wrapper\ArrayWrapper
+     * @throws \Exception
+     */
+    public function addMethodCallback()
+    {
+        $args = func_get_args();
+        if (count($args) != 2) {
+            throw new \Exception("Invalid arguments count for addMethod FuncCall");
+        }
+
+        $methodId = array_shift($args);
+        if (!is_string($methodId) || !preg_match('#^[a-z][a-z0-9_]*$#', $methodId)) {
+            throw new \Exception("Invalid first argument for addMethod FuncCall: the first argument"
+                . " must be a string and match the following pattern : ^[a-z][a-z0-9_]*$");
+        }
+        $this->currentMethodId = $methodId;
+
+        $methodOptions = array_shift($args);
+        if (!is_array($methodOptions)) {
+            throw new \Exception("Invalid second argument for addMethod FuncCall:"
+                . " the second argument must be an array");
+        }
+        if (isset($this->parsingResult[$methodId])) {
+            throw new \Exception("The method " . $methodId . " already exists");
+        }
+        $this->parsingResult[$methodId] = (object) $methodOptions;
+
+        $this->currentMethodId = null;
+        return $this->registryHelper->create('ArrayWrapper', [ 'data' => $methodOptions ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function helpCallback()
+    {
+        return "The result of the help call is visible in the backoffice";
+    }
+
+    /**
+     * @return string
+     */
+    public function errorCallback($msg)
+    {
+        throw new \Exception($msg);
+    }
+
+    /**
+     * @return string
+     */
+    public function appendParsingError($msg)
+    {
+        if (isset($this->currentMethodId)) {
+            $this->parsingResult[$this->currentMethodId] = (object) [ 'error' => $msg ];
+        } else {
+            $this->parsingResult[] = (object) [ 'error' => $msg ];
+        }
+        return $msg;
     }
 
     /**
