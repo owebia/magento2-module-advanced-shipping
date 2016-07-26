@@ -167,7 +167,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
      */
     public function getAllowedMethods()
     {
-        $config = $this->getConfig();
+        $config = $this->getConfig(new RateRequest());
         if (!isset($config) || !is_array($config)) {
             $this->_logger->debug("Owebia_AdavancedShippingSetting : Invalid config");
             return array();
