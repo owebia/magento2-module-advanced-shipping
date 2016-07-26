@@ -22,15 +22,14 @@ class Config extends \Owebia\AdvancedSettingCore\Block\System\Config\Form\Field\
     {
         return parent::getToolbarContent($element)
             . <<<EOD
-            <a target="_blank" class="icon icon-check" href="{$this->getUrl('owebia_advancedshippingsetting/help/test')}" title="{$this->translate('Test')}"><span>{$this->translate('Test')}</span></a>
+<!--<a target="_blank" class="icon icon-check" href="{$this->getUrl('owebia_advancedshippingsetting/help/test')}" title="{$this->translate('Test')}"><span>{$this->translate('Test')}</span></a>-->
 EOD;
     }
 
     protected function getFooterContent(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
         return <<<EOD
-            <!--<a href="http://www.owebia.com/os2/fr/configurations"
-                target=_blank>{$this->translate('Download configuration templates')}</a>-->
+<!--<a href="http://www.owebia.com/os2/fr/configurations" target=_blank>{$this->translate('Download configuration templates')}</a>-->
 EOD;
     }
 }
