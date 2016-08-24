@@ -36,7 +36,10 @@ class Display extends \Magento\Backend\App\Action
     {
         /** @var \Magento\Framework\Module\Dir\Reader $reader */
         $reader = $this->_objectManager->get('Magento\Framework\Module\Dir\Reader');
-        $viewDir = $reader->getModuleDir(\Magento\Framework\Module\Dir::MODULE_VIEW_DIR, 'Owebia_AdvancedShippingSetting');
+        $viewDir = $reader->getModuleDir(
+            \Magento\Framework\Module\Dir::MODULE_VIEW_DIR,
+            'Owebia_AdvancedShippingSetting'
+        );
 
         $locale = $this->_localeResolver->getLocale();
 

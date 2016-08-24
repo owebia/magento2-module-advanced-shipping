@@ -296,23 +296,26 @@ addMethod('id_024', [
 EOT;
         
         $carrier = $this->_objectManager->create('Owebia\AdvancedShippingSetting\Model\Carrier');
-        $request = $this->_objectManager->create('Magento\Quote\Model\Quote\Address\RateRequest', array(
-            'data' => array(
+        $request = $this->_objectManager->create('Magento\Quote\Model\Quote\Address\RateRequest', [
+            'data' => [
                 'package_value' => 10,
                 'dest_country_id' => 'FR',
                 'dest_postcode' => '96000',
                 'package_weight' => 0.7,
-                'items' => array()
-
-                
-            )
-        ));
-        var_export(array_keys($request->getData()));
+                'items' => [],
+            ]
+        ]);
         $carrier->initRegistry($request);
         
         $result = $helper->parse($config, $registry);
-        echo "<pre>";
-        var_export($result);
-        exit();
+        return $this->resultRawFactory->create()
+            ->setHttpResponseCode(200)
+            ->setHeader('Pragma', 'public', true)
+            ->setHeader('Content-type', 'text/html; charset=UTF-8', true)
+            ->setContents(
+                var_export(array_keys($request->getData()), true)
+                . '<pre>'
+                . var_export($result, true)
+            );
     }
 }

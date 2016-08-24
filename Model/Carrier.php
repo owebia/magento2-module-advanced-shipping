@@ -8,7 +8,8 @@ namespace Owebia\AdvancedShippingSetting\Model;
 use Magento\Quote\Model\Quote\Address\RateResult\Error;
 use Magento\Quote\Model\Quote\Address\RateRequest;
 
-class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements \Magento\Shipping\Model\Carrier\CarrierInterface
+class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
+    \Magento\Shipping\Model\Carrier\CarrierInterface
 {
 
     const CODE = 'owsh1';
@@ -28,6 +29,11 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
      * @var string
      */
     protected $_code = self::CODE;
+
+    /**
+     * @var \Magento\Framework\ObjectManagerInterface
+     */
+    protected $objectManager = null;
 
     /**
      * @var \Magento\Shipping\Model\Rate\ResultFactory
@@ -58,6 +64,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeInterface
      * @param \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Magento\Framework\ObjectManagerInterface $objectManager
      * @param \Magento\Shipping\Model\Rate\ResultFactory $rateFactory
      * @param \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory
      * @param \Owebia\AdvancedSettingCore\Helper\Registry $registryHelper
@@ -69,6 +76,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeInterface,
         \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory,
         \Psr\Log\LoggerInterface $logger,
+        \Magento\Framework\ObjectManagerInterface $objectManager,
         \Magento\Shipping\Model\Rate\ResultFactory $rateFactory,
         \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory,
         \Owebia\AdvancedSettingCore\Helper\Registry $registryHelper,
@@ -77,6 +85,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         array $data = []
     ) {
         parent::__construct($scopeInterface, $rateErrorFactory, $logger, $data);
+        $this->objectManager = $objectManager;
         $this->rateFactory = $rateFactory;
         $this->rateMethodFactory = $rateMethodFactory;
         $this->registryHelper = $registryHelper;
@@ -119,17 +128,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
             } elseif (isset($method->debug)) {
                 $this->appendError($result, $methodId, $method, $method->debug);
             } else {
-                /** @var \Magento\Quote\Model\Quote\Address\RateResult\Method $rate */
-                $rate = $this->rateMethodFactory->create();
-                $rate->setCarrier($this->_code);
-                $rate->setCarrierTitle($this->getConfigData('title'));
-                $rate->setMethod($methodId);
-                $title = isset($method->title) ? $method->title : 'N/A';
-                $rate->setMethodTitle($title);
-                $description = isset($method->description) ? $method->description : null;
-                $rate->setMethodDescription($description);
-                $rate->setCost($method->price);
-                $rate->setPrice($method->price);
+                $rate = $this->createMethod($methodId, $method);
                 $result->append($rate);
 
                 // if ($stopToFirstMatch) break;
@@ -137,6 +136,27 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $methodId
+     * @param \stdClass $method
+     * @return \Magento\Quote\Model\Quote\Address\RateResult\Method
+     */
+    protected function createMethod($methodId, $method)
+    {
+        /** @var \Magento\Quote\Model\Quote\Address\RateResult\Method $rate */
+        $rate = $this->rateMethodFactory->create();
+        $rate->setCarrier($this->_code);
+        $rate->setCarrierTitle($this->getConfigData('title'));
+        $rate->setMethod($methodId);
+        $title = isset($method->title) ? $method->title : 'N/A';
+        $rate->setMethodTitle($title);
+        $description = isset($method->description) ? $method->description : null;
+        $rate->setMethodDescription($description);
+        $rate->setCost($method->price);
+        $rate->setPrice($method->price);
+        return $rate;
     }
 
     /**
@@ -167,12 +187,12 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
      */
     public function getAllowedMethods()
     {
-        $config = $this->getConfig(new RateRequest());
+        $config = $this->getConfig($this->objectManager->create(RateRequest::class));
         if (!isset($config) || !is_array($config)) {
             $this->_logger->debug("Owebia_AdavancedShippingSetting : Invalid config");
-            return array();
+            return [];
         }
-        $allowedMethods = array();
+        $allowedMethods = [];
         foreach ($config as $methodId => $method) {
             $allowedMethods[$methodId] = isset($method->title) ? $method->title : 'N/A';
         }
@@ -221,29 +241,35 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
 
     /**
      * @return \Owebia\AdvancedSettingCore\Model\Wrapper\ArrayWrapper
-     * @throws \Exception
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function addMethodCallback()
     {
         $args = func_get_args();
         if (count($args) != 2) {
-            throw new \Exception("Invalid arguments count for addMethod FuncCall");
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __("Invalid arguments count for addMethod FuncCall")
+            );
         }
 
         $methodId = array_shift($args);
         if (!is_string($methodId) || !preg_match('#^[a-z][a-z0-9_]*$#', $methodId)) {
-            throw new \Exception("Invalid first argument for addMethod FuncCall: the first argument"
-                . " must be a string and match the following pattern : ^[a-z][a-z0-9_]*$");
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __("Invalid first argument for addMethod FuncCall: the first argument must be a string and match the following pattern : ^[a-z][a-z0-9_]*$")
+            );
         }
         $this->currentMethodId = $methodId;
 
         $methodOptions = array_shift($args);
         if (!is_array($methodOptions)) {
-            throw new \Exception("Invalid second argument for addMethod FuncCall:"
-                . " the second argument must be an array");
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __("Invalid second argument for addMethod FuncCall: the second argument must be an array")
+            );
         }
         if (isset($this->parsingResult[$methodId])) {
-            throw new \Exception("The method " . $methodId . " already exists");
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __("The method %1 already exists", $methodId)
+            );
         }
         $this->parsingResult[$methodId] = (object) $methodOptions;
 
@@ -260,11 +286,11 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
     }
 
     /**
-     * @return string
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function errorCallback($msg)
     {
-        throw new \Exception($msg);
+        throw new \Magento\Framework\Exception\LocalizedException(__($msg));
     }
 
     /**
