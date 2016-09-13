@@ -11,7 +11,7 @@
         h4{margin-top:1.5em}
         code.hljs{display:inline;background:#eee;padding:4px;}pre code.hljs{background:none;padding:0;}
         .hljs-comment{color:gray;}.hljs-string{color:purple;}.hljs-keyword{color:blue;font-weight:bold}.hljs-variable{color:DarkBlue}.hljs-number{color:#f50}
-        .config-id .hljs-string{color:#09f}.config-attr .hljs-string{color:maroon}
+        .config-id .hljs-string{color:#09f}.config-attr .hljs-string{color:maroon}.config-fn{color:Green;background:rgba(173,255,47,.7);font-weight:bold}
         p.bold{margin:20px 0 5px;font-weight:bold;}
         a[href^="#"]{color:green}a[href^="#"]:hover,a[href^="#"]:focus,a[href^="#"]:active{color:DarkGreen}
         ul.ventilated>li{padding:.5em 0;}
@@ -21,6 +21,13 @@
         #sidebar .nav .nav a{padding-top:3px;padding-bottom:3px;padding-left:30px;font-size:90%;}@media screen and (max-width: 1600px){#sidebar{display:none}}
         .highlight{background:#ffa;padding:4px;line-height:2em;}
         .highlight code{background:#ffa;}
+        .nav-tabs>li>a,
+        .nav-tabs>li>a:focus,
+        .nav-tabs>li>a:hover{text-transform:uppercase;font-weight:bold;color:#888;font-size:.8em}
+        .nav-tabs>li.active>a,
+        .nav-tabs>li.active>a:focus,
+        .nav-tabs>li.active>a:hover{background:#f5f5f5;}
+        .tab-pane > pre{border-top:0;border-radius:0;border-color:#ddd}
     </style>
 </head>
 <body>
@@ -28,6 +35,8 @@
     <!-- doc sidebar start -->
     <ul class="nav sidenav">
         <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#addons">Add-ons</a></li>
+        <li><a href="#whats_new">What's new?</a></li>
         <li><a href="#quick_start">Quick start</a></li>
         <li><a href="#formulas">Variables and functions</a>
             <ul class="nav">
@@ -38,7 +47,7 @@
         <li><a href="#examples">Examples</a>
             <ul class="nav">
                 <li><a href="#examples_simple">Free shipping</a></li>
-                <li><a href="#examples_using_address_filters">Filter on destination</a></li>
+                <li><a href="#examples_using_destination">Filter on destination</a></li>
                 <li><a href="#examples_using_customer_groups">Filter on customer group</a></li>
                 <li><a href="#examples_using_formulas">Using formulas</a></li>
                 <li><a href="#examples_using_special_functions">Using special functions</a></li>
@@ -64,16 +73,31 @@
         <p>The usage of the PHP syntax (with an <a href="http://en.wikipedia.org/wiki/Abstract_syntax_tree" target=_blank>Abstract Syntax Tree</a>) has been preferred to the usage of a JSON syntax (with regular expressions and the eval function) as in previous versions of the extension. This is the result of considerations on security and performance.</p>
         <p>The PHP code defined in the configuration is not evaluated with the eval function for security reasons. The library <a href="https://github.com/nikic/PHP-Parser" target=_blank>PHP-Parser</a> is used to obtain an Abstract Syntax Tree (AST). The AST is browsed and only a limited set of functions and variables is allowed.</p>
         <p>As the AST is not version-dependent, you can use the PHP 5.6 syntax even if your server uses a lower version of PHP.</p>
+    </div>
+
+    <div id="addons">
+        <h2>Add-ons</h2>
 
         <div class="jumbotron">
-            <p><a href="https://en.store.owebia.com/magento2-module-advanced-shipping-setting.html" target=_blank>Advanced Shipping Setting</a> allows you to manage one carrier.<br/>To manage more carriers, you can get a license for <a href="https://en.store.owebia.com/magento2-module-unlimited-carriers.html" target=_blank>Unlimited Carriers add-on</a> by Owebia.</p>
+            <h3>You want to do more with <strong>Advanced Shipping Setting</strong>?</h3>
+            <p>Discover our add-ons on <a href="https://en.store.owebia.com/" target="_blank">Owebia Store</a>.</p>
+
+            <h4><a href="https://en.store.owebia.com/magento2-module-adv-ship-unlimited-carriers-addon.html" target="_blank">Unlimited Carriers Add-on</a></h4>
+            Create as many carrier as you need with Owebia Shipping
+
+            <h4><a href="https://en.store.owebia.com/magento2-module-adv-ship-functions-addon.html" target="_blank">Functions Add-on</a></h4>
+            Use functions to simplify the writing of your configuration
+            <br>Look at <strong>"With Functions Add-on"</strong> tabs in examples to see how easy it becomes with this add-on
+
+            <h4><a href="https://en.store.owebia.com/magento2-module-adv-ship-universal-setting-addon.html" target="_blank">Universal Setting Add-on</a></h4>
+            Hide or change price of methods regardless the shipping module
         </div>
     </div>
 
     <div id="whats_new">
         <h2>What's new?</h2>
         <ul>
-            <li><code class=php>$item->product->getAttributeText('attribute_code')</code> for product attributes of type select</li>
+            <li>Get <a href="https://en.store.owebia.com/magento2-module-adv-ship-functions-addon.html" target="_blank">Functions Add-On</a> and make configuration creation easy <a href="#formulas_functions_addon" class="fn_addon">with additional functions</a></li>
         </ul>
     </div>
 
@@ -92,19 +116,21 @@
             <li id=property_description><code>description</code> (optional)</li>
             <li id=property_enabled><code>enabled</code> (optional): conditions for displaying the shipping method</li>
         </ul>
-        <p class=bold>Example</p>
-<pre class=php>
-// First shipping method
-addMethod('method1', [
-    'title' => "Standard Shipping",
-    'price' => 10,
-]);
-// Second shipping method
-addMethod('method2', [
-    'title' => "Express Shipping",
-    'price' => 20,
-]);
-</pre>
+        <div class=examples>
+            <script class=ex type="x-example">
+                /* Example */
+                // First shipping method
+                addMethod('method1', [
+                    'title' => "Standard Shipping",
+                    'price' => 10,
+                ]);
+                // Second shipping method
+                addMethod('method2', [
+                    'title' => "Express Shipping",
+                    'price' => 20,
+                ]);
+            </script>
+        </div>
         <p><a href="#examples">More examples</a></p>
         <p class="alert alert-danger">
             <strong><u>Warning</u>:</strong> to avoid conflicts, use only the characters <code>a-z</code>, <code>A-Z</code>, <code>0-9</code>, <code>-</code> and <code>_</code> for the method id.<br/>
@@ -112,27 +138,28 @@ addMethod('method2', [
         </p>
     </div>
 
-
     <div id="formulas">
         <h2>Use Variables and Functions</h2>
         <p>
             You can use <a href="#formulas_variables">variables</a>, <a href="#formulas_functions">functions</a> and <a href="http://php.net/manual/en/language.operators.php" target=_blank>operators</a> to define a dynamic value (all operators are not supported).<br/>
         </p>
-        <p class=bold>Example</p>
-<pre class=php>
-addMethod('method1', [
-    // Dynamic title using the variable $request->dest_country_id
-    'title' => "Delivery to " . $request->dest_country_id,
-    // Dynamic price using the variable $quote->subtotal
-    'price' => 0.2 * $quote->subtotal,
-]);
-addMethod('method2', [
-    'title'   => "Free Shipping",
-    // Dynamic enabled using the function substr() and the variable $quote->coupon_code
-    'enabled' => substr($quote->coupon_code, 0, 4) == 'free',
-    'price'   => 0,
-]);
-</pre>
+        <div class=examples>
+            <script class=ex type="x-example">
+                /* Example */
+                addMethod('__auto__', [
+                    // Dynamic title using the variable $request->dest_country_id
+                    'title' => "Delivery to " . $request->dest_country_id,
+                    // Dynamic price using the variable $quote->subtotal
+                    'price' => 0.2 * $quote->subtotal,
+                ]);
+                addMethod('__auto__', [
+                    'title'   => "Free Shipping",
+                    // Dynamic enabled using the function substr() and the variable $quote->coupon_code
+                    'enabled' => substr($quote->coupon_code, 0, 4) == 'free',
+                    'price'   => 0,
+                ]);
+            </script>
+        </div>
         <div id="formulas_variables">
             <h3>1. Variables</h3>
             <p>There are <a href="#formulas_variables_global">global variables</a> and local variables that you can access with array functions and callbacks.</p>
@@ -231,18 +258,29 @@ addMethod('method2', [
 
                 <p class="alert alert-info">You can use <code class=php>$request->all_items</code> with array functions.</p>
 
-                <p class="bold">Example</p>
-                <pre class=php>
-addMethod('__auto__', [
-    'title'      => "If at least one product has the attribute 'name' equal to 'Cat'",
-    'enabled'    => count(
-                        array_filter($request->all_items, function ($item) {
-                            return $item->product->name == 'Cat';
-                        })
-                    ) > 0,
-    'price'      => 10
-]);
-</pre>
+                <div class=examples>
+                    <script class=ex type="x-example">
+                        /* Example */
+                        addMethod('__auto__', [
+                            'title'      => "If at least one product has the attribute 'name' equal to 'Cat'",
+                            'enabled'    => count(
+                                                array_filter($request->all_items, function ($item) {
+                                                    return $item->product->name == 'Cat';
+                                                })
+                                            ) > 0,
+                            'price'      => 10
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        addMethod('__auto__', [
+                            'title'      => "If at least one product has the attribute 'name' equal to 'Cat'",
+                            'enabled'    => _count(function ($item) {
+                                                return $item->product->name == 'Cat';
+                                            }) > 0,
+                            'price'      => 10
+                        ]);
+                    </script>
+                </div>
                 <ul class=ventilated>
                     <li id="formulas_variables_item">The <strong>item</strong> (<code class=php>\Magento\Quote\Model\Quote\Item</code>):
                         <ul>
@@ -347,6 +385,21 @@ addMethod('__auto__', [
                 <li><a href="http://php.net/manual/en/function.strtotime.php" target=_blank>strtotime</a></li>
                 <li><a href="http://php.net/manual/en/function.substr.php" target=_blank>substr</a></li>
             </ul>
+
+            <div id="formulas_functions_addon">
+                <h4>2.1. Functions available with Functions Add-On</h4>
+                <ul>
+                    <li><strong>_country</strong>: <a href="#examples_using_destination" class="fn_addon">see examples</a></li>
+                    <li><strong>_postcode</strong>: <a href="#examples_using_destination" class="fn_addon">see examples</a></li>
+                    <li><strong>_customerGroup</strong>: <a href="#examples_using_customer_groups" class="fn_addon">see examples</a></li>
+                    <li><strong>_sum</strong>: <a href="#examples_using_sum" class="fn_addon">see examples</a></li>
+                    <li><strong>_min</strong>: <a href="#examples_using_minmax" class="fn_addon">see examples</a></li>
+                    <li><strong>_max</strong>: <a href="#examples_using_minmax" class="fn_addon">see examples</a></li>
+                    <li><strong>_count</strong>: <a href="#examples_using_count" class="fn_addon">see examples</a></li>
+                    <li><strong>_anyCat</strong>: <a href="#examples_using_categories" class="fn_addon">see examples</a></li>
+                    <li><strong>_allCat</strong>: <a href="#examples_using_categories" class="fn_addon">see examples</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -355,95 +408,181 @@ addMethod('__auto__', [
 
         <div id="examples_simple">
             <h3>Free shipping</h3>
-<pre class=php>
-addMethod('__auto__', [
-    'title'      => "Free shipping",
-    'price'      => 0,
-]);
-</pre>
+            <div class=examples>
+                <script class=ex type="x-example">
+                    /* Example */
+                    addMethod('__auto__', [
+                        'title'      => "Free shipping",
+                        'price'      => 0,
+                    ]);
+                    //---
+                    /* With Functions Add-on */
+                    addMethod('__auto__', [
+                        'title'      => "Free shipping",
+                        'price'      => 0,
+                    ]);
+                </script>
+            </div>
         </div>
 
-        <div id="examples_using_address_filters">
+        <div id="examples_using_destination">
             <h3>Filter on destination</h3>
 
-<pre class=php>
-addMethod('__auto__', [
-    'title'      => "France, Germany, Switzerland, Spain, Italy",
-    'enabled'    => in_array($request->dest_country_id, ['FR', 'DE', 'CH', 'ES', 'IT']),
-    'price'      => 10,
-]);
-addMethod('__auto__', [
-    'title'      => "Postcode starting with 25",
-    'enabled'    => $request->dest_country_id == 'FR' && substr($request->dest_postcode, 0, 2) == '25',
-    'price'      => 10,
-]);
-addMethod('__auto__', [
-    'title'      => "Regular expressions allowing postal codes beginning with 'PO' (case insensitive)",
-    'enabled'    => $request->dest_country_id == 'GB' && preg_match('/^PO.*$/i', $request->dest_postcode),
-    'price'      => 10,
-]);
-</pre>
-
+            <div class=examples>
+                <script class=ex type="x-example">
+                    /* Example */
+                    addMethod('__auto__', [
+                        'title'      => "France, Germany, Switzerland, Spain, Italy",
+                        'enabled'    => in_array($request->dest_country_id, ['FR', 'DE', 'CH', 'ES', 'IT']),
+                        'price'      => 10,
+                    ]);
+                    //---
+                    /* With Functions Add-on */
+                    addMethod('__auto__', [
+                        'title'      => "France, Germany, Switzerland, Spain, Italy",
+                        'enabled'    => _country('FR', 'DE', 'CH', 'ES', 'IT'),
+                        'price'      => 10,
+                    ]);
+                </script>
+                <script class=ex type="x-example">
+                    /* Example */
+                    addMethod('__auto__', [
+                        'title'      => "Postcode starting with 25",
+                        'enabled'    => $request->dest_country_id == 'FR' && substr($request->dest_postcode, 0, 2) == '25',
+                        'price'      => 10,
+                    ]);
+                    //---
+                    /* With Functions Add-on */
+                    addMethod('__auto__', [
+                        'title'      => "Postcode starting with 25",
+                        'enabled'    => _country('FR') && _postcode('/^25/'),
+                        'price'      => 10,
+                    ]);
+                </script>
+                <script class=ex type="x-example">
+                    /* Example */
+                    addMethod('__auto__', [
+                        'title'      => "Regular expressions allowing postal codes beginning with 'PO' (case insensitive)",
+                        'enabled'    => $request->dest_country_id == 'GB' && preg_match('/^PO.*$/i', $request->dest_postcode),
+                        'price'      => 10,
+                    ]);
+                    //---
+                    /* With Functions Add-on */
+                    addMethod('__auto__', [
+                        'title'      => "Regular expressions allowing postal codes beginning with 'PO' (case insensitive)",
+                        'enabled'    => _country('GB') && _postcode('/^PO.*$/i'),
+                        'price'      => 10,
+                    ]);
+                </script>
+            </div>
             <div id="examples_excluding_domtom_postcode">
                 <p class=bold>France excluding DOM/TOM</p>
-<pre class=php>
-// Regular Expression refusing delivery to France with postal codes
-// beginning with 97 and 98 (with or without interspersed zeros and spaces)
-addMethod('__auto__', [
-    'title'      => "France excluding DOM/TOM",
-    'enabled'    => $request->dest_country_id == 'FR'
-                        && !preg_match('/^[0\\s]*9\\s*[78]/', $request->dest_postcode),
-    'price'      => 10,
-]);
-</pre>
+                <div class=examples>
+                    <script class=ex type="x-example">
+                        /* Example */
+                        // Regular Expression refusing delivery to France with postal codes
+                        // beginning with 97 and 98 (with or without interspersed zeros and spaces)
+                        addMethod('__auto__', [
+                            'title'      => "France excluding DOM/TOM",
+                            'enabled'    => $request->dest_country_id == 'FR'
+                                                && !preg_match('/^[0\\s]*9\\s*[78]/', $request->dest_postcode),
+                            'price'      => 10,
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        // Regular Expression refusing delivery to France with postal codes
+                        // beginning with 97 and 98 (with or without interspersed zeros and spaces)
+                        addMethod('__auto__', [
+                            'title'      => "France excluding DOM/TOM",
+                            'enabled'    => _country('FR')
+                                                && !_postcode('/^[0\\s]*9\\s*[78]/'),
+                            'price'      => 10,
+                        ]);
+                    </script>
+                </div>
             </div>
 
             <div id="examples_using_customer_groups">
                 <h3>Filter on customer group</h3>
                 <p>You can use the name or ID of the customer groups.</p>
-<pre class=php>
-addMethod('__auto__', [
-    'title'      => "Retailer group",
-    'enabled'    => $customer_group->code == "Retailer",
-    'price'      => 10,
-]);
-addMethod('__auto__', [
-    'title'      => "NOT LOGGED IN and General groups",
-    'enabled'    => in_array($customer_group->code, ['NOT LOGGED IN', 'General']),
-    'price'      => 10,
-]);
-addMethod('__auto__', [
-    'title'      => "NOT LOGGED IN and General groups by their ID",
-    'enabled'    => in_array($customer_group->id, [0, 1]),
-    'price'      => 10,
-]);
-</pre>
+                <div class=examples>
+                    <script class=ex type="x-example">
+                        /* Example */
+                        addMethod('__auto__', [
+                            'title'      => "Retailer group",
+                            'enabled'    => $customer_group->code == "Retailer",
+                            'price'      => 10,
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        addMethod('__auto__', [
+                            'title'      => "Retailer group",
+                            'enabled'    => _customerGroup('Retailer'),
+                            'price'      => 10,
+                        ]);
+                    </script>
+                    <script class=ex type="x-example">
+                        /* Example */
+                        addMethod('__auto__', [
+                            'title'      => "NOT LOGGED IN or General groups",
+                            'enabled'    => in_array($customer_group->code, ['NOT LOGGED IN', 'General']),
+                            'price'      => 10,
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        addMethod('__auto__', [
+                            'title'      => "NOT LOGGED IN or General groups",
+                            'enabled'    => _customerGroup('NOT LOGGED IN', 'General'),
+                            'price'      => 10,
+                        ]);
+                    </script>
+                    <script class=ex type="x-example">
+                        /* Example */
+                        addMethod('__auto__', [
+                            'title'      => "NOT LOGGED IN or General groups by their ID",
+                            'enabled'    => in_array($customer_group->id, [0, 1]),
+                            'price'      => 10,
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        addMethod('__auto__', [
+                            'title'      => "NOT LOGGED IN or General groups by their ID",
+                            'enabled'    => _customerGroup(0, 1),
+                            'price'      => 10,
+                        ]);
+                    </script>
+                </div>
             </div>
 
             <div id="examples_using_formulas">
                 <h3>Using formulas</h3>
                 <p>Formulas can be used to calculate the price of the delivery.</p>
-<pre class=php>
-addMethod('__auto__', [
-    'title'      => "Shipping",
-    'price'      => 0.1 * $quote->subtotal + 10.00,
-]);
-</pre>
+                <div class=examples>
+                    <script class=ex type="x-example">
+                        /* Example */
+                        addMethod('__auto__', [
+                            'title'      => "Shipping",
+                            'price'      => 0.1 * $quote->subtotal + 10.00,
+                        ]);
+                    </script>
+                </div>
 
                 <p class=bold>Using the configuration of another element</p>
-<pre class=php>
-$standard = addMethod('standard', [
-    'title'      => "Standard Shipping",
-    'enabled'    => $quote->subtotal < 1000.00,
-    'price'      => 10,
-]);
-addMethod('express', [
-    'title'      => "Express Shipping",
-    'enabled'    => $standard->enabled && $request->package_weight < 10,
-    'price'      => 12,
-]);
-</pre>
-
+                <div class=examples>
+                    <script class=ex type="x-example">
+                        /* Example */
+                        $standard = addMethod('standard', [
+                            'title'      => "Standard Shipping",
+                            'enabled'    => $quote->subtotal < 1000.00,
+                            'price'      => 10,
+                        ]);
+                        addMethod('express', [
+                            'title'      => "Express Shipping",
+                            'enabled'    => $standard->enabled && $request->package_weight < 10,
+                            'price'      => 12,
+                        ]);
+                    </script>
+                </div>
             </div>
 
             <div id="examples_using_special_functions">
@@ -451,300 +590,451 @@ addMethod('express', [
 
                 <div id="examples_functions__table">
                     <p class=bold>Defining a table</p>
-<pre class=php>
-// If the package weight is lower or equal to 0.5, the price will be 5.30
-// If the package weight is lower or equal to 1.0, the price will be 6.50
-// In others cases, the price will be 7.50
-addMethod('__auto__', [
-    'title'      => "Shipping",
-    'price'      => array_reduce([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ], function ($carry, $item) {
-                        global $request;
-                        if (isset($carry)) return $carry;
-                        if (isset($item[0]) && ($request->package_weight <= $item[0] || $item[0] == '*')) {
-                            $carry = $item[1];
-                        }
-                        return $carry;
-                    }),
-]);
-// You can exclude the upper limit value by adding an argument false
-addMethod('__auto__', [
-    'title'      => "Shipping",
-    'price'      => array_reduce([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ], function ($carry, $item) {
-                        global $request;
-                        if (isset($carry)) return $carry;
-                        if (isset($item[0]) && ($request->package_weight < $item[0] || $item[0] == '*')) {
-                            $carry = $item[1];
-                        }
-                        return $carry;
-                    }),
-]);
-</pre>
+
+                    <div class=examples>
+                        <script class=ex type="x-example">
+                            /* Example */
+                            // If the package weight is lower or equal to 0.5, the price will be 5.30
+                            // If the package weight is lower or equal to 1.0, the price will be 6.50
+                            // In others cases, the price will be 7.50
+                            addMethod('__auto__', [
+                                'title'      => "Shipping",
+                                'price'      => array_reduce([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ], function ($carry, $item) {
+                                                    global $request;
+                                                    if (isset($carry)) return $carry;
+                                                    if (isset($item[0]) && ($request->package_weight <= $item[0] || $item[0] == '*')) {
+                                                        $carry = $item[1];
+                                                    }
+                                                    return $carry;
+                                                }),
+                            ]);
+                            //---
+                            /* With Functions Add-on */
+                            // If the package weight is lower or equal to 0.5, the price will be 5.30
+                            // If the package weight is lower or equal to 1.0, the price will be 6.50
+                            // In others cases, the price will be 7.50
+                            addMethod('__auto__', [
+                                'title'      => "Shipping",
+                                'price'      => _table([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ]),
+                            ]);
+                        </script>
+                        <script class=ex type="x-example">
+                            /* Example */
+                            // You can exclude the upper limit value by adding an argument false
+                            addMethod('__auto__', [
+                                'title'      => "Shipping",
+                                'price'      => array_reduce([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ], function ($carry, $item) {
+                                                    global $request;
+                                                    if (isset($carry)) return $carry;
+                                                    if (isset($item[0]) && ($request->package_weight < $item[0] || $item[0] == '*')) {
+                                                        $carry = $item[1];
+                                                    }
+                                                    return $carry;
+                                                }),
+                            ]);
+                            //---
+                            /* With Functions Add-on */
+                            // You can exclude the upper limit value by adding an argument false
+                            addMethod('__auto__', [
+                                'title'      => "Shipping",
+                                'price'      => _table([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ], 'package_weight', false),
+                            ]);
+                        </script>
+                    </div>
                 </div>
 
                 <div id="examples_functions__switch">
-                    <p class=bold>Using the function <code>_switch()</code> (associative table)</p>
-<pre class=php>
-// If the coupon code is equal to "coupon1", the price will be 5.30
-// If the coupon code is equal to "coupon2", the price will be 6.50
-// In others cases, the price will be 7.50
-addMethod('__auto__', [
-    'title'      => "Shipping",
-    'price'      => [ 'coupon1' => 5.30, 'coupon2' => 6.50 ][$quote->coupon_code] ?? 7.50,
-]);
-</pre>
+                    <p class=bold>Using an associative table</p>
+                    <div class=examples>
+                        <script class=ex type="x-example">
+                            /* Example */
+                            // If the coupon code is equal to "coupon1", the price will be 5.30
+                            // If the coupon code is equal to "coupon2", the price will be 6.50
+                            // In others cases, the price will be 7.50
+                            addMethod('__auto__', [
+                                'title'      => "Shipping",
+                                'price'      => [ 'coupon1' => 5.30, 'coupon2' => 6.50 ][$quote->coupon_code] ?? 7.50,
+                            ]);
+                        </script>
+                    </div>
                 </div>
             </div>
 
             <div id="examples_using_products">
                 <h3>Using the attributes and options of products</h3>
 
-<pre class=php>
-addMethod('__auto__', [
-    'title'      => "If at least one product has the attribute 'name' equal to 'Cat'",
-    'enabled'    => count(
-                        array_filter($request->all_items, function ($item) {
-                            return $item->product->name == 'Cat';
-                        })
-                    ) > 0,
-    'price'      => 10
-]);
-addMethod('__auto__', [
-    'title'      => "If all items have the option 'Size' greater or equal to 1",
-    'enabled'    => count(
-                        array_filter($request->all_items, function ($item) {
-                            return isset($item->options['Size']) && $item->options['Size']['value'] >= 1;
-                        })
-                    ) == $request->package_qty,
-    'price'      => 10
-]);
-addMethod('__auto__', [
-    'title'      => "More than 3 sku differents",
-    'enabled'    => count(
-                        array_unique(
-                            array_map(function ($item) {
-                                return $item->product->sku;
-                            }, $request->all_items)
-                        )
-                    ) > 3,
-    'price'      => 10
-]);
-addMethod('__auto__', [
-    'title'      => "Sum of all options 'Size' is greater than 30",
-    'enabled'    => array_sum(
-                        array_map(
-                            function ($item) {
-                                return $item->options['Size']['value'] ?? 0;
-                            },
-                            $request->all_items
-                        )
-                    ) > 30,
-    'price'      => 10
-]);
-addMethod('__auto__', [
-    'title'      => "Minimum price excluding tax without discount is greater to 10",
-    'enabled'    => min(
-                        array_map(
-                            function ($item) {
-                                return $item->base_original_price;
-                            },
-                            $request->all_items
-                        )
-                    ) > 10,
-    'price'      => 10
-]);
-addMethod('__auto__', [
-    'title'      => "Maximum value of the option 'Size' is lower than 50",
-    'enabled'    => max(
-                        array_map(
-                            function ($item) {
-                                return $item->options['Size']['value'] ?? 0;
-                            },
-                            $request->all_items
-                        )
-                    ) < 50,
-    'price'      => 10
-]);
-// shipping is a custom product attribute
-addMethod('__auto__', [
-    'title'      => "Calculate shipping fees by product",
-    'price'      => array_sum(
-                        array_map(
-                            function ($item) {
-                                return $item->product->shipping * $item->qty;
-                            },
-                            $request->all_items
-                        )
-                    ),
-]);
-addMethod('__auto__', [
-    'title'      => "5 x weight of products that are in categories 2 or 3",
-    'price'      => array_sum(
-                        array_map(
-                            function ($item) {
-                                return count(array_intersect($item->product->category_ids, [2, 3]))>= 1
-                                    ? $item->product->weight * $item->qty
-                                    : 0;
-                            },
-                            $request->all_items
-                        )
-                    ) * 5.0,
-]);
-addMethod('__auto__', [
-    'title'      => "5 x weight of products that are in both categories 2 and 3",
-    'price'      => array_sum(
-                        array_map(
-                            function ($item) {
-                                return count(array_intersect($item->product->category_ids, [2, 3])) == 2
-                                    ? $item->product->weight * $item->qty
-                                    : 0;
-                            },
-                            $request->all_items
-                        )
-                    ) * 5.0,
-]);
-</pre>
+                <div id="examples_using_count">
+                    <h4>Count items</h4>
+                    <div class=examples>
+                        <script class=ex type="x-example">
+                            /* Example */
+                            addMethod('__auto__', [
+                                'title'      => "If at least one product has the attribute 'name' equal to 'Cat'",
+                                'enabled'    => count(
+                                                    array_filter($request->all_items, function ($item) {
+                                                        return $item->product->name == 'Cat';
+                                                    })
+                                                ) > 0,
+                                'price'      => 10
+                            ]);
+                            //---
+                            /* With Functions Add-on */
+                            addMethod('__auto__', [
+                                'title'      => "If at least one product has the attribute 'name' equal to 'Cat'",
+                                'enabled'    => _count(function ($item) {
+                                                    return $item->product->name == 'Cat';
+                                                }) > 0,
+                                'price'      => 10
+                            ]);
+                        </script>
+                        <script class=ex type="x-example">
+                            /* Example */
+                            addMethod('__auto__', [
+                                'title'      => "If all items have the option 'Size' greater or equal to 1",
+                                'enabled'    => count(
+                                                    array_filter($request->all_items, function ($item) {
+                                                        return isset($item->options['Size']) && $item->options['Size']['value'] >= 1;
+                                                    })
+                                                ) == $request->package_qty,
+                                'price'      => 10
+                            ]);
+                            //---
+                            /* With Functions Add-on */
+                            addMethod('__auto__', [
+                                'title'      => "If all items have the option 'Size' greater or equal to 1",
+                                'enabled'    => _count(function ($item) {
+                                                    return isset($item->options['Size']) && $item->options['Size']['value'] >= 1;
+                                                }) == $request->package_qty,
+                                'price'      => 10
+                            ]);
+                        </script>
+                        <script class=ex type="x-example">
+                            /* Example */
+                            addMethod('__auto__', [
+                                'title'      => "More than 3 sku differents",
+                                'enabled'    => count(
+                                                    array_unique(
+                                                        array_map(function ($item) {
+                                                            return $item->product->sku;
+                                                        }, $request->all_items)
+                                                    )
+                                                ) > 3,
+                                'price'      => 10
+                            ]);
+                            //---
+                            /* With Functions Add-on */
+                            addMethod('__auto__', [
+                                'title'      => "More than 3 sku differents",
+                                'enabled'    => count(
+                                                    array_unique(
+                                                        array_map(function ($item) {
+                                                            return $item->product->sku;
+                                                        }, $request->all_items)
+                                                    )
+                                                ) > 3,
+                                'price'      => 10
+                            ]);
+                        </script>
+                    </div>
                 </div>
 
-                <div id="examples_using_categories">
-                    <h3>Using categories</h3>
-                    <p class="alert alert-danger">Warning: you must notice that in Magento, <strong>a product can be in multiple categories</strong>.<br/>So be particularly careful how you use this property.</p>
-<pre class=php>
-<!--addMethod('__auto__', [
-    'title'      => "Sum of weight attributes of products in category 'Test'",
-    'price'      => array_sum(
-                        array_map(
-                            function ($item) {
-                                return in_array('Test', $item->product->category_names)
-                                  ? $item->product->weight : 0;
-                            },
-                            $request->all_items
-                        )
-                    ),
-]);-->
-addMethod('__auto__', [
-    'title'      => "Sum of weight attributes of products in category 12",
-    'price'      => array_sum(
-                        array_map(
-                            function ($item) {
-                                return in_array(12, $item->product->category_ids)
-                                    ? $item->product->weight : 0;
-                            },
-                            $request->all_items
-                        )
-                    ),
-]);
-addMethod('__auto__', [
-    'title'      => "Sum of weight attributes of products in categories whose id is 11 and 12",
-    'price'      => array_sum(
-                        array_map(
-                            function ($item) {
-                                return count(array_intersect($item->product->category_ids, [11, 12])) >= 1
-                                    ? $item->product->weight : 0;
-                            },
-                            $request->all_items
-                        )
-                    ),
-]);
-<!--
-addMethod('__auto__', [
-    'title'      => "Sum of weights of products having for first category 'Test'",
-    'price'      => array_sum(
-                        array_map(
-                            function ($item) {
-                                return $item->product->category->name == 'Test'
-                                    ? $item->product->weight : 0;
-                            },
-                            $request->all_items
-                        )
-                    ),
-]);-->
-addMethod('__auto__', [
-    'title'      => "Sum of weights of products having for first category id 12",
-    'price'      => array_sum(
-                        array_map(
-                            function ($item) {
-                                return $item->product->category_id == 12
-                                    ? $item->product->weight : 0;
-                            },
-                            $request->all_items
-                        )
-                    ),
-]);
-</pre>
-                    <!--'__auto__', [
-                        'price' => $quote->subtotal
-                            + $quote->subtotal_with_discount
-                            + $quote->grand_total
-                            + $quote->base_subtotal
-                            + $quote->base_subtotal_with_discount
-                            + $quote->base_grand_total
-                            + $customer_group->id
-                            + $customer_group->code
-                            + $customer_group->name
-                            + $customer_group->customer_group_code
-                            + $customer_group->tax_class_id
-                            + $customer->id
-                            + $customer->entity_id
-                            + $customer->lastname
-                            + $customvar->my_var
-                            + $store->id
-                            + $store->code
-                            + $store->name
-                            + $store->address
-                            + $store->phone
-                            + $request->country_id
-                            + $request->region_id
-                            + $request->city
-                            + $request->postcode
-                            + $request->dest_country_id
-                            + $request->dest_region_id
-                            + $request->dest_region_code
-                            + $request->dest_street
-                            + $request->dest_city
-                            + $request->dest_postcode
-                            + $request->package_weight
-                            + $request->package_qty
-                            + $request->free_shipping
-                            + $request->store_id
-                    ],-->
+                <div id="examples_using_minmax">
+                        <h4>Get minimum value, get maximum value</h4>
+                    <div class=examples>
+                        <script class=ex type="x-example">
+                            /* Example */
+                            addMethod('__auto__', [
+                                'title'      => "Minimum price excluding tax without discount is greater to 10",
+                                'enabled'    => min(
+                                                    array_map(
+                                                        function ($item) {
+                                                            return $item->base_original_price;
+                                                        },
+                                                        $request->all_items
+                                                    )
+                                                ) > 10,
+                                'price'      => 10
+                            ]);
+                            //---
+                            /* With Functions Add-on */
+                            addMethod('__auto__', [
+                                'title'      => "Minimum price excluding tax without discount is greater to 10",
+                                'enabled'    => _min(function ($item) {
+                                                    return $item->base_original_price;
+                                                }) > 10,
+                                'price'      => 10
+                            ]);
+                        </script>
+                        <script class=ex type="x-example">
+                            /* Example */
+                            addMethod('__auto__', [
+                                'title'      => "Maximum value of the option 'Size' is lower than 50",
+                                'enabled'    => max(
+                                                    array_map(
+                                                        function ($item) {
+                                                            return $item->options['Size']['value'] ?? 0;
+                                                        },
+                                                        $request->all_items
+                                                    )
+                                                ) < 50,
+                                'price'      => 10
+                            ]);
+                            //---
+                            /* With Functions Add-on */
+                            addMethod('__auto__', [
+                                'title'      => "Maximum value of the option 'Size' is lower than 50",
+                                'enabled'    => _max(function ($item) {
+                                                    return $item->options['Size']['value'] ?? 0;
+                                                }) < 50,
+                                'price'      => 10
+                            ]);
+                        </script>
+                    </div>
+                </div>
+
+                <div id="examples_using_sum">
+                    <h4>Sum</h4>
+                    <div class=examples>
+                        <script class=ex type="x-example">
+                            /* Example */
+                            addMethod('__auto__', [
+                                'title'      => "Sum of all options 'Size' is greater than 30",
+                                'enabled'    => array_sum(
+                                                    array_map(
+                                                        function ($item) {
+                                                            return $item->options['Size']['value'] ?? 0;
+                                                        },
+                                                        $request->all_items
+                                                    )
+                                                ) > 30,
+                                'price'      => 10
+                            ]);
+                            //---
+                            /* With Functions Add-on */
+                            addMethod('__auto__', [
+                                'title'      => "Sum of all options 'Size' is greater than 30",
+                                'enabled'    => _sum(function ($item) {
+                                                    return $item->options['Size']['value'] ?? 0;
+                                                }) > 30,
+                                'price'      => 10
+                            ]);
+                        </script>
+                        <script class=ex type="x-example">
+                            /* Example */
+                            addMethod('__auto__', [
+                                'title'      => "Calculate shipping fees by product",
+                                'price'      => array_sum(
+                                                    array_map(
+                                                        function ($item) {
+                                                            // shipping is a custom product attribute
+                                                            return $item->product->shipping * $item->qty;
+                                                        },
+                                                        $request->all_items
+                                                    )
+                                                ),
+                            ]);
+                            //---
+                            /* With Functions Add-on */
+                            addMethod('__auto__', [
+                                'title'      => "Calculate shipping fees by product",
+                                'price'      => _sum(function ($item) {
+                                                    // shipping is a custom product attribute
+                                                    return $item->product->shipping * $item->qty;
+                                                }),
+                            ]);
+                        </script>
+                        <script class=ex type="x-example">
+                            /* Example */
+                            addMethod('__auto__', [
+                                'title'      => "5 x weight of products that are in categories 2 or 3",
+                                'price'      => array_sum(
+                                                    array_map(
+                                                        function ($item) {
+                                                            return count(array_intersect($item->product->category_ids, [2, 3]))>= 1
+                                                                ? $item->product->weight * $item->qty
+                                                                : 0;
+                                                        },
+                                                        $request->all_items
+                                                    )
+                                                ) * 5.0,
+                            ]);
+                            //---
+                            /* With Functions Add-on */
+                            addMethod('__auto__', [
+                                'title'      => "5 x weight of products that are in categories 2 or 3",
+                                'price'      => _sum(function ($item) {
+                                                    return _anyCat($item->product->category_ids, 2, 3)
+                                                        ? $item->product->weight * $item->qty
+                                                        : 0;
+                                                }) * 5.0,
+                            ]);
+                        </script>
+                    </div>
                 </div>
             </div>
-            <!-- doc content end -->
-            <p>&copy; 2016 <a href="http://www.owebia.com/">Owebia</a></p>
-        </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/languages/php.min.js"></script>
-        <script>
-            <!-- doc scripts start -->
-            $(function(){
-                $('a[href^="#"]').each(function (e) {
-                    var anchor = $(this).attr('href').replace('#', '');
-                    if (anchor == '') return;
-                    var jelem = $('#' + anchor);
-                    if (!jelem.length) {
-                        $(this).css('border', 'solid 1px red').css('padding', 3);
-                    }
-                });
 
-                var index = 0;
-                hljs.initHighlightingOnLoad();
-                $('pre.php').each(function(){
-                    var text = $(this).text();
-                    while (text.match(/'__auto__'/)) {
-                        text = text.replace(/'__auto__'/, '<span class="config-id">\'id_' + ('000' + index).slice(-3) + '\'</span>');
-                        index++;
-                    }
-                    while (text.match(/'(title|enabled|price)'(\s*)=>/)) {
-                        text = text.replace(/'(title|enabled|price)'(\s*)=>/, '<span class="config-attr">\'$1\'</span>$2=>');
-                    }
-                    $(this).html("<code class=php>" + text.trim() + "</code>");
-                });
-                $('code.php').each(function(i, block) {
-                    hljs.highlightBlock(block);
-                });
+            <div id="examples_using_categories">
+                <h3>Using categories</h3>
+                <p class="alert alert-danger">Warning: you must notice that in Magento, <strong>a product can be in multiple categories</strong>.<br/>So be particularly careful how you use this property.</p>
+                <div class=examples>
+                    <script class=ex type="x-example">
+                        /* Example */
+                        addMethod('__auto__', [
+                            'title'      => "Sum of weight attributes of products in category 12",
+                            'price'      => array_sum(
+                                                array_map(
+                                                    function ($item) {
+                                                        return in_array(12, $item->product->category_ids)
+                                                            ? $item->product->weight : 0;
+                                                    },
+                                                    $request->all_items
+                                                )
+                                            ),
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        addMethod('__auto__', [
+                            'title'      => "Sum of weight attributes of products in category 12",
+                            'price'      => _sum(
+                                                function ($item) {
+                                                    return _anyCat($item, 12)
+                                                            ? $item->product->weight : 0;
+                                                }
+                                            ),
+                        ]);
+                    </script>
+                    <script class=ex type="x-example">
+                        /* Example */
+                        addMethod('__auto__', [
+                            'title'      => "Sum of weight attributes of products in categories whose id is 11 and 12",
+                            'price'      => array_sum(
+                                                array_map(
+                                                    function ($item) {
+                                                        return count(array_intersect($item->product->category_ids, [11, 12])) >= 1
+                                                            ? $item->product->weight : 0;
+                                                    },
+                                                    $request->all_items
+                                                )
+                                            ),
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        addMethod('__auto__', [
+                            'title'      => "Sum of weight attributes of products in categories whose id is 11 and 12",
+                            'price'      => _sum(
+                                                function ($item) {
+                                                    return _allCat($item, 11, 12)
+                                                        ? $item->product->weight : 0;
+                                                }
+                                            ),
+                        ]);
+                    </script>
+                    <script class=ex type="x-example">
+                        /* Example */
+                        addMethod('__auto__', [
+                            'title'      => "Sum of weights of products having for first category id 12",
+                            'price'      => array_sum(
+                                                array_map(
+                                                    function ($item) {
+                                                        return $item->product->category_id == 12
+                                                            ? $item->product->weight : 0;
+                                                    },
+                                                    $request->all_items
+                                                )
+                                            ),
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        addMethod('__auto__', [
+                            'title'      => "Sum of weights of products having for first category id 12",
+                            'price'      => _sum(
+                                                function ($item) {
+                                                    return $item->product->category_id == 12
+                                                        ? $item->product->weight : 0;
+                                                }
+                                            ),
+                        ]);
+                    </script>
+                </div>
+            </div>
+
+    <!-- doc content end -->
+    <p>&copy; 2016 <a href="http://www.owebia.com/">Owebia</a></p>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/languages/php.min.js"></script>
+<script>
+<!-- doc scripts start -->
+$(function(){
+    /*$('a[href^="#"]').each(function (e) {
+        var anchor = $(this).attr('href').replace('#', '');
+        if (anchor == '') return;
+        var jelem = $('#' + anchor);
+        if (!jelem.length) {
+            $(this).css('border', 'solid 1px red').css('padding', 3);
+        }
+    });*/
+
+    var counter = 1;
+    hljs.initHighlightingOnLoad();
+    var zoneIndex = 0;
+    $('.examples').each(function(){
+        var parts = [];
+        var tabNames = [];
+        $(this).find('.ex').each(function(){
+            var text = $(this).text();
+            text = text.replace(/^(\r|\n)+|(\r|\n)+$/g, '');
+            var indentLength = text.search(/\S/);
+            var indent = text.substr(0, indentLength);
+            var regexp = new RegExp('^' + indent, 'gm');
+            text = text.replace(regexp, '');
+            text = text.replace(/\b(_[a-zA-Z]+)\b/g, '<span class="config-fn">$1</span>');
+            while (text.match(/'(title|enabled|price)'(\s*)=>/)) {
+                text = text.replace(/'(title|enabled|price)'(\s*)=>/, '<span class="config-attr">\'$1\'</span>$2=>');
+            }
+            var elems = text.split(/\/\/---/g);
+            var n = 0;
+            $.each(elems, function(index, element){
+                n = 0;
+                while (element.match(/'__auto__'/)) {
+                    element = element.replace(/'__auto__'/, '<span class="config-id">\'id_' + ('000' + counter).slice(-3) + '\'</span>');
+                    counter++;
+                    n++;
+                }
+                counter -= n;
+                if (typeof parts[index] == 'undefined') {
+                    parts[index] = '';
+                }
+                var splitted = element.split(/\/\* (.*?) \*\//);
+                tabNames[index] = splitted[1];
+                parts[index] += splitted[2].trim() + "\n";
             });
-            <!-- doc scripts end -->
-        </script>
+            counter += n;
+            $(this).html("<pre><code class=php>" + text.trim() + "</code></pre>");
+        });
+        var tabList = [];
+        var tabContent = [];
+        $.each(parts, function(index, part){
+            tabList.push('<li role="presentation"' + (index == 0 ? ' class="active"' : '') + '><a href="#tab-' + zoneIndex + '-' + index + '" role="tab" data-toggle="tab">' + tabNames[index] + '</a></li>');
+            tabContent.push('<div role="tabpanel" class="tab-pane' + (index == 0 ? ' active' : '') + '" id="tab-' + zoneIndex + '-' + index + '">'
+                    + '<pre><code class=php>' + part.trim() + '</code></pre>'
+                + '</div>');
+        });
+        $(this).html('<div><ul class="nav nav-tabs" role="tablist">' + tabList.join('') + '</ul><div class="tab-content">' + tabContent.join('') + '</div></div>');
+        zoneIndex++;
+    });
+    $('code.php').each(function(i, block) {
+        hljs.highlightBlock(block);
+    });
+    $('a.fn_addon').click(function(e){
+        $('.nav').each(function () {
+            $(this).find('> li:eq(1) > a').tab('show');
+        });
+    });
+});
+<!-- doc scripts end -->
+</script>
 </body>
 </html>
