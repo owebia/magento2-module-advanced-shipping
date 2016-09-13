@@ -15,16 +15,6 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
     const CODE = 'owsh1';
 
     /**
-     * @var array
-     */
-    protected $parsingResult = [];
-
-    /**
-     * @var string
-     */
-    protected $currentMethodId = null;
-
-    /**
      * Do not change variable name
      * @var string
      */
@@ -220,13 +210,15 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         try {
             $this->initRegistry($request);
             $configString = $this->getConfigData('config');
+            $callbackHandler = $this->objectManager->create('Owebia\AdvancedShippingSetting\Model\CallbackHandler');
+            $callbackHandler->setRegistry($this->registryHelper);
             $this->configHelper->parse(
                 $configString,
                 $this->registryHelper,
-                $this,
+                $callbackHandler,
                 (bool) $this->getConfigData('debug')
             );
-            $config = $this->parsingResult;
+            $config = $callbackHandler->getParsingResult();
         } catch (\Exception $e) {
             $this->_logger->debug($e);
             if ($this->isDebugEnabled()) {
@@ -237,73 +229,6 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
             $this->debugLogger->collapseClose();
         }
         return $config;
-    }
-
-    /**
-     * @return \Owebia\AdvancedSettingCore\Model\Wrapper\ArrayWrapper
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    public function addMethodCallback()
-    {
-        $args = func_get_args();
-        if (count($args) != 2) {
-            throw new \Magento\Framework\Exception\LocalizedException(
-                __("Invalid arguments count for addMethod FuncCall")
-            );
-        }
-
-        $methodId = array_shift($args);
-        if (!is_string($methodId) || !preg_match('#^[a-z][a-z0-9_]*$#', $methodId)) {
-            throw new \Magento\Framework\Exception\LocalizedException(
-                __("Invalid first argument for addMethod FuncCall: the first argument must be a string and match the following pattern : ^[a-z][a-z0-9_]*$")
-            );
-        }
-        $this->currentMethodId = $methodId;
-
-        $methodOptions = array_shift($args);
-        if (!is_array($methodOptions)) {
-            throw new \Magento\Framework\Exception\LocalizedException(
-                __("Invalid second argument for addMethod FuncCall: the second argument must be an array")
-            );
-        }
-        if (isset($this->parsingResult[$methodId])) {
-            throw new \Magento\Framework\Exception\LocalizedException(
-                __("The method %1 already exists", $methodId)
-            );
-        }
-        $this->parsingResult[$methodId] = (object) $methodOptions;
-
-        $this->currentMethodId = null;
-        return $this->registryHelper->create('ArrayWrapper', [ 'data' => $methodOptions ]);
-    }
-
-    /**
-     * @return string
-     */
-    public function helpCallback()
-    {
-        return "The result of the help call is visible in the backoffice";
-    }
-
-    /**
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    public function errorCallback($msg)
-    {
-        throw new \Magento\Framework\Exception\LocalizedException(__($msg));
-    }
-
-    /**
-     * @return string
-     */
-    public function appendParsingError($msg)
-    {
-        if (isset($this->currentMethodId)) {
-            $this->parsingResult[$this->currentMethodId] = (object) [ 'error' => $msg ];
-        } else {
-            $this->parsingResult[] = (object) [ 'error' => $msg ];
-        }
-        return $msg;
     }
 
     /**
