@@ -26,6 +26,11 @@
                     <label>Configuration</label>
                     <frontend_model>Owebia\AdvancedShippingSetting\Block\System\Config\Form\Field\Config</frontend_model>
                 </field>
+                <field id="required_fields" translate="label" type="multiselect" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Required Fields</label>
+                    <source_model>Owebia\AdvancedShippingSetting\Model\Config\Source\RequiredFields</source_model>
+                    <comment><![CDATA[If the value of a selected field is changed, the shipping methods will be recalculated]]></comment>
+                </field>
                 <field id="showmethod" translate="label" type="select" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Show Method if Not Applicable</label>
                     <frontend_class>shipping-skip-hide</frontend_class>

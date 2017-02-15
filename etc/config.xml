@@ -12,6 +12,7 @@
                 <active>0</active>
                 <model>Owebia\AdvancedShippingSetting\Model\Carrier</model>
                 <title>Advanced Shipping Setting by Owebia</title>
+                <required_fields>country_id,postcode</required_fields>
             </owsh1>
         </carriers>
     </default>
