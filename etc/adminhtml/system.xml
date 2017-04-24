@@ -9,7 +9,7 @@
     <system>
         <section id="carriers">
             <group id="owsh1" translate="label" type="text" sortOrder="-10" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Advanced Shipping Setting by Owebia</label>
+                <label>Advanced Shipping by Owebia</label>
                 <field id="about" translate="label" type="label" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>About</label>
                     <frontend_model>Owebia\AdvancedShippingSetting\Block\System\Config\Form\Field\About</frontend_model>
