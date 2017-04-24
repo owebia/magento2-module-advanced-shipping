@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2016 Owebia. All rights reserved.
+ * Copyright Â© 2016-2017 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Owebia\AdvancedShippingSetting\Model;

@@ -19,7 +19,7 @@ composer require owebia/magento2-module-advanced-shipping-setting:^2.0
 
 ## License
 
-Copyright © 2016 Owebia. All rights reserved.
+Copyright © 2016-2017 Owebia. All rights reserved.
 
 No warranty, explicit or implicit, provided.
 
