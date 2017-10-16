@@ -29,11 +29,16 @@ class RequiredFields implements \Magento\Framework\Option\ArrayInterface
     public function toArray()
     {
         return [
-            'country_id' => __('Country'),
-            'region_id'  => __('Region/State'),
-            'postcode'   => __('ZIP/Postal Code'),
-            'city'       => __('City'),
-            'street'     => __('Street Address'),
+            'firstname'     => __('First Name'),
+            'lastname'      => __('Last Name'),
+            'company'       => __('Company'),
+            'street'        => __('Street Address'),
+            'city'          => __('City'),
+            'region_id'     => __('Region/State'),
+            'postcode'      => __('ZIP/Postal Code'),
+            'country_id'    => __('Country'),
+            'telephone'     => __('Phone Number'),
+            'vat_id'        => __('VAT number'),
         ];
     }
 }
