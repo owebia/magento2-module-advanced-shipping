@@ -42,3 +42,7 @@ Files can not be copied and/or distributed without the express permission of Owe
 Icons:
 
 https://fortawesome.github.io/Font-Awesome/
+
+## Contributing
+
+By contributing to this project, you grant a world-wide, royalty-free, perpetual, irrevocable, non-exclusive, transferable license to all users under the terms of the license(s) under which this project is distributed.
