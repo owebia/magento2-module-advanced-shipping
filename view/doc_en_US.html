@@ -92,6 +92,14 @@
                 <li><a href="#examples_using_categories">Using categories</a></li>
             </ul>
         </li>
+        <li><a href="#hints_and_tips">Hints and tips</a>
+            <ul class="nav">
+                <li><a href="#hints_using_if_elseif_else">Using if/elseif/else statements</a></li>
+                <li><a href="#hints_access_new_customer_data">Access new customer data (ex. VAT ID)</a></li>
+            </ul>
+        </li>
+
+        <li><a href="#known_issues">Known issues</a></li>
     </ul>
     <!-- doc sidebar end -->
 </div>
@@ -246,8 +254,8 @@ php bin/magento setup:di:compile
                                     <li><code class=php>$request->dest_country_id</code> *</li>
                                     <li><code class=php>$request->dest_region_id</code></li>
                                     <li><code class=php>$request->dest_region_code</code></li>
-                                    <li><code class=php>$request->dest_street</code></li>
-                                    <li><code class=php>$request->dest_city</code></li>
+                                    <li><code class=php>$request->dest_street</code> (<a href="#issue_inconsistent_data_with_magento_lt_2_1_8">known issue with Magento CE < 2.1.8</a>)</li>
+                                    <li><code class=php>$request->dest_city</code> (<a href="#issue_inconsistent_data_with_magento_lt_2_1_8">known issue with Magento CE < 2.1.8</a>)</li>
                                     <li><code class=php>$request->dest_postcode</code></li>
                                 </ul>
                             </li>
@@ -1015,6 +1023,77 @@ php bin/magento setup:di:compile
                     </script>
                 </div>
             </div>
+
+        </div><!-- end examples_using_destination -->
+
+    </div><!-- end examples -->
+
+    <div id="hints_and_tips">
+        <h2>Hints and tips</h2>
+
+        <h3 id="hints_using_if_elseif_else">Using if/elseif/else statements</h3>
+        <div class=examples>
+            <script class=ex type="x-example">
+                /* Example */
+                if ($request->dest_country_id == 'US') {
+                    addMethod('__auto__', [
+                        'title'      => "If destination country is US",
+                        'price'      => 0,
+                    ]);
+                } elseif ($request->dest_country_id == 'CA') {
+                    addMethod('__auto__', [
+                        'title'      => "Else if destination country is CA",
+                        'price'      => 0,
+                    ]);
+                } else {
+                    addMethod('__auto__', [
+                        'title'      => "Other countries",
+                        'price'      => 10,
+                    ]);
+                }
+                //---
+                /* With Functions Add-on */
+                if (_country('US')) {
+                    addMethod('__auto__', [
+                        'title'      => "If destination country is US",
+                        'price'      => 0,
+                    ]);
+                } elseif (_country('CA')) {
+                    addMethod('__auto__', [
+                        'title'      => "Else if destination country is CA",
+                        'price'      => 0,
+                    ]);
+                } else {
+                    addMethod('__auto__', [
+                        'title'      => "Other countries",
+                        'price'      => 10,
+                    ]);
+                }
+            </script>
+        </div>
+
+        <h3 id="hints_access_new_customer_data">Access new customer data (ex. VAT ID)</h3>
+        <p><a href="#issue_inconsistent_data_with_magento_lt_2_1_8">Known issue with Magento CE < 2.1.8</a></p>
+        <div class=examples>
+            <script class=ex type="x-example">
+                /* Example */
+                if (!$customer->id && $quote->getShippingAddress()->vat_id) {
+                    addMethod('__auto__', [
+                        'title'      => "Display shipping method for new customer with VAT ID",
+                        'price'      => 0,
+                    ]);
+                }
+            </script>
+        </div>
+    </div>
+
+    <div id="known_issues">
+        <h2>Known issues</h2>
+
+        <ul>
+            <li id="issue_inconsistent_data_with_magento_lt_2_1_8">With earlier version than CE 2.1.8, Magento does not correctly update some variables: <code class=php>$request->dest_street</code>, <code class=php>$request->dest_city</code> and <code class=php>$quote->getShippingAddress()->*</code></li>
+        </ul>
+    </div>
 
     <!-- doc content end -->
     <p style="padding-top:50px;">&copy; 2016-2017 <a href="http://www.owebia.com/">Owebia</a></p>
