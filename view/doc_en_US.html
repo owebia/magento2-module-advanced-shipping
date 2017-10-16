@@ -73,6 +73,7 @@
         <li><a href="#introduction">Introduction</a></li>
         <li><a href="#addons">Add-ons</a></li>
         <li><a href="#whats_new">What's new?</a></li>
+        <li><a href="#installation">Installation</a></li>
         <li><a href="#quick_start">Quick start</a></li>
         <li><a href="#formulas">Variables and functions</a>
             <ul class="nav">
@@ -134,6 +135,26 @@
         <h2>What's new?</h2>
         <ul>
             <li>Get <a href="https://en.store.owebia.com/magento2-module-adv-ship-functions-addon.html" target="_blank">Functions Add-On</a> and make configuration creation easy <a href="#formulas_functions_addon" class="fn_addon">with additional functions</a></li>
+        </ul>
+    </div>
+
+    <div id="installation">
+        <h2>Installation</h2>
+        <div class="alert alert-danger">Please note that you can only install the extension using composer.</div>
+        <ul>
+            <li>Backup your store database and web directory</li>
+            <li>Login to Magento backend</li>
+            <li>Run these commands in your console
+                <pre>
+composer require owebia/magento2-module-advanced-shipping-setting:^2.0
+php bin/magento cache:clean
+php bin/magento module:enable Owebia_AdvancedSettingCore
+php bin/magento module:enable Owebia_AdvancedShippingSetting
+php bin/magento setup:upgrade
+php bin/magento setup:di:compile
+</pre>
+            </li>
+            <li>Logout from Magento backend and login again</li>
         </ul>
     </div>
 
