@@ -7,6 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/styles/github.min.css" rel="stylesheet">
     <style>
+        body{padding-top:50px;}
         h2{border-top:solid 1px #eee;padding-top:30px;margin-top:50px}
         h4{margin-top:1.5em}
         code.hljs{display:inline;background:#eee;padding:4px;}pre code.hljs{background:none;padding:0;}
@@ -16,9 +17,13 @@
         a[href^="#"]{color:green}a[href^="#"]:hover,a[href^="#"]:focus,a[href^="#"]:active{color:DarkGreen}
         ul.ventilated>li{padding:.5em 0;}
         /* sidebar */
-        #sidebar{position:fixed;top:0;left:0;padding-top:10px;}
-        #sidebar a{display:block;color:#716b7a;padding:5px 20px;}#sidebar a:hover,#sidebar a:focus{text-decoration:none;background-color:#e5e3e9;}
-        #sidebar .nav .nav a{padding-top:3px;padding-bottom:3px;padding-left:30px;font-size:90%;}@media screen and (max-width: 1600px){#sidebar{display:none}}
+        #sidebar{position:fixed;top:0;left:0;right:0;background:rgba(255,255,255,.5);z-index:100}
+        #sidebar > ul{padding-top:10px;padding-bottom:10px;background:#f0f0f0}
+        #sidebar ul a{display:block;color:#716b7a;padding:5px 20px;}
+        #sidebar ul a:hover,
+        #sidebar ul a:focus{text-decoration:none;background-color:#e5e3e9;}
+        #sidebar .nav .nav a{padding-top:3px;padding-bottom:3px;padding-left:30px;font-size:90%;}
+        @media screen and (min-width: 480px){#sidebar{right:auto}}
         .highlight{background:#ffa;padding:4px;line-height:2em;}
         .highlight code{background:#ffa;}
         .nav-tabs>li>a,
@@ -28,12 +33,42 @@
         .nav-tabs>li.active>a:focus,
         .nav-tabs>li.active>a:hover{background:#f5f5f5;}
         .tab-pane > pre{border-top:0;border-radius:0;border-color:#ddd}
+        .icon-bar{background-color:#888;display:block;width:22px;height:2px;border-radius:1px;}
+        .icon-bar+.icon-bar{margin-top:4px;}
+        #sidebar.opened{background:#f0f0f0;bottom:0;overflow:auto;}
+        @media screen and (min-width: 1700px){
+            #sidebar{background:#f0f0f0;bottom:0;overflow:auto;}
+            #sidebar ul.collapse{display:block;}
+            .c-hamburger{display:none!important}
+        }
+
+        .c-hamburger{display:block;position:relative;overflow:hidden;margin:0;width:50px;height:50px;font-size:0;text-indent:-9999px;border:none;appearance:none;cursor:pointer;transition:background 0.2s}
+        .navbar-inverse .navbar-toggle.c-hamburger:hover, .navbar-inverse .navbar-toggle.c-hamburger:focus{background:none}
+        .c-hamburger:focus{outline:none}
+        .c-hamburger span, .c-hamburger span::before, .c-hamburger span::after{position:absolute;display:block;height:2px;background-color:#333}
+        .c-hamburger span{top:24px;left:10px;right:10px}
+        .c-hamburger span::before, .c-hamburger span::after{left:0;width:100%;content:""}
+        .c-hamburger--htx span{transition:background 0s 0.2s}
+        .c-hamburger--htx span::before, .c-hamburger--htx span::after{transition-duration:0.2s, 0.2s}
+        .c-hamburger--htx span::before{transition-property:top, transform}
+        .c-hamburger--htx span::after{transition-property:bottom, transform}
+        .c-hamburger--htx span{background:none}
+        .c-hamburger--htx span::before{top:0;transform:rotate(45deg)}
+        .c-hamburger--htx span::after{bottom:0;transform:rotate(-45deg)}
+        .c-hamburger--htx span::before, .c-hamburger--htx span::after{transition-delay:0s, 0.2s}
+        .c-hamburger--htx.collapsed span{background:#333}
+        .c-hamburger--htx.collapsed span::before{top:-7px;transform:rotate(0)}
+        .c-hamburger--htx.collapsed span::after{bottom:-7px;transform:rotate(0)}
+        .c-hamburger--htx.collapsed span::before, .c-hamburger--htx.collapsed span::after{transition-delay:0.2s,0s}
     </style>
 </head>
 <body>
 <div id="sidebar">
     <!-- doc sidebar start -->
-    <ul class="nav sidenav">
+    <a class="c-hamburger c-hamburger--htx collapsed" role="button" title="Table of Contents" data-toggle="collapse" href="#tableOfContents" aria-expanded="false" aria-controls="tableOfContents">
+        <span>Show/Hide Table of Contents</span>
+    </a>
+    <ul id="tableOfContents" class="collapse nav sidenav">
         <li><a href="#introduction">Introduction</a></li>
         <li><a href="#addons">Add-ons</a></li>
         <li><a href="#whats_new">What's new?</a></li>
@@ -1033,6 +1068,14 @@ $(function(){
         $('.nav').each(function () {
             $(this).find('> li:eq(1) > a').tab('show');
         });
+    });
+    $(document).on('click', '#sidebar ul a', function (e) {
+        $('ul', '#sidebar').removeClass('in');
+        $('a.c-hamburger', '#sidebar').addClass('collapsed');
+        $('#sidebar').removeClass('opened');
+    });
+    $(document).on('click', '#sidebar a.c-hamburger', function (e) {
+        $('#sidebar').toggleClass('opened');
     });
 });
 <!-- doc scripts end -->
