@@ -21,6 +21,7 @@ php bin/magento cache:clean
 php bin/magento module:enable Owebia_AdvancedSettingCore
 php bin/magento module:enable Owebia_AdvancedShippingSetting
 php bin/magento setup:upgrade
+# Execute setup:di:compile only if the store is in production mode
 php bin/magento setup:di:compile
 ```
 
