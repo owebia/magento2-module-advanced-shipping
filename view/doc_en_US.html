@@ -142,6 +142,10 @@
     <div id="whats_new">
         <h2>What's new?</h2>
         <ul>
+            <li>
+                December, 2017 (version 2.0.9): new functions available <code>mb_strtolower</code>, <code>mb_strtoupper</code>,
+                <code>mb_substr</code>, <code>preg_replace</code>, <code>strtolower</code>, <code>strtoupper</code> and <code>time</code>
+            </li>
             <li>Get <a href="https://en.store.owebia.com/magento2-module-adv-ship-functions-addon.html" target="_blank">Functions Add-On</a> and make configuration creation easy <a href="#formulas_functions_addon" class="fn_addon">with additional functions</a></li>
         </ul>
     </div>
@@ -151,18 +155,20 @@
         <div class="alert alert-danger">Please note that you can only install the extension using composer.</div>
         <ul>
             <li>Backup your store database and web directory</li>
-            <li>Login to Magento backend</li>
-            <li>Run these commands in your console
+            <li>Open a terminal and move to Magento root directory</li>
+            <li>Run these commands in your terminal
                 <pre>
-composer require owebia/magento2-module-advanced-shipping-setting:^2.0
+# You must be in Magento root directory
+composer require owebia/magento2-module-advanced-shipping-setting:^2.0.8
 php bin/magento cache:clean
 php bin/magento module:enable Owebia_AdvancedSettingCore
 php bin/magento module:enable Owebia_AdvancedShippingSetting
 php bin/magento setup:upgrade
+# Execute setup:di:compile only if the store is in production mode
 php bin/magento setup:di:compile
 </pre>
             </li>
-            <li>Logout from Magento backend and login again</li>
+            <li>If you are logged to Magento backend, logout from Magento backend and login again</li>
         </ul>
     </div>
 
@@ -275,7 +281,7 @@ php bin/magento setup:di:compile
                             </li>
                         </ul>
                     </li>
-                    <li id="formulas_variables_quote">The <strong>quote</strong> (<code class=php>\Magento\Quote\Model\Quote</code>):
+                    <li id="formulas_variables_quote">The <strong>quote</strong> (<code class=php>\Magento\Quote\Model\Quote</code>):  (<a href="#issue_infinite_loop_when_using_quote">known issue #2</a>)
                         <ul>
                             <li><code class=php>$quote->subtotal</code>: subtotal (excluding tax)</li>
                             <li><code class=php>$quote->subtotal_with_discount</code>: subtotal (excluding tax) with discount</li>
@@ -438,18 +444,25 @@ php bin/magento setup:di:compile
                 <li><a href="http://php.net/manual/en/function.array-unique.php" target=_blank>array_unique</a></li>
                 <li><a href="http://php.net/manual/en/function.ceil.php" target=_blank>ceil</a></li>
                 <li><a href="http://php.net/manual/en/function.count.php" target=_blank>count</a></li>
-                <li><a href="http://php.net/manual/en/function.preg-match.php" target=_blank>date</a>
+                <li><a href="http://php.net/manual/en/function.date.php" target=_blank>date</a>
                 <li><a href="http://php.net/manual/en/function.explode.php" target=_blank>explode</a></li>
                 <li><a href="http://php.net/manual/en/function.floor.php" target=_blank>floor</a></li>
                 <li><a href="http://php.net/manual/en/function.implode.php" target=_blank>implode</a></li>
                 <li><a href="http://php.net/manual/en/function.in-array.php" target=_blank>in_array</a></li>
                 <li><a href="http://php.net/manual/en/function.max.php" target=_blank>max</a></li>
+                <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.mb-strtolower.php" target=_blank>mb_strtolower</a></li>
+                <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.mb-strtoupper.php" target=_blank>mb_strtoupper</a></li>
+                <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.mb-substr.php" target=_blank>mb_substr</a></li>
                 <li><a href="http://php.net/manual/en/function.min.php" target=_blank>min</a></li>
                 <li><a href="http://php.net/manual/en/function.preg-match.php" target=_blank>preg_match</a></li>
+                <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.preg-replace.php" target=_blank>preg_replace</a></li>
                 <li><a href="http://php.net/manual/en/function.range.php" target=_blank>range</a></li>
                 <li><a href="http://php.net/manual/en/function.round.php" target=_blank>round</a></li>
+                <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.strtolower.php" target=_blank>strtolower</a></li>
                 <li><a href="http://php.net/manual/en/function.strtotime.php" target=_blank>strtotime</a></li>
+                <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.strtoupper.php" target=_blank>strtoupper</a></li>
                 <li><a href="http://php.net/manual/en/function.substr.php" target=_blank>substr</a></li>
+                <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.time.php" target=_blank>time</a></li>
             </ul>
 
             <div id="formulas_functions_addon">
@@ -1091,7 +1104,14 @@ php bin/magento setup:di:compile
         <h2>Known issues</h2>
 
         <ul>
-            <li id="issue_inconsistent_data_with_magento_lt_2_1_8">With earlier version than CE 2.1.8, Magento does not correctly update some variables: <code class=php>$request->dest_street</code>, <code class=php>$request->dest_city</code> and <code class=php>$quote->getShippingAddress()->*</code></li>
+            <li id="issue_inconsistent_data_with_magento_lt_2_1_8">
+                #1: With earlier version than CE 2.1.8, Magento does not correctly update some variables:
+                <code class=php>$request->dest_street</code>, <code class=php>$request->dest_city</code> and <code class=php>$quote->getShippingAddress()->*</code>
+            </li>
+            <li id="issue_infinite_loop_when_using_quote">
+                #2: With some configurations, you can enter in an infinite loop when using <code class=php>$quote</code> variable.
+                <br/><strong>If you have more information on this issue, please contact us.</strong>
+            </li>
         </ul>
     </div>
 
