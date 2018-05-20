@@ -51,6 +51,16 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
     protected $debugLogger = null;
 
     /**
+     * @var \Magento\Framework\Locale\Resolver $localeResolver
+
+     */
+    protected $localeResolver;
+
+    /**
+     * @var Magento\Framework\App\Language\Dictionary
+     */
+    protected $dictionary;
+    /**
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeInterface
      * @param \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory
      * @param \Psr\Log\LoggerInterface $logger
@@ -72,6 +82,8 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         \Owebia\AdvancedSettingCore\Helper\Registry $registryHelper,
         \Owebia\AdvancedSettingCore\Helper\Config $configHelper,
         \Owebia\AdvancedSettingCore\Logger\Logger $debugLogger,
+        \Magento\Framework\App\Language\Dictionary $dictionary,
+        \Magento\Framework\Locale\Resolver $localeResolver,
         array $data = []
     ) {
         parent::__construct($scopeInterface, $rateErrorFactory, $logger, $data);
@@ -81,6 +93,8 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         $this->registryHelper = $registryHelper;
         $this->configHelper = $configHelper;
         $this->debugLogger = $debugLogger;
+        $this->dictionary = $dictionary;
+        $this->localeResolver = $localeResolver;
     }
 
     /**
@@ -129,6 +143,21 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
     }
 
     /**
+     * @param $phrase
+     *
+     * @return string
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    protected function getTranslation($phrase){
+
+        $locale = $this->localeResolver->getLocale();
+        if(!isset($locale)) return $phrase;
+        $dic = $this->dictionary->getDictionary($locale);
+        if(!isset($dic)) return $phrase;
+        return array_key_exists($phrase, $dic) ? $dic[$phrase] : $phrase;
+    }
+
+    /**
      * @param string $methodId
      * @param \stdClass $method
      * @return \Magento\Quote\Model\Quote\Address\RateResult\Method
@@ -140,9 +169,9 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         $rate->setCarrier($this->_code);
         $rate->setCarrierTitle($this->getConfigData('title'));
         $rate->setMethod($methodId);
-        $title = isset($method->title) ? $method->title : 'N/A';
+        $title = isset($method->title) ? $this->getTranslation($method->title) : 'N/A';
         $rate->setMethodTitle($title);
-        $description = isset($method->description) ? $method->description : null;
+        $description = isset($method->description) ? $this->getTranslation($method->description) : null;
         $rate->setMethodDescription($description);
         $rate->setCost($method->price);
         $rate->setPrice($method->price);
@@ -162,7 +191,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
             $error = $this->_rateErrorFactory->create();
             $error->setCarrier($this->_code);
             $error->setCarrierTitle($this->getConfigData('title'));
-            $methodTitle = isset($method->title) ? $method->title
+            $methodTitle = isset($method->title) ? $this->getTranslation($method->title)
                 : (!empty($methodId) ? "Method `$methodId` - " : '');
             $error->setErrorMessage("$methodTitle $msg");
             $result->append($error);
@@ -184,7 +213,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         }
         $allowedMethods = [];
         foreach ($config as $methodId => $method) {
-            $allowedMethods[$methodId] = isset($method->title) ? $method->title : 'N/A';
+            $allowedMethods[$methodId] = isset($method->title) ? $this->getTranslation($method->title) : 'N/A';
         }
         return $allowedMethods;
     }
