@@ -96,6 +96,7 @@
             <ul class="nav">
                 <li><a href="#hints_using_if_elseif_else">Using if/elseif/else statements</a></li>
                 <li><a href="#hints_access_new_customer_data">Access new customer data (ex. VAT ID)</a></li>
+                <li><a href="#hints_using_custom_customer_attribute">Using custom customer attribute</a></li>
             </ul>
         </li>
 
@@ -305,6 +306,7 @@ php bin/magento setup:di:compile
                         <ul>
                             <li><code class=php>$customer->id</code>: alias of <code class=php>$customer->entity_id</code></li>
                             <li><code class=php>$customer->*</code>: attribute of the customer (ex: email, lastname, firstname, group_id…)</li>
+                            <li><code class=php>$customer->getCustomAttribute('my_custom_attribute')->value</code>: custom attribute of the customer (where 'my_custom_attribute' should be replaced by custom attribute's code)</li>
                         </ul>
                     </li>
                     <li id="formulas_variables_customvar">Custom <strong>variables</strong> (<code class=php>\Magento\Variable\Model\Variable</code>):
@@ -1093,6 +1095,20 @@ php bin/magento setup:di:compile
                 if (!$customer->id && $quote->getShippingAddress()->vat_id) {
                     addMethod('__auto__', [
                         'title'      => "Display shipping method for new customer with VAT ID",
+                        'price'      => 0,
+                    ]);
+                }
+            </script>
+        </div>
+
+        <h3 id="hints_using_custom_customer_attribute">Using custom customer attribute</h3>
+        <p>In the following example, <code>my_custom_attribute</code> is a custom customer attribute created by a custom extension.</p>
+        <div class=examples>
+            <script class=ex type="x-example">
+                /* Example */
+                if ($customer->getCustomAttribute('my_custom_attribute')->value == 5) {
+                    addMethod('__auto__', [
+                        'title'      => "Display shipping method only for customers having 'my_custom_attribute' set to 5",
                         'price'      => 0,
                     ]);
                 }
