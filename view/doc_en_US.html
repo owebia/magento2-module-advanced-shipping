@@ -61,6 +61,9 @@
         .c-hamburger--htx.collapsed span::before{top:-7px;transform:rotate(0)}
         .c-hamburger--htx.collapsed span::after{bottom:-7px;transform:rotate(0)}
         .c-hamburger--htx.collapsed span::before, .c-hamburger--htx.collapsed span::after{transition-delay:0.2s,0s}
+
+        .red{color:red;}
+        code.hljs.red{color:red;background:#f2dede}
     </style>
 </head>
 <body>
@@ -221,8 +224,8 @@ php bin/magento setup:di:compile
                 addMethod('__auto__', [
                     // Dynamic title using the variable $request->dest_country_id
                     'title' => "Delivery to " . $request->dest_country_id,
-                    // Dynamic price using the variable $quote->subtotal
-                    'price' => 0.2 * $quote->subtotal,
+                    // Dynamic price using the variable $request->package_value
+                    'price' => 0.2 * $request->package_value,
                 ]);
                 addMethod('__auto__', [
                     'title'   => "Free Shipping",
@@ -282,14 +285,14 @@ php bin/magento setup:di:compile
                             </li>
                         </ul>
                     </li>
-                    <li id="formulas_variables_quote">The <strong>quote</strong> (<code class=php>\Magento\Quote\Model\Quote</code>):  (<a href="#issue_infinite_loop_when_using_quote">known issue #2</a>)
+                    <li id="formulas_variables_quote">The <strong>quote</strong> (<code class=php>\Magento\Quote\Model\Quote</code>):  (<a href="#issue_infinite_loop_when_using_quote">known issue #2</a>, <a href="#issue_unexpected_behaviors_when_using_quote_grand_total">known issue #3</a>)
                         <ul>
                             <li><code class=php>$quote->subtotal</code>: subtotal (excluding tax)</li>
                             <li><code class=php>$quote->subtotal_with_discount</code>: subtotal (excluding tax) with discount</li>
-                            <li><code class=php>$quote->grand_total</code>: total (including tax) with discount</li>
+                            <li><code class="php red">$quote->grand_total</code>: total (including tax) with discount (<a href="#issue_unexpected_behaviors_when_using_quote_grand_total">known issues #3</a>, <strong class="red">you should avoid using this value</strong>)</li>
                             <li><code class=php>$quote->base_subtotal</code>: subtotal (excluding tax) in base currency</li>
                             <li><code class=php>$quote->base_subtotal_with_discount</code>: subtotal (excluding tax) with discount in base currency</li>
-                            <li><code class=php>$quote->base_grand_total</code>: total (including tax) with discount in base currency</li>
+                            <li><code class="php red">$quote->base_grand_total</code>: total (including tax) with discount in base currency (<a href="#issue_unexpected_behaviors_when_using_quote_grand_total">known issues #3</a>, <strong class="red">you should avoid using this value</strong>)</li>
                             <li><code class=php>$quote->coupon_code</code>: the coupon code used in cart</li>
                             <li><code class=php>$quote->*</code>: property of the quote (ex: <code class=php>$quote->subtotal</code>)</li>
                         </ul>
@@ -643,7 +646,7 @@ php bin/magento setup:di:compile
                         /* Example */
                         addMethod('__auto__', [
                             'title'      => "Shipping",
-                            'price'      => 0.1 * $quote->subtotal + 10.00,
+                            'price'      => 0.1 * $request->package_value + 10.00,
                         ]);
                     </script>
                 </div>
@@ -654,7 +657,7 @@ php bin/magento setup:di:compile
                         /* Example */
                         $standard = addMethod('standard', [
                             'title'      => "Standard Shipping",
-                            'enabled'    => $quote->subtotal < 1000.00,
+                            'enabled'    => $request->package_value < 1000.00,
                             'price'      => 10,
                         ]);
                         addMethod('express', [
@@ -1127,6 +1130,9 @@ php bin/magento setup:di:compile
             <li id="issue_infinite_loop_when_using_quote">
                 #2: With some configurations, you can enter in an infinite loop when using <code class=php>$quote</code> variable.
                 <br/><strong>If you have more information on this issue, please contact us.</strong>
+            </li>
+            <li id="issue_unexpected_behaviors_when_using_quote_grand_total">
+                #3: You can encounter unexpected behaviors when using <code class=php>$quote->grand_total</code> and <code class=php>$quote->base_grand_total</code> as these values include shipping fees.
             </li>
         </ul>
     </div>
