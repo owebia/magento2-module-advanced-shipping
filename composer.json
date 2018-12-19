@@ -2,7 +2,7 @@
     "name": "owebia/magento2-module-advanced-shipping-setting",
     "description": "N/A",
     "require": {
-        "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0",
+        "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0|~7.2.0",
         "magento/magento-composer-installer": "^0.1.11",
         "owebia/magento2-module-advanced-setting-core": "^2.1.0"
     },
