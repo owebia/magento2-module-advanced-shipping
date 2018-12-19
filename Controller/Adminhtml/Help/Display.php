@@ -1,13 +1,12 @@
 <?php
 /**
- * Copyright © 2016-2017 Owebia. All rights reserved.
+ * Copyright © 2016-2018 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Owebia\AdvancedShippingSetting\Controller\Adminhtml\Help;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Filesystem;
-use Magento\Framework\Locale\Resolver;
 
 class Display extends \Magento\Backend\App\Action
 {
@@ -35,7 +34,7 @@ class Display extends \Magento\Backend\App\Action
     public function execute()
     {
         /** @var \Magento\Framework\Module\Dir\Reader $reader */
-        $reader = $this->_objectManager->get('Magento\Framework\Module\Dir\Reader');
+        $reader = $this->_objectManager->get(\Magento\Framework\Module\Dir\Reader::class);
         $viewDir = $reader->getModuleDir(
             \Magento\Framework\Module\Dir::MODULE_VIEW_DIR,
             'Owebia_AdvancedShippingSetting'
@@ -47,7 +46,7 @@ class Display extends \Magento\Backend\App\Action
         $localePath = str_replace('en_US', $locale, $defaultPath);
 
         /** @var Filesystem $filesystem */
-        $filesystem = $this->_objectManager->get('Magento\Framework\Filesystem');
+        $filesystem = $this->_objectManager->get(Filesystem::class);
         $readInterface = $filesystem->getDirectoryRead(DirectoryList::ROOT);
         $docPath = $readInterface->isFile($localePath) ? $localePath : $defaultPath;
         $docRelativePath = $readInterface->getRelativePath($docPath);
