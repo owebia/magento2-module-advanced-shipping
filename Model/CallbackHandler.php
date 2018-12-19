@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2016-2017 Owebia. All rights reserved.
+ * Copyright © 2016-2018 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Owebia\AdvancedShippingSetting\Model;
@@ -13,7 +13,7 @@ class CallbackHandler extends \Owebia\AdvancedSettingCore\Model\CallbackHandler
     protected $parsingResult = [];
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $currentMethodId = null;
 

@@ -1,11 +1,10 @@
 <?php
 /**
- * Copyright © 2016-2017 Owebia. All rights reserved.
+ * Copyright © 2016-2018 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Owebia\AdvancedShippingSetting\Model;
 
-use Magento\Quote\Model\Quote\Address\RateResult\Error;
 use Magento\Quote\Model\Quote\Address\RateRequest;
 
 class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
