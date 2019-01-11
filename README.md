@@ -29,7 +29,7 @@ php bin/magento setup:di:compile
 
 ## Documentation
 
-[See the documentation](http://htmlpreview.github.io/?https://github.com/owebia/magento2-module-advanced-shipping-setting/blob/master/view/doc_en_US.html)
+[See the documentation](https://owebia.com/doc/en/magento2-module-advanced-shipping)
 
 ## License
 
