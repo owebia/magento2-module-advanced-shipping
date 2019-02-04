@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2016-2018 Owebia. All rights reserved.
+ * Copyright © 2016-2019 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Owebia\AdvancedShippingSetting\Model;
@@ -35,6 +35,21 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
     protected $rateMethodFactory = null;
 
     /**
+     * @var \Magento\Shipping\Model\Tracking\ResultFactory
+     */
+    protected $trackFactory;
+
+    /**
+     * @var \Magento\Shipping\Model\Tracking\Result\ErrorFactory
+     */
+    protected $trackErrorFactory;
+
+    /**
+     * @var \Magento\Shipping\Model\Tracking\Result\StatusFactory
+     */
+    protected $trackStatusFactory;
+
+    /**
      * @var \Owebia\AdvancedSettingCore\Helper\Registry
      */
     protected $registryHelper = null;
@@ -55,6 +70,9 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Framework\ObjectManagerInterface $objectManager
      * @param \Magento\Shipping\Model\Rate\ResultFactory $rateFactory
+     * @param \Magento\Shipping\Model\Tracking\ResultFactory $trackFactory
+     * @param \Magento\Shipping\Model\Tracking\Result\ErrorFactory $trackErrorFactory
+     * @param \Magento\Shipping\Model\Tracking\Result\StatusFactory $trackStatusFactory
      * @param \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory
      * @param \Owebia\AdvancedSettingCore\Helper\Registry $registryHelper
      * @param \Owebia\AdvancedSettingCore\Helper\Config $configHelper
@@ -68,6 +86,9 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Magento\Shipping\Model\Rate\ResultFactory $rateFactory,
         \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory,
+        \Magento\Shipping\Model\Tracking\ResultFactory $trackFactory,
+        \Magento\Shipping\Model\Tracking\Result\ErrorFactory $trackErrorFactory,
+        \Magento\Shipping\Model\Tracking\Result\StatusFactory $trackStatusFactory,
         \Owebia\AdvancedSettingCore\Helper\Registry $registryHelper,
         \Owebia\AdvancedSettingCore\Helper\Config $configHelper,
         \Owebia\AdvancedSettingCore\Logger\Logger $debugLogger,
@@ -77,6 +98,9 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         $this->objectManager = $objectManager;
         $this->rateFactory = $rateFactory;
         $this->rateMethodFactory = $rateMethodFactory;
+        $this->trackFactory = $trackFactory;
+        $this->trackErrorFactory = $trackErrorFactory;
+        $this->trackStatusFactory = $trackStatusFactory;
         $this->registryHelper = $registryHelper;
         $this->configHelper = $configHelper;
         $this->debugLogger = $debugLogger;
@@ -236,5 +260,61 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
     protected function isDebugEnabled()
     {
         return (bool) $this->getConfigData('debug');
+    }
+
+    /**
+     * Check if carrier has shipping tracking option available
+     *
+     * @return bool
+     */
+    public function isTrackingAvailable()
+    {
+        return true;
+    }
+
+    /**
+     * Get tracking information
+     *
+     * @param string $tracking
+     * @return string|false
+     * @api
+     */
+    public function getTrackingInfo($tracking)
+    {
+        $result = $this->getTracking($tracking);
+
+        if ($result instanceof \Magento\Shipping\Model\Tracking\Result) {
+            $trackings = $result->getAllTrackings();
+            if ($trackings) {
+                return $trackings[0];
+            }
+        } elseif (is_string($result) && !empty($result)) {
+            return $result;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get tracking information
+     *
+     * @param string $tracking
+     * @return string|false
+     * @api
+     */
+    public function getTracking($tracking)
+    {
+        return $this->trackFactory->create()
+            ->append(
+                $this->trackStatusFactory->create()
+                    ->setCarrier(self::CODE)
+                    ->setCarrierTitle($this->getConfigData('title'))
+                    ->setTracking($tracking)
+                    ->setUrl(
+                        str_replace(
+                            '{{trackingNumber}}', $tracking, $this->getConfigData('tracking_url')
+                        )
+                    )
+            );
     }
 }
