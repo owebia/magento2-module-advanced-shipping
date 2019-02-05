@@ -6,6 +6,8 @@
 namespace Owebia\AdvancedShippingSetting\Model;
 
 use Magento\Quote\Model\Quote\Address\RateRequest;
+use Owebia\AdvancedSettingCore\Model\Wrapper;
+use Owebia\AdvancedShippingSetting\Model\CallbackHandler;
 
 class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
     \Magento\Shipping\Model\Carrier\CarrierInterface
@@ -215,9 +217,15 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
     public function initRegistry(RateRequest $request = null)
     {
         $this->registryHelper->init($request);
-        $this->registryHelper->register('info', $this->registryHelper->create('Info', [
-            'carrierCode' => $this->getCarrierCode()
-        ]));
+        $this->registryHelper->register(
+            'info',
+            $this->registryHelper->create(
+                Wrapper\Info::class,
+                [
+                    'carrierCode' => $this->getCarrierCode()
+                ]
+            )
+        );
     }
 
     /**
@@ -233,7 +241,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         try {
             $this->initRegistry($request);
             $configString = $this->getConfigData('config');
-            $callbackHandler = $this->objectManager->create('Owebia\AdvancedShippingSetting\Model\CallbackHandler');
+            $callbackHandler = $this->objectManager->create(CallbackHandler::class);
             $callbackHandler->setRegistry($this->registryHelper);
             $this->configHelper->parse(
                 $configString,
