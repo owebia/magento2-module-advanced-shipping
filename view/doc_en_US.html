@@ -62,8 +62,16 @@
         .c-hamburger--htx.collapsed span::after{bottom:-7px;transform:rotate(0)}
         .c-hamburger--htx.collapsed span::before, .c-hamburger--htx.collapsed span::after{transition-delay:0.2s,0s}
 
-        .red{color:red;}
+        .red,.issue{color:red!important}
         code.hljs.red{color:red;background:#f2dede}
+        .nowrap{white-space:nowrap}
+        .multicolumns > div{break-inside:avoid-column;padding-top:1px}
+        @media screen and (min-width: 500px){
+            .multicolumns{-webkit-column-count:2;-moz-column-count:2;column-count:2}
+        }
+        @media screen and (min-width: 1000px){
+            .multicolumns{-webkit-column-count:3;-moz-column-count:3;column-count:3}
+        }
     </style>
 </head>
 <body>
@@ -100,6 +108,7 @@
                 <li><a href="#hints_using_if_elseif_else">Using if/elseif/else statements</a></li>
                 <li><a href="#hints_access_new_customer_data">Access new customer data (ex. VAT ID)</a></li>
                 <li><a href="#hints_using_custom_customer_attribute">Using custom customer attribute</a></li>
+                <li><a href="#hints_translate_string">Translate a string (new)</a></li>
             </ul>
         </li>
 
@@ -146,6 +155,8 @@
     <div id="whats_new">
         <h2>What's new?</h2>
         <ul>
+            <li>February, 2019 (version 2.4.0): translate a string using <code>__</code> function, new functions available <code>array_keys</code>, <code>array_search</code>, <code>array_values</code>, <code>strlen</code> and <code>strpos</code>, <code>mb_strlen</code> and <code>mb_strpos</code></li>
+            <li>February, 2019 (version 2.3.0): add tracking URL support (new configuration field)</li>
             <li>
                 December, 2017 (version 2.1.0): new functions available <code>mb_strtolower</code>, <code>mb_strtoupper</code>,
                 <code>mb_substr</code>, <code>preg_replace</code>, <code>strtolower</code>, <code>strtoupper</code> and <code>time</code>
@@ -264,8 +275,8 @@ php bin/magento setup:di:compile
                                     <li><code class=php>$request->dest_country_id</code> *</li>
                                     <li><code class=php>$request->dest_region_id</code></li>
                                     <li><code class=php>$request->dest_region_code</code></li>
-                                    <li><code class=php>$request->dest_street</code> (<a href="#issue_inconsistent_data_with_magento_lt_2_1_8">known issue with Magento CE < 2.1.8</a>)</li>
-                                    <li><code class=php>$request->dest_city</code> (<a href="#issue_inconsistent_data_with_magento_lt_2_1_8">known issue with Magento CE < 2.1.8</a>)</li>
+                                    <li><code class=php>$request->dest_street</code> (<a href="#issue_inconsistent_data_with_magento_lt_2_1_8" class=issue>known issue with Magento CE < 2.1.8</a>)</li>
+                                    <li><code class=php>$request->dest_city</code> (<a href="#issue_inconsistent_data_with_magento_lt_2_1_8" class=issue>known issue with Magento CE < 2.1.8</a>)</li>
                                     <li><code class=php>$request->dest_postcode</code></li>
                                 </ul>
                             </li>
@@ -285,14 +296,14 @@ php bin/magento setup:di:compile
                             </li>
                         </ul>
                     </li>
-                    <li id="formulas_variables_quote">The <strong>quote</strong> (<code class=php>\Magento\Quote\Model\Quote</code>):  (<a href="#issue_infinite_loop_when_using_quote">known issue #2</a>, <a href="#issue_unexpected_behaviors_when_using_quote_grand_total">known issue #3</a>)
+                    <li id="formulas_variables_quote">The <strong>quote</strong> (<code class=php>\Magento\Quote\Model\Quote</code>):  (<a href="#issue_infinite_loop_when_using_quote" class=issue>known issue #2</a>, <a href="#issue_unexpected_behaviors_when_using_quote_grand_total" class=issue>known issue #3</a>)
                         <ul>
                             <li><code class=php>$quote->subtotal</code>: subtotal (excluding tax)</li>
                             <li><code class=php>$quote->subtotal_with_discount</code>: subtotal (excluding tax) with discount</li>
-                            <li><code class="php red">$quote->grand_total</code>: total (including tax) with discount (<a href="#issue_unexpected_behaviors_when_using_quote_grand_total">known issues #3</a>, <strong class="red">you should avoid using this value</strong>)</li>
+                            <li><code class="php red">$quote->grand_total</code>: total (including tax) with discount (<a href="#issue_unexpected_behaviors_when_using_quote_grand_total" class=issue>known issues #3</a>, <strong class="red">you should avoid using this value</strong>)</li>
                             <li><code class=php>$quote->base_subtotal</code>: subtotal (excluding tax) in base currency</li>
                             <li><code class=php>$quote->base_subtotal_with_discount</code>: subtotal (excluding tax) with discount in base currency</li>
-                            <li><code class="php red">$quote->base_grand_total</code>: total (including tax) with discount in base currency (<a href="#issue_unexpected_behaviors_when_using_quote_grand_total">known issues #3</a>, <strong class="red">you should avoid using this value</strong>)</li>
+                            <li><code class="php red">$quote->base_grand_total</code>: total (including tax) with discount in base currency (<a href="#issue_unexpected_behaviors_when_using_quote_grand_total" class=issue>known issues #3</a>, <strong class="red">you should avoid using this value</strong>)</li>
                             <li><code class=php>$quote->coupon_code</code>: the coupon code used in cart</li>
                             <li><code class=php>$quote->*</code>: property of the quote (ex: <code class=php>$quote->subtotal</code>)</li>
                         </ul>
@@ -319,7 +330,14 @@ php bin/magento setup:di:compile
                     </li>
                     <li id="formulas_variables_store">The <strong>store</strong> (<code class=php>\Magento\Store\Model\Store</code>):
                         <ul>
-                            <li><code class=php>$store->id</code> <code class=php>$store->code</code> <code class=php>$store->name</code> <code class=php>$store->address</code> <code class=php>$store->phone</code></li>
+                            <li><code class=php>$store->id</code>, <code class=php>$store->code</code>, <code class=php>$store->name</code>, <code class=php>$store->address</code>, <code class=php>$store->phone</code></li>
+                        </ul>
+                    </li>
+                    <li id="formulas_variables_store">The <strong>app</strong> (see <code class=php>\Magento\Framework\App\State</code>):
+                        <ul>
+                            <li><code class=php>$app->area_code</code></li>
+                            <li><code class=php>$app->isAdminArea()</code> (area_code == 'adminhtml')</li>
+                            <li><code class=php>$app->isFrontendArea()</code> (area_code == 'webapi_rest')</li>
                         </ul>
                     </li>
                 </ul>
@@ -437,41 +455,79 @@ php bin/magento setup:di:compile
         <div id="formulas_functions">
             <h3>2. Functions</h3>
 
+            <h4>2.1. Native functions allowed</h4>
+
             <p class="alert alert-warning">Look at the PHP documentation if you want to know how to use these functions.</p>
-            <p>Functions allowed:</p>
-            <ul>
-                <li><a href="http://php.net/manual/en/function.abs.php" target=_blank>abs</a></li>
-                <li><a href="http://php.net/manual/en/function.array-filter.php" target=_blank>array_filter</a></li>
-                <li><a href="http://php.net/manual/en/function.array-intersect.php" target=_blank>array_intersect</a></li>
-                <li><a href="http://php.net/manual/en/function.array-map.php" target=_blank>array_map</a></li>
-                <li><a href="http://php.net/manual/en/function.array-reduce.php" target=_blank>array_reduce</a></li>
-                <li><a href="http://php.net/manual/en/function.array-sum.php" target=_blank>array_sum</a></li>
-                <li><a href="http://php.net/manual/en/function.array-unique.php" target=_blank>array_unique</a></li>
-                <li><a href="http://php.net/manual/en/function.ceil.php" target=_blank>ceil</a></li>
-                <li><a href="http://php.net/manual/en/function.count.php" target=_blank>count</a></li>
-                <li><a href="http://php.net/manual/en/function.date.php" target=_blank>date</a>
-                <li><a href="http://php.net/manual/en/function.explode.php" target=_blank>explode</a></li>
-                <li><a href="http://php.net/manual/en/function.floor.php" target=_blank>floor</a></li>
-                <li><a href="http://php.net/manual/en/function.implode.php" target=_blank>implode</a></li>
-                <li><a href="http://php.net/manual/en/function.in-array.php" target=_blank>in_array</a></li>
-                <li><a href="http://php.net/manual/en/function.max.php" target=_blank>max</a></li>
-                <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.mb-strtolower.php" target=_blank>mb_strtolower</a></li>
-                <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.mb-strtoupper.php" target=_blank>mb_strtoupper</a></li>
-                <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.mb-substr.php" target=_blank>mb_substr</a></li>
-                <li><a href="http://php.net/manual/en/function.min.php" target=_blank>min</a></li>
-                <li><a href="http://php.net/manual/en/function.preg-match.php" target=_blank>preg_match</a></li>
-                <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.preg-replace.php" target=_blank>preg_replace</a></li>
-                <li><a href="http://php.net/manual/en/function.range.php" target=_blank>range</a></li>
-                <li><a href="http://php.net/manual/en/function.round.php" target=_blank>round</a></li>
-                <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.strtolower.php" target=_blank>strtolower</a></li>
-                <li><a href="http://php.net/manual/en/function.strtotime.php" target=_blank>strtotime</a></li>
-                <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.strtoupper.php" target=_blank>strtoupper</a></li>
-                <li><a href="http://php.net/manual/en/function.substr.php" target=_blank>substr</a></li>
-                <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.time.php" target=_blank>time</a></li>
-            </ul>
+            <div class=multicolumns>
+                <div>
+                    <h5>Math Functions</h5>
+                    <ul>
+                        <li><a href="http://php.net/manual/en/function.abs.php" target=_blank>abs</a></li>
+                        <li><a href="http://php.net/manual/en/function.ceil.php" target=_blank>ceil</a></li>
+                        <li><a href="http://php.net/manual/en/function.floor.php" target=_blank>floor</a></li>
+                        <li><a href="http://php.net/manual/en/function.max.php" target=_blank>max</a></li>
+                        <li><a href="http://php.net/manual/en/function.min.php" target=_blank>min</a></li>
+                        <li><a href="http://php.net/manual/en/function.round.php" target=_blank>round</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>String Functions</h5>
+                    <ul>
+                        <li><a href="http://php.net/manual/en/function.explode.php" target=_blank>explode</a></li>
+                        <li><a href="http://php.net/manual/en/function.implode.php" target=_blank>implode</a></li>
+                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.strlen.php" target=_blank>strlen</a></li>
+                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.strpos.php" target=_blank>strpos</a></li>
+                        <li><a href="http://php.net/manual/en/function.strtolower.php" target=_blank>strtolower</a></li>
+                        <li><a href="http://php.net/manual/en/function.strtoupper.php" target=_blank>strtoupper</a></li>
+                        <li><a href="http://php.net/manual/en/function.substr.php" target=_blank>substr</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Multibyte String Functions</h5>
+                    <ul>
+                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.mb-strlen.php" target=_blank>mb_strlen</a></li>
+                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.mb-strpos.php" target=_blank>mb_strpos</a></li>
+                        <li><a href="http://php.net/manual/en/function.mb-strtolower.php" target=_blank>mb_strtolower</a></li>
+                        <li><a href="http://php.net/manual/en/function.mb-strtoupper.php" target=_blank>mb_strtoupper</a></li>
+                        <li><a href="http://php.net/manual/en/function.mb-substr.php" target=_blank>mb_substr</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>PCRE Functions</h5>
+                    <ul>
+                        <li><a href="http://php.net/manual/en/function.preg-match.php" target=_blank>preg_match</a></li>
+                        <li><a href="http://php.net/manual/en/function.preg-replace.php" target=_blank>preg_replace</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Date/Time Functions</h5>
+                    <ul>
+                        <li><a href="http://php.net/manual/en/function.date.php" target=_blank>date</a>
+                        <li><a href="http://php.net/manual/en/function.strtotime.php" target=_blank>strtotime</a></li>
+                        <li><a href="http://php.net/manual/en/function.time.php" target=_blank>time</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Array Functions</h5>
+                    <ul>
+                        <li><a href="http://php.net/manual/en/function.array-filter.php" target=_blank>array_filter</a></li>
+                        <li><a href="http://php.net/manual/en/function.array-intersect.php" target=_blank>array_intersect</a></li>
+                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.array-keys.php" target=_blank>array_keys</a></li>
+                        <li><a href="http://php.net/manual/en/function.array-map.php" target=_blank>array_map</a></li>
+                        <li><a href="http://php.net/manual/en/function.array-reduce.php" target=_blank>array_reduce</a></li>
+                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.array-search.php" target=_blank>array_search</a></li>
+                        <li><a href="http://php.net/manual/en/function.array-sum.php" target=_blank>array_sum</a></li>
+                        <li><a href="http://php.net/manual/en/function.array-unique.php" target=_blank>array_unique</a></li>
+                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.array-values.php" target=_blank>array_values</a></li>
+                        <li><a href="http://php.net/manual/en/function.count.php" target=_blank>count</a></li>
+                        <li><a href="http://php.net/manual/en/function.in-array.php" target=_blank>in_array</a></li>
+                        <li><a href="http://php.net/manual/en/function.range.php" target=_blank>range</a></li>
+                    </ul>
+                </div>
+            </div>
 
             <div id="formulas_functions_addon">
-                <h4>2.1. Functions available with Functions Add-On</h4>
+                <h4>2.2. Functions available with Functions Add-On</h4>
                 <ul>
                     <li><strong>_country</strong>: <a href="#examples_using_destination" class="fn_addon">see examples</a></li>
                     <li><strong>_postcode</strong>: <a href="#examples_using_destination" class="fn_addon">see examples</a></li>
@@ -483,6 +539,13 @@ php bin/magento setup:di:compile
                     <li><strong>_anyCat</strong>: <a href="#examples_using_categories" class="fn_addon">see examples</a></li>
                     <li><strong>_allCat</strong>: <a href="#examples_using_categories" class="fn_addon">see examples</a></li>
                     <li><strong>_table</strong>: <a href="#examples_functions__table" class="fn_addon">see examples</a></li>
+                </ul>
+            </div>
+
+            <div id="custom_functions">
+                <h4>2.3. Custom functions</h4>
+                <ul>
+                    <li><strong>__</strong>: translate the input string <a href="#hints_translate_string">see example</a></li>
                 </ul>
             </div>
         </div>
@@ -1092,7 +1155,7 @@ php bin/magento setup:di:compile
         </div>
 
         <h3 id="hints_access_new_customer_data">Access new customer data (ex. VAT ID)</h3>
-        <p><a href="#issue_inconsistent_data_with_magento_lt_2_1_8">Known issue with Magento CE < 2.1.8</a></p>
+        <p><a href="#issue_inconsistent_data_with_magento_lt_2_1_8" class=issue>Known issue with Magento CE < 2.1.8</a></p>
         <div class=examples>
             <script class=ex type="x-example">
                 /* Example */
@@ -1118,6 +1181,18 @@ php bin/magento setup:di:compile
                 }
             </script>
         </div>
+
+        <h3 id="hints_translate_string">Translate a string</h3>
+        <p>You can translate a string by using the <code>__</code> function (two underscore characters). It will use Magento dictionary to translate the input string.</p>
+        <div class=examples>
+            <script class=ex type="x-example">
+                /* Example */
+                addMethod('__auto__', [
+                    'title'      => __("My Shipping Method"),
+                    'price'      => 10,
+                ]);
+            </script>
+        </div>
     </div>
 
     <div id="known_issues">
@@ -1126,7 +1201,7 @@ php bin/magento setup:di:compile
         <ul>
             <li id="issue_inconsistent_data_with_magento_lt_2_1_8">
                 #1: With earlier version than CE 2.1.8, Magento does not correctly update some variables:
-                <code class=php>$request->dest_street</code>, <code class=php>$request->dest_city</code> and <code class=php>$quote->getShippingAddress()->*</code>
+                <code class=php>$request->dest_street</code>, <code class=php>$request->dest_city</code> and <code class="php nowrap">$quote->getShippingAddress()->*</code>
             </li>
             <li id="issue_infinite_loop_when_using_quote">
                 #2: With some configurations, you can enter in an infinite loop when using <code class=php>$quote</code> variable.
