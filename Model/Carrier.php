@@ -5,12 +5,14 @@
  */
 namespace Owebia\AdvancedShippingSetting\Model;
 
+use Magento\Shipping\Model\Carrier\AbstractCarrier;
+use Magento\Shipping\Model\Carrier\CarrierInterface;
 use Magento\Quote\Model\Quote\Address\RateRequest;
 use Owebia\AdvancedSettingCore\Model\Wrapper;
 use Owebia\AdvancedShippingSetting\Model\CallbackHandler;
+use Owebia\AdvancedShippingSetting\Model\Wrapper\RateResult as RateResultWrapper;
 
-class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
-    \Magento\Shipping\Model\Carrier\CarrierInterface
+class Carrier extends AbstractCarrier implements CarrierInterface
 {
 
     const CODE = 'owsh1';
@@ -131,22 +133,18 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
             return false;
         }
 
-        foreach ($config as $methodId => $method) {
-            if (isset($method->error)) {
-                $this->appendError($result, $methodId, $method, $method->error);
-            } elseif (!isset($method->price)) {
-                $this->appendError($result, $methodId, $method, "Invalid price: null");
-            } elseif ($method->price === false) {
-                $this->appendError($result, $methodId, $method, "Invalid price: false");
-            } elseif (isset($method->enabled) && !$method->enabled) {
-                // $this->appendError($result, $methodId, $method, "Method disabled");
-            } elseif (isset($method->debug)) {
-                $this->appendError($result, $methodId, $method, $method->debug);
-            } else {
-                $rate = $this->createMethod($methodId, $method);
-                $result->append($rate);
+        foreach ($config as $index => $item) {
+            if ($item instanceof RateResultWrapper\Error) {
+                $this->appendError($result, $item, $item->error);
+            } elseif ($item instanceof RateResultWrapper\Method) {
+                if ($item->enabled) {
+                    $rate = $this->createMethod($index, $item);
+                    $result->append($rate);
+                }
 
                 // if ($stopToFirstMatch) break;
+            } else {
+                $this->appendError($result, $item, "Invalid parsing result");
             }
         }
 
@@ -155,19 +153,19 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
 
     /**
      * @param string $methodId
-     * @param \stdClass $method
+     * @param RateResultWrapper\Method $method
      * @return \Magento\Quote\Model\Quote\Address\RateResult\Method
      */
-    protected function createMethod($methodId, $method)
+    protected function createMethod($methodId, RateResultWrapper\Method $method)
     {
         /** @var \Magento\Quote\Model\Quote\Address\RateResult\Method $rate */
         $rate = $this->rateMethodFactory->create();
         $rate->setCarrier($this->_code);
         $rate->setCarrierTitle($this->getConfigData('title'));
         $rate->setMethod($methodId);
-        $title = isset($method->title) ? $method->title : 'N/A';
-        $rate->setMethodTitle($title);
-        $description = isset($method->description) ? $method->description : null;
+        $title = $method->title;
+        $rate->setMethodTitle($title ? $title : 'N/A');
+        $description = $method->description ? $method->description : null;
         $rate->setMethodDescription($description);
         $rate->setCost($method->price);
         $rate->setPrice($method->price);
@@ -176,22 +174,26 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
 
     /**
      * @param \Magento\Shipping\Model\Rate\Result $result
-     * @param string $methodId
-     * @param \stdClass $method
+     * @param mixed $wrapper
      * @param string $msg
      * @return \Owebia\AdvancedShippingSetting\Model\Carrier
      */
-    protected function appendError(\Magento\Shipping\Model\Rate\Result $result, $methodId, \stdClass $method, $msg)
-    {
-        if ($this->getConfigData('showmethod') != 0) {
+    protected function appendError(
+        \Magento\Shipping\Model\Rate\Result $result,
+        $wrapper,
+        $msg
+    ) {
+        if (empty($wrapper->id) || $this->getConfigData('showmethod') != 0) {
             $error = $this->_rateErrorFactory->create();
             $error->setCarrier($this->_code);
             $error->setCarrierTitle($this->getConfigData('title'));
-            $methodTitle = isset($method->title) ? $method->title
-                : (!empty($methodId) ? "Method `$methodId` - " : '');
+            $methodTitle = empty($wrapper->title)
+                ? $wrapper->title
+                : (empty($wrapper->id) ? "Method `{$wrapper->id}` - " : '');
             $error->setErrorMessage("$methodTitle $msg");
             $result->append($error);
         }
+
         return $this;
     }
 
@@ -207,10 +209,14 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
             $this->_logger->debug("Owebia_AdavancedShippingSetting : Invalid config");
             return [];
         }
+
         $allowedMethods = [];
-        foreach ($config as $methodId => $method) {
-            $allowedMethods[$methodId] = isset($method->title) ? $method->title : 'N/A';
+        foreach ($config as $index => $item) {
+            if ($item instanceof RateResultWrapper\Method) {
+                $allowedMethods[$index] = isset($item->title) ? $item->title : 'N/A';
+            }
         }
+
         return $allowedMethods;
     }
 

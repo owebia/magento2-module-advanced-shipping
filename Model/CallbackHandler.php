@@ -6,6 +6,7 @@
 namespace Owebia\AdvancedShippingSetting\Model;
 
 use Owebia\AdvancedSettingCore\Model\Wrapper;
+use Owebia\AdvancedShippingSetting\Model\Wrapper\RateResult as RateResultWrapper;
 
 class CallbackHandler extends \Owebia\AdvancedSettingCore\Model\CallbackHandler
 {
@@ -20,7 +21,7 @@ class CallbackHandler extends \Owebia\AdvancedSettingCore\Model\CallbackHandler
     protected $currentMethodId = null;
 
     /**
-     * @return Wrapper\ArrayWrapper
+     * @return RateResultWrapper\Method
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function addMethodCallback()
@@ -54,24 +55,67 @@ class CallbackHandler extends \Owebia\AdvancedSettingCore\Model\CallbackHandler
             );
         }
 
-        $this->parsingResult[$methodId] = (object) $methodOptions;
+        $methodOptions = $methodOptions + [ 'enabled' => true ];
+        $price = isset($methodOptions['price']) ? $methodOptions['price'] : null;
+        if ($price === null | $price === false) {
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __("Invalid price")
+            );
+        }
 
+        $method = $this->registry->create(RateResultWrapper\Method::class, [ 'data' => $methodOptions ]);
+        $method->setId($methodId);
+        $this->parsingResult[$methodId] = $method;
         $this->currentMethodId = null;
-        return $this->registry->create(Wrapper\ArrayWrapper::class, [ 'data' => $methodOptions ]);
+        return $method;
     }
 
     /**
-     * @return string
+     * @return RateResultWrapper\Error
      */
-    public function appendParsingError($msg)
+    public function appendParsingError($message)
     {
-        if (isset($this->currentMethodId)) {
-            $this->parsingResult[$this->currentMethodId] = (object) [ 'error' => $msg ];
+        return $this->addError($message, $this->currentMethodId);
+    }
+
+    /**
+     * @return RateResultWrapper\Error
+     */
+    protected function addError($message, $id = null)
+    {
+        $data = [ 'error' => $message ];
+        $error = $this->registry->create(RateResultWrapper\Error::class, [ 'data' => $data ]);
+        if (!empty($id)) {
+            $error->setId($id);
+            $this->parsingResult[$id] = $error;
         } else {
-            $this->parsingResult[] = (object) [ 'error' => $msg ];
+            $this->parsingResult[] = $error;
         }
 
-        return $msg;
+        return $error;
+    }
+
+    /**
+     * @return RateResultWrapper\Error
+     */
+    public function addErrorCallback($message)
+    {
+        return $this->addError($message);
+    }
+
+    /**
+     * @return array
+     */
+    public function getMethodsCallback($onlyEnabled = false)
+    {
+        $methods = [];
+        foreach ($this->parsingResult as $item) {
+            if ($item instanceof RateResultWrapper\Method && (!$onlyEnabled || $item->enabled)) {
+                $methods[] = $item;
+            }
+        }
+
+        return $methods;
     }
 
     /**

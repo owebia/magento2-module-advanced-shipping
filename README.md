@@ -16,7 +16,7 @@ You can find [add-ons for Advanced Shipping on Owebia Store](https://en.store.ow
 
 ```shell
 # You must be in Magento root directory
-composer require owebia/magento2-module-advanced-shipping-setting:^2.4.0
+composer require owebia/magento2-module-advanced-shipping-setting:^2.5.0
 php bin/magento cache:clean
 php bin/magento module:enable Owebia_AdvancedSettingCore
 php bin/magento module:enable Owebia_AdvancedShippingSetting

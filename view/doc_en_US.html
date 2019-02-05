@@ -18,7 +18,7 @@
         a[href^="#"]{color:green}a[href^="#"]:hover,a[href^="#"]:focus,a[href^="#"]:active{color:DarkGreen}
         ul.ventilated>li{padding:.5em 0;}
         /* sidebar */
-        #sidebar{position:fixed;top:0;left:0;right:0;background:rgba(255,255,255,.5);z-index:100}
+        #sidebar{position:fixed;top:0;left:0;right:0;max-width:280px;background:rgba(255,255,255,.5);z-index:100}
         #sidebar > ul{padding-top:10px;padding-bottom:10px;background:#f0f0f0}
         #sidebar ul a{display:block;color:#716b7a;padding:5px 20px;}
         #sidebar ul a:hover,
@@ -88,8 +88,8 @@
         <li><a href="#quick_start">Quick start</a></li>
         <li><a href="#formulas">Variables and functions</a>
             <ul class="nav">
-                <li><a href="#formulas_variables">Variables</a></li>
-                <li><a href="#formulas_functions">Functions</a></li>
+                <li><a href="#formulas_variables">Variables <span class=red>(updated)</span></a></li>
+                <li><a href="#formulas_functions">Functions <span class=red>(updated)</span></a></li>
             </ul>
         </li>
         <li><a href="#examples">Examples</a>
@@ -108,7 +108,8 @@
                 <li><a href="#hints_using_if_elseif_else">Using if/elseif/else statements</a></li>
                 <li><a href="#hints_access_new_customer_data">Access new customer data (ex. VAT ID)</a></li>
                 <li><a href="#hints_using_custom_customer_attribute">Using custom customer attribute</a></li>
-                <li><a href="#hints_translate_string">Translate a string (new)</a></li>
+                <li><a href="#hints_translate_string">Translate a string <span class=red>(new)</span></a></li>
+                <li><a href="#hints_error_when_no_method">Display an error when no method is available <span class=red>(new)</span></a></li>
             </ul>
         </li>
 
@@ -155,6 +156,7 @@
     <div id="whats_new">
         <h2>What's new?</h2>
         <ul>
+            <li>February, 2019 (version 2.5.0): new custom functions available <code>addError</code>, <code>getMethods</code></li>
             <li>February, 2019 (version 2.4.0): translate a string using <code>__</code> function, new functions available <code>array_keys</code>, <code>array_search</code>, <code>array_values</code>, <code>strlen</code> and <code>strpos</code>, <code>mb_strlen</code> and <code>mb_strpos</code></li>
             <li>February, 2019 (version 2.3.0): add tracking URL support (new configuration field)</li>
             <li>
@@ -545,7 +547,10 @@ php bin/magento setup:di:compile
             <div id="custom_functions">
                 <h4>2.3. Custom functions</h4>
                 <ul>
-                    <li><strong>__</strong>: translate the input string <a href="#hints_translate_string">see example</a></li>
+                    <li><code class=php>string __ ( string $string_to_translate )</code>: translate the input string, <a href="#hints_translate_string">see example</a></li>
+                    <li><code class=php>object addMethod ( string $method_id , array $method_properties )</code>: add a shipping method</li>
+                    <li><code class=php>object addError ( string $message )</code>: add an error, <a href="#hints_error_when_no_method">see example</a></li>
+                    <li><code class=php>array getMethods ( [ boolean $onlyEnabled = false ] )</code>: get an array of defined shipping methods, if <code class=php>$onlyEnabled = true</code>, only enabled methods will be returned, <a href="#hints_error_when_no_method">see example</a></li>
                 </ul>
             </div>
         </div>
@@ -1191,6 +1196,17 @@ php bin/magento setup:di:compile
                     'title'      => __("My Shipping Method"),
                     'price'      => 10,
                 ]);
+            </script>
+        </div>
+
+        <h3 id="hints_error_when_no_method">Display an error when no method is available</h3>
+        <p>Add this at the end of your configuration:</p>
+        <div class=examples>
+            <script class=ex type="x-example">
+                /* Example */
+                if (count(getMethods(true)) == 0) {
+                    addError('No shipping method available');
+                }
             </script>
         </div>
     </div>
