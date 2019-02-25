@@ -62,6 +62,7 @@
         .c-hamburger--htx.collapsed span::after{bottom:-7px;transform:rotate(0)}
         .c-hamburger--htx.collapsed span::before, .c-hamburger--htx.collapsed span::after{transition-delay:0.2s,0s}
 
+        ul.fn_list > li+li{margin-top:1em}
         .red,.issue{color:red!important}
         code.hljs.red{color:red;background:#f2dede}
         .nowrap{white-space:nowrap}
@@ -530,27 +531,101 @@ php bin/magento setup:di:compile
 
             <div id="formulas_functions_addon">
                 <h4>2.2. Functions available with Functions Add-On</h4>
-                <ul>
-                    <li><strong>_country</strong>: <a href="#examples_using_destination" class="fn_addon">see examples</a></li>
-                    <li><strong>_postcode</strong>: <a href="#examples_using_destination" class="fn_addon">see examples</a></li>
-                    <li><strong>_customerGroup</strong>: <a href="#examples_using_customer_groups" class="fn_addon">see examples</a></li>
-                    <li><strong>_sum</strong>: <a href="#examples_using_sum" class="fn_addon">see examples</a></li>
-                    <li><strong>_min</strong>: <a href="#examples_using_minmax" class="fn_addon">see examples</a></li>
-                    <li><strong>_max</strong>: <a href="#examples_using_minmax" class="fn_addon">see examples</a></li>
-                    <li><strong>_count</strong>: <a href="#examples_using_count" class="fn_addon">see examples</a></li>
-                    <li><strong>_anyCat</strong>: <a href="#examples_using_categories" class="fn_addon">see examples</a></li>
-                    <li><strong>_allCat</strong>: <a href="#examples_using_categories" class="fn_addon">see examples</a></li>
-                    <li><strong>_table</strong>: <a href="#examples_functions__table" class="fn_addon">see examples</a></li>
+                <ul class="fn_list">
+                    <li>
+                        <code class=php>_country ( string $country_id1 [, string $... ] ) : bool</code>:
+                        <br>Returns true if the destination country matches one of the given country IDs,
+                        <a href="#examples_using_destination" class="fn_addon">see examples</a>
+                    </li>
+                    <li>
+                        <code class=php>_postcode ( string $postcode_or_pattern1 [, mixed $... ] ) : bool</code>:
+                        <br>Returns true if the destination postcode matches one of the given postcodes or regular expression patterns,
+                        <a href="#examples_using_destination" class="fn_addon">see examples</a>
+                    </li>
+                    <li>
+                        <code class=php>_customerGroup ( mixed $customer_group_id_or_name1 [, mixed $... ] ) : bool</code>:
+                        <br>Returns true if the customer group matches one of the given ids or names,
+                        <a href="#examples_using_customer_groups" class="fn_addon">see examples</a>
+                    </li>
+                    <li>
+                        <code class=php>_sum ( mixed $value1 [, mixed $... ] ) : mixed</code>:
+                        <br>Returns the sum of the given values,
+                        <a href="#examples_using_sum" class="fn_addon">see examples</a>
+                    </li>
+                    <li>
+                        <code class=php>_min ( mixed $value1 [, mixed $... ] ) : mixed</code>:
+                        <br>Returns the minimum of the given values,
+                        <a href="#examples_using_minmax" class="fn_addon">see examples</a>
+                    </li>
+                    <li>
+                        <code class=php>_max ( mixed $value1 [, mixed $... ] ) : mixed</code>:
+                        <br>Returns the maximum of the given values,
+                        <a href="#examples_using_minmax" class="fn_addon">see examples</a>
+                    </li>
+                    <li>
+                        <code class=php>_count ( callable $callback ) : int</code>:
+                        <br>Returns the number of matching items using a callback function,
+                        <a href="#examples_using_count" class="fn_addon">see examples</a>
+                    </li>
+                    <li>
+                        <code class=php>_anyCat ( object $item, int $category_id1 [, int $... ] ) : bool</code>:
+                        <br>Returns true if the item belongs to one of the given categories,
+                        <a href="#examples_using_categories" class="fn_addon">see examples</a>
+                    </li>
+                    <li>
+                        <code class=php>_allCat ( object $item, int $category_id1 [, int $... ] ) : bool</code>:
+                        <br>Returns true if the item belongs to all given categories,
+                        <a href="#examples_using_categories" class="fn_addon">see examples</a>
+                    </li>
+                    <li>
+                        <code class=php>_table ( array $table [, string $attribute_name = 'package_weight' [, bool $include_upper_limit = true ]] ) : mixed</code>:
+                        <br>Returns true if the item belongs to all given categories,
+                        <a href="#examples_functions__table" class="fn_addon">see examples</a>
+                    </li>
+                    <li>
+                        <code class=php>_setStopAtFirstMatch ( bool $stop_at_first_match ) : void</code>:
+                        <br>Sets option to stop adding methods at first match (must be used at the beginning of the configuration)
+                        <div class=examples>
+                            <script class=ex type="x-example">
+                                /* With Functions Add-on */
+                                _setStopAtFirstMatch(true);
+
+                                addMethod('__auto__', [
+                                    'title'      => "Delivery to US",
+                                    'enabled'    => $request->dest_country_id == 'US',
+                                    'price'      => 10,
+                                ]);
+
+                                // This method will be added only if the first one is not enabled
+                                addMethod('__auto__', [
+                                    'title'      => "Delivery to the rest of the world",
+                                    'price'      => 15,
+                                ]);
+                            </script>
+                        </div>
+                    </li>
                 </ul>
             </div>
 
             <div id="custom_functions">
                 <h4>2.3. Custom functions</h4>
-                <ul>
-                    <li><code class=php>string __ ( string $string_to_translate )</code>: translate the input string, <a href="#hints_translate_string">see example</a></li>
-                    <li><code class=php>object addMethod ( string $method_id , array $method_properties )</code>: add a shipping method</li>
-                    <li><code class=php>object addError ( string $message )</code>: add an error, <a href="#hints_error_when_no_method">see example</a></li>
-                    <li><code class=php>array getMethods ( [ boolean $onlyEnabled = false ] )</code>: get an array of defined shipping methods, if <code class=php>$onlyEnabled = true</code>, only enabled methods will be returned, <a href="#hints_error_when_no_method">see example</a></li>
+                <ul class="fn_list">
+                    <li>
+                        <code class=php>__ ( string $string_to_translate ) : string</code>:
+                        <br> Translates the input string, <a href="#hints_translate_string">see example</a>
+                    </li>
+                    <li>
+                        <code class=php>addMethod ( string $method_id , array $method_properties ) : object</code>:
+                        <br>Adds a new shipping method
+                    </li>
+                    <li>
+                        <code class=php>addError ( string $message ) : object</code>:
+                        <br>Adds an error, <a href="#hints_error_when_no_method">see example</a>
+                    </li>
+                    <li>
+                        <code class=php>getMethods ( [ bool $only_enabled = false ] ) : array</code>:
+                        <br>Gets an array of defined shipping methods, if <code class=php>$onlyEnabled = true</code>, only enabled methods will be returned, <a href="#hints_error_when_no_method">see example</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -1232,10 +1307,10 @@ php bin/magento setup:di:compile
     <!-- doc content end -->
     <p style="padding-top:50px;">&copy; 2016-2019 <a href="http://www.owebia.com/">Owebia</a></p>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/languages/php.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.2/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.2/languages/php.min.js"></script>
 <script>
 <!-- doc scripts start -->
 $(function(){
@@ -1249,7 +1324,9 @@ $(function(){
     });*/
 
     var counter = 1;
+    hljs.getLanguage("php").k += " bool int string object void mixed callable";
     hljs.initHighlightingOnLoad();
+
     var zoneIndex = 0;
     $('.examples').each(function(){
         var parts = [];
