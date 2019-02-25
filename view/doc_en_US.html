@@ -195,7 +195,7 @@ php bin/magento setup:di:compile
         <p>
             A call to <code>addMethod</code> function adds a shipping method.
         </p>
-        <p><code class=php>object addMethod ( string $method_id , array $method_properties )</code></p>
+        <p><code class=php>addMethod ( string $method_id , array $method_properties ) : object</code></p>
         <p>
             List of method <strong>properties</strong>:<br/>
         </p>
@@ -624,7 +624,7 @@ php bin/magento setup:di:compile
                     </li>
                     <li>
                         <code class=php>getMethods ( [ bool $only_enabled = false ] ) : array</code>:
-                        <br>Gets an array of defined shipping methods, if <code class=php>$onlyEnabled = true</code>, only enabled methods will be returned, <a href="#hints_error_when_no_method">see example</a>
+                        <br>Gets an array of defined shipping methods, if <code class=php>$only_enabled</code> is true, only enabled methods will be returned, <a href="#hints_error_when_no_method">see example</a>
                     </li>
                 </ul>
             </div>
@@ -1091,7 +1091,7 @@ php bin/magento setup:di:compile
                             addMethod('__auto__', [
                                 'title'      => "5 x weight of products that are in categories 2 or 3",
                                 'price'      => _sum(function ($item) {
-                                                    return _anyCat($item->product->category_ids, 2, 3)
+                                                    return _anyCat($item, 2, 3)
                                                         ? $item->product->weight * $item->qty
                                                         : 0;
                                                 }) * 5.0,
