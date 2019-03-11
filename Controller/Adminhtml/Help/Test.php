@@ -1,9 +1,9 @@
 <?php
 /**
- * Copyright © 2016-2017 Owebia. All rights reserved.
+ * Copyright © 2016-2019 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Owebia\AdvancedShippingSetting\Controller\Adminhtml\Help;
+namespace Owebia\AdvancedShipping\Controller\Adminhtml\Help;
 
 class Test extends \Magento\Backend\App\Action
 {
@@ -13,9 +13,9 @@ class Test extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $helper = $this->_objectManager->create('Owebia\AdvancedSettingCore\Helper\Config');
+        $helper = $this->_objectManager->create(\Owebia\AdvancedSettingCore\Helper\Config::class);
         /** @var \Owebia\AdvancedSettingCore\Helper\Registry $registry */
-        $registry = $this->_objectManager->create('Owebia\AdvancedSettingCore\Helper\Registry');
+        $registry = $this->_objectManager->create(\Owebia\AdvancedSettingCore\Helper\Registry::class);
         $config = <<<'EOT'
 
 // First shipping method
@@ -295,8 +295,8 @@ addMethod('id_024', [
 
 EOT;
         
-        $carrier = $this->_objectManager->create('Owebia\AdvancedShippingSetting\Model\Carrier');
-        $request = $this->_objectManager->create('Magento\Quote\Model\Quote\Address\RateRequest', [
+        $carrier = $this->_objectManager->create(\Owebia\AdvancedShipping\Model\Carrier::class);
+        $request = $this->_objectManager->create(\Magento\Quote\Model\Quote\Address\RateRequest::class, [
             'data' => [
                 'package_value' => 10,
                 'dest_country_id' => 'FR',

@@ -1,9 +1,9 @@
 <?php
 /**
- * Copyright © 2016-2017 Owebia. All rights reserved.
+ * Copyright © 2016-2019 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Owebia\AdvancedShippingSetting\Model\Config\Source;
+namespace Owebia\AdvancedShipping\Model\Config\Source;
 
 class RequiredFields implements \Magento\Framework\Option\ArrayInterface
 {

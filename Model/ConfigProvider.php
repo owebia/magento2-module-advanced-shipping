@@ -1,9 +1,9 @@
 <?php
 /**
- * Copyright © 2016-2017 Owebia. All rights reserved.
+ * Copyright © 2016-2019 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Owebia\AdvancedShippingSetting\Model;
+namespace Owebia\AdvancedShipping\Model;
 
 class ConfigProvider implements \Magento\Checkout\Model\ConfigProviderInterface
 {
@@ -33,14 +33,14 @@ class ConfigProvider implements \Magento\Checkout\Model\ConfigProviderInterface
     {
         $config = [
             'owebia' => [
-                'advanced_shipping_setting' => [
+                'advanced_shipping' => [
                     'validation_rules' => [],
                 ],
             ],
         ];
         $requiredFields = explode(',', (string) $this->getConfigValue('required_fields'));
         foreach ($requiredFields as $field) {
-            $config['owebia']['advanced_shipping_setting']['validation_rules'][$field] = [ 'required' => true ];
+            $config['owebia']['advanced_shipping']['validation_rules'][$field] = [ 'required' => true ];
         }
         return $config;
     }

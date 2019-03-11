@@ -1,9 +1,9 @@
 <?php
 /**
- * Copyright © 2016-2018 Owebia. All rights reserved.
+ * Copyright © 2016-2019 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Owebia\AdvancedShippingSetting\Controller\Adminhtml\Help;
+namespace Owebia\AdvancedShipping\Controller\Adminhtml\Help;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Filesystem;
@@ -37,7 +37,7 @@ class Display extends \Magento\Backend\App\Action
         $reader = $this->_objectManager->get(\Magento\Framework\Module\Dir\Reader::class);
         $viewDir = $reader->getModuleDir(
             \Magento\Framework\Module\Dir::MODULE_VIEW_DIR,
-            'Owebia_AdvancedShippingSetting'
+            'Owebia_AdvancedShipping'
         );
 
         $locale = $this->_localeResolver->getLocale();

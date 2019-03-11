@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Copyright © 2016-2017 Owebia. All rights reserved.
+ * Copyright © 2016-2019 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
 -->
@@ -10,7 +10,7 @@
         <carriers>
             <owsh1>
                 <active>0</active>
-                <model>Owebia\AdvancedShippingSetting\Model\Carrier</model>
+                <model>Owebia\AdvancedShipping\Model\Carrier</model>
                 <title>Advanced Shipping by Owebia</title>
                 <required_fields>country_id,postcode</required_fields>
             </owsh1>

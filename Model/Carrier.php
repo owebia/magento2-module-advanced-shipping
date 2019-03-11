@@ -3,14 +3,14 @@
  * Copyright © 2016-2019 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Owebia\AdvancedShippingSetting\Model;
+namespace Owebia\AdvancedShipping\Model;
 
 use Magento\Shipping\Model\Carrier\AbstractCarrier;
 use Magento\Shipping\Model\Carrier\CarrierInterface;
 use Magento\Quote\Model\Quote\Address\RateRequest;
 use Owebia\AdvancedSettingCore\Model\Wrapper;
-use Owebia\AdvancedShippingSetting\Model\CallbackHandler;
-use Owebia\AdvancedShippingSetting\Model\Wrapper\RateResult as RateResultWrapper;
+use Owebia\AdvancedShipping\Model\CallbackHandler;
+use Owebia\AdvancedShipping\Model\Wrapper\RateResult as RateResultWrapper;
 
 class Carrier extends AbstractCarrier implements CarrierInterface
 {
@@ -129,7 +129,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
         $result = $this->rateFactory->create();
 
         if (!isset($config) || !is_array($config)) {
-            $this->_logger->debug("Owebia_AdvancedShippingSetting : Invalid config");
+            $this->_logger->debug("Owebia_AdvancedShipping : Invalid config");
             return false;
         }
 
@@ -176,7 +176,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
      * @param \Magento\Shipping\Model\Rate\Result $result
      * @param mixed $wrapper
      * @param string $msg
-     * @return \Owebia\AdvancedShippingSetting\Model\Carrier
+     * @return \Owebia\AdvancedShipping\Model\Carrier
      */
     protected function appendError(
         \Magento\Shipping\Model\Rate\Result $result,
@@ -206,7 +206,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
     {
         $config = $this->getConfig($this->objectManager->create(RateRequest::class));
         if (!isset($config) || !is_array($config)) {
-            $this->_logger->debug("Owebia_AdavancedShippingSetting : Invalid config");
+            $this->_logger->debug("Owebia_AdvancedShipping : Invalid config");
             return [];
         }
 

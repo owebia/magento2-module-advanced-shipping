@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Copyright © 2016-2017 Owebia. All rights reserved.
+ * Copyright © 2016-2019 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
     <router id="admin">
-        <route id="owebia_advancedshippingsetting" frontName="owebia-advancedshippingsetting">
-            <module name="Owebia_AdvancedShippingSetting" before="Magento_Backend" />
+        <route id="owebia_advancedshipping" frontName="owebia-advancedshipping">
+            <module name="Owebia_AdvancedShipping" before="Magento_Backend" />
         </route>
     </router>
 </config>

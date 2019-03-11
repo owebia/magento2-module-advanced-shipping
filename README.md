@@ -15,12 +15,16 @@ You can find [add-ons for Advanced Shipping on Owebia Store](https://en.store.ow
 * Run these commands in your terminal
 
 ```shell
+# Remove old package
+composer remove owebia/magento2-module-advanced-shipping-setting
+
 # You must be in Magento root directory
-composer require owebia/magento2-module-advanced-shipping-setting:^2.5.0
+composer require owebia/magento2-module-advanced-shipping:^2.5.3
 php bin/magento cache:clean
 php bin/magento module:enable Owebia_AdvancedSettingCore
-php bin/magento module:enable Owebia_AdvancedShippingSetting
+php bin/magento module:enable Owebia_AdvancedShipping
 php bin/magento setup:upgrade
+
 # Execute setup:di:compile only if the store is in production mode
 php bin/magento setup:di:compile
 ```

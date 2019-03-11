@@ -1,10 +1,10 @@
 <?php
 /**
- * Copyright © 2016-2017 Owebia. All rights reserved.
+ * Copyright © 2016-2019 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
 
-namespace Owebia\AdvancedShippingSetting\Block\System\Config\Form\Field;
+namespace Owebia\AdvancedShipping\Block\System\Config\Form\Field;
 
 class About extends \Owebia\AdvancedSettingCore\Block\System\Config\Form\Field\AbstractField
 {

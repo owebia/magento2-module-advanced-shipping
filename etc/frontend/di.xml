@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /**
- * Copyright © 2016-2017 Owebia. All rights reserved.
+ * Copyright © 2016-2019 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
 -->
@@ -9,7 +9,7 @@
     <type name="Magento\Checkout\Model\CompositeConfigProvider">
         <arguments>
             <argument name="configProviders" xsi:type="array">
-                <item name="owebia_advancedshippingsetting_config_provider" xsi:type="object">Owebia\AdvancedShippingSetting\Model\ConfigProvider</item>
+                <item name="owebia_advancedshipping_config_provider" xsi:type="object">Owebia\AdvancedShipping\Model\ConfigProvider</item>
             </argument>
         </arguments>
     </type>

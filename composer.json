@@ -1,5 +1,5 @@
 {
-    "name": "owebia/magento2-module-advanced-shipping-setting",
+    "name": "owebia/magento2-module-advanced-shipping",
     "description": "N/A",
     "require": {
         "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0|~7.2.0",
@@ -15,7 +15,7 @@
             "registration.php"
         ],
         "psr-4": {
-            "Owebia\\AdvancedShippingSetting\\": ""
+            "Owebia\\AdvancedShipping\\": ""
         }
     }
 }

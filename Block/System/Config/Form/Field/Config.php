@@ -1,10 +1,10 @@
 <?php
 /**
- * Copyright © 2016-2017 Owebia. All rights reserved.
+ * Copyright © 2016-2019 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
 
-namespace Owebia\AdvancedShippingSetting\Block\System\Config\Form\Field;
+namespace Owebia\AdvancedShipping\Block\System\Config\Form\Field;
 
 class Config extends \Owebia\AdvancedSettingCore\Block\System\Config\Form\Field\Config
 {
@@ -15,7 +15,7 @@ class Config extends \Owebia\AdvancedSettingCore\Block\System\Config\Form\Field\
 
     protected function getHelpUrl(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
-        return $this->getUrl('owebia_advancedshippingsetting/help/display');
+        return $this->getUrl('owebia_advancedshipping/help/display');
     }
 
     protected function getToolbarContent(\Magento\Framework\Data\Form\Element\AbstractElement $element)

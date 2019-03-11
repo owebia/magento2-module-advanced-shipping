@@ -3,10 +3,10 @@
  * Copyright © 2016-2019 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Owebia\AdvancedShippingSetting\Model;
+namespace Owebia\AdvancedShipping\Model;
 
 use Owebia\AdvancedSettingCore\Model\Wrapper;
-use Owebia\AdvancedShippingSetting\Model\Wrapper\RateResult as RateResultWrapper;
+use Owebia\AdvancedShipping\Model\Wrapper\RateResult as RateResultWrapper;
 
 class CallbackHandler extends \Owebia\AdvancedSettingCore\Model\CallbackHandler
 {

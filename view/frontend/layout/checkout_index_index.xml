@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Copyright © 2016-2017 Owebia. All rights reserved.
+ * Copyright © 2016-2019 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
 -->
@@ -21,8 +21,8 @@
                                                     <item name="children" xsi:type="array">
                                                         <item name="shipping-rates-validation" xsi:type="array">
                                                             <item name="children" xsi:type="array">
-                                                                <item name="owebia-advancedshippingsetting-rates-validation" xsi:type="array">
-                                                                    <item name="component" xsi:type="string">Owebia_AdvancedShippingSetting/js/view/shipping-rates-validation</item>
+                                                                <item name="owebia-advancedshipping-rates-validation" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Owebia_AdvancedShipping/js/view/shipping-rates-validation</item>
                                                                 </item>
                                                             </item>
                                                         </item>

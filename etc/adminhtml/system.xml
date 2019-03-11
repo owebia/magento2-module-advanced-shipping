@@ -12,7 +12,7 @@
                 <label>Advanced Shipping by Owebia</label>
                 <field id="about" translate="label" type="label" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>About</label>
-                    <frontend_model>Owebia\AdvancedShippingSetting\Block\System\Config\Form\Field\About</frontend_model>
+                    <frontend_model>Owebia\AdvancedShipping\Block\System\Config\Form\Field\About</frontend_model>
                     <comment><![CDATA[<p>To manage more carriers, you can use <a href="https://en.store.owebia.com/magento2-module-adv-ship-unlimited-carriers-addon.html" target="_blank">Unlimited Carriers Add-on</a>.</p><p>To make the writing of your configuration easier, you can use <a href="https://en.store.owebia.com/magento2-module-adv-ship-functions-addon.html" target="_blank">Functions Add-on</a>.</p>]]></comment>
                 </field>
                 <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -24,11 +24,11 @@
                 </field>
                 <field id="config" translate="label" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Configuration</label>
-                    <frontend_model>Owebia\AdvancedShippingSetting\Block\System\Config\Form\Field\Config</frontend_model>
+                    <frontend_model>Owebia\AdvancedShipping\Block\System\Config\Form\Field\Config</frontend_model>
                 </field>
                 <field id="required_fields" translate="label" type="multiselect" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Required Fields</label>
-                    <source_model>Owebia\AdvancedShippingSetting\Model\Config\Source\RequiredFields</source_model>
+                    <source_model>Owebia\AdvancedShipping\Model\Config\Source\RequiredFields</source_model>
                     <comment><![CDATA[If the value of a selected field is changed, the shipping methods will be recalculated]]></comment>
                 </field>
                 <field id="showmethod" translate="label" type="select" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
