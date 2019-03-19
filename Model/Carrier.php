@@ -213,7 +213,8 @@ class Carrier extends AbstractCarrier implements CarrierInterface
         $allowedMethods = [];
         foreach ($config as $index => $item) {
             if ($item instanceof RateResultWrapper\Method) {
-                $allowedMethods[$index] = isset($item->title) ? $item->title : 'N/A';
+                $title = $item->title;
+                $allowedMethods[$index] = isset($title) ? $title : 'N/A';
             }
         }
 
