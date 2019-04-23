@@ -27,6 +27,7 @@
         @media screen and (min-width: 480px){#sidebar{right:auto}}
         .highlight{background:#ffa;padding:4px;line-height:2em;}
         .highlight code{background:#ffa;}
+        .hljs .highlight{padding:0;line-height:inherit}
         .nav-tabs>li>a,
         .nav-tabs>li>a:focus,
         .nav-tabs>li>a:hover{text-transform:uppercase;font-weight:bold;color:#888;font-size:.8em}
@@ -112,6 +113,8 @@
                 <li><a href="#hints_translate_string">Translate a string <span class=red>(new)</span></a></li>
                 <li><a href="#hints_error_when_no_method">Display an error when no method is available <span class=red>(new)</span></a></li>
                 <li><a href="#hints_method_chaining">Method chaining <span class=red>(new)</span></a></li>
+                <li><a href="#hints_display_method_description_in_templates">Method description in templates <span class=red>(new)</span></a></li>
+                <li><a href="#hints_display_custom_method_data_in_templates">Custom data in templates <span class=red>(new)</span></a></li>
             </ul>
         </li>
 
@@ -1305,6 +1308,70 @@ php bin/magento setup:di:compile
                     ->setPrice(10);
             </script>
         </div>
+
+        <h3 id="hints_display_method_description_in_templates">Display method description in frontend templates</h3>
+        <p class="alert alert-warning">Read <a href="https://devdocs.magento.com/" target="_blank">Magento DevDocs</a> to understand how to override a template.</p>
+        <div class="examples">
+            <script class=ex type="x-example">
+                /* Set your custom data */
+                addMethod('__auto__', [
+                    'title'       => "My Shipping Method",
+                    'description' => "My Description",      // Define the method description
+                    'price'       => 10,
+                ]);
+            </script>
+        </div>
+        <div class="examples is-template">
+            <script class=ex type="x-template">
+                /* Cart Template */
+                &lt;!-- In template app/design/frontend/{vendor}/{theme}/Magento_Checkout/web/template/cart/shipping-rates.html --&gt;
+
+                &lt;!-- ko text: (<span class="highlight">$data</span>.extension_attributes || {}).<span class="highlight">description</span> --&gt;&lt;!-- /ko --&gt;
+            </script>
+        </div>
+        <div class="examples is-template">
+            <script class=ex type="x-template">
+                /* Checkout Template */
+                &lt;!-- In template app/design/frontend/{vendor}/{theme}/Magento_Checkout/web/template/shipping.html --&gt;
+
+                &lt;!-- ko text: (<span class="highlight">method</span>.extension_attributes || {}).<span class="highlight">description</span> --&gt;&lt;!-- /ko --&gt;
+            </script>
+        </div>
+
+        <h3 id="hints_display_custom_method_data_in_templates">Display custom method data in frontend templates</h3>
+        <p class="alert alert-warning">Read <a href="https://devdocs.magento.com/" target="_blank">Magento DevDocs</a> to understand how to override a template.</p>
+        <div class="examples">
+            <script class=ex type="x-example">
+                /* Set your custom data */
+                addMethod('__auto__', [
+                    'title'       => "My Shipping Method",
+                    'price'       => 10,
+                ]) // No semicolon after closing parenthesis
+                ->set('my_data', 'Hello World !');
+
+                // Or with method chaining
+                addMethod('__auto__')
+                    ->setTitle("My Shipping Method")
+                    ->setPrice(10)
+                    ->set('my_data', 'Hello World !');
+            </script>
+        </div>
+        <div class="examples" data-language="html">
+            <script class=ex type="x-example">
+                /* Cart Template */
+                &lt;!-- In template app/design/frontend/{vendor}/{theme}/Magento_Checkout/web/template/cart/shipping-rates.html --&gt;
+
+                &lt;!-- ko text: ((<span class="highlight">$data</span>.extension_attributes || {}).custom || [{}])[0].<span class="highlight">my_data</span> --&gt;&lt;!-- /ko --&gt;
+            </script>
+        </div>
+        <div class="examples" data-language="html">
+            <script class=ex type="x-example">
+                /* Checkout Template */
+                &lt;!-- In template app/design/frontend/{vendor}/{theme}/Magento_Checkout/web/template/shipping.html --&gt;
+
+                &lt;!-- ko text: ((<span class="highlight">method</span>.extension_attributes || {}).custom || [{}])[0].<span class="highlight">my_data</span> --&gt;&lt;!-- /ko --&gt;
+            </script>
+        </div>
     </div>
 
     <div id="known_issues">
@@ -1332,6 +1399,7 @@ php bin/magento setup:di:compile
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.2/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.2/languages/php.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.2/languages/html.min.js"></script>
 <script>
 <!-- doc scripts start -->
 $(function(){
@@ -1349,10 +1417,11 @@ $(function(){
     hljs.initHighlightingOnLoad();
 
     var zoneIndex = 0;
-    $('.examples').each(function(){
+    $('.examples').each(function () {
+        var language = $(this).data('language') || 'php';
         var parts = [];
         var tabNames = [];
-        $(this).find('.ex').each(function(){
+        $(this).find('.ex').each(function () {
             var text = $(this).text();
             text = text.replace(/^(\r|\n)+|(\r|\n)+$/g, '');
             var indentLength = text.search(/\S/);
@@ -1360,12 +1429,12 @@ $(function(){
             var regexp = new RegExp('^' + indent, 'gm');
             text = text.replace(regexp, '');
             text = text.replace(/\b(_[a-zA-Z]+)\b/g, '<span class="config-fn">$1</span>');
-            while (text.match(/'(title|enabled|price)'(\s*)=>/)) {
-                text = text.replace(/'(title|enabled|price)'(\s*)=>/, '<span class="config-attr">\'$1\'</span>$2=>');
+            while (text.match(/'(title|enabled|price|description)'(\s*)=>/)) {
+                text = text.replace(/'(title|enabled|price|description)'(\s*)=>/, '<span class="config-attr">\'$1\'</span>$2=>');
             }
             var elems = text.split(/\/\/---/g);
             var n = 0;
-            $.each(elems, function(index, element){
+            $.each(elems, function (index, element) {
                 n = 0;
                 while (element.match(/'__auto__'/)) {
                     element = element.replace(/'__auto__'/, '<span class="config-id">\'id_' + ('000' + counter).slice(-3) + '\'</span>');
@@ -1377,24 +1446,51 @@ $(function(){
                     parts[index] = '';
                 }
                 var splitted = element.split(/\/\* (.*?) \*\//);
-                tabNames[index] = splitted[1];
-                parts[index] += splitted[2].trim() + "\n";
+                if (splitted.length == 3) {
+                    tabNames[index] = splitted[1];
+                    parts[index] += splitted[2].trim() + "\n";
+                } else {
+                    tabNames[index] = 'Example';
+                    parts[index] += element.trim() + "\n";
+                }
             });
             counter += n;
-            $(this).html("<pre><code class=php>" + text.trim() + "</code></pre>");
         });
         var tabList = [];
         var tabContent = [];
-        $.each(parts, function(index, part){
-            tabList.push('<li role="presentation"' + (index == 0 ? ' class="active"' : '') + '><a href="#tab-' + zoneIndex + '-' + index + '" role="tab" data-toggle="tab">' + tabNames[index] + '</a></li>');
-            tabContent.push('<div role="tabpanel" class="tab-pane' + (index == 0 ? ' active' : '') + '" id="tab-' + zoneIndex + '-' + index + '">'
-                    + '<pre><code class=php>' + part.trim() + '</code></pre>'
-                + '</div>');
+        $.each(parts, function (index, part) {
+            tabList.push(
+                $('<li role="presentation"/>')
+                    .addClass(index == 0 ? 'active' : '')
+                    .append(
+                        $('<a role="tab" data-toggle="tab"/>')
+                            .attr('href', '#tab-' + zoneIndex + '-' + index)
+                            .text(tabNames[index])
+                    )
+            );
+            tabContent.push(
+                $('<div role="tabpanel" class="tab-pane"/>')
+                    .addClass(index == 0 ? 'active' : '')
+                    .attr('id', 'tab-' + zoneIndex + '-' + index)
+                    .append(
+                        $('<pre/>').append(
+                            $('<code/>').addClass(language).html(part.trim())
+                        )
+                    )
+            );
         });
-        $(this).html('<div><ul class="nav nav-tabs" role="tablist">' + tabList.join('') + '</ul><div class="tab-content">' + tabContent.join('') + '</div></div>');
+        $(this).html(
+            $('<div/>')
+                .append(
+                    $('<ul class="nav nav-tabs" role="tablist"/>').append(tabList)
+                )
+                .append(
+                    $('<div class="tab-content"/>').append(tabContent)
+                )
+        );
         zoneIndex++;
     });
-    $('code.php').each(function(i, block) {
+    $('code.php, code.html').each(function(i, block) {
         hljs.highlightBlock(block);
     });
     $('a.fn_addon').click(function(e){
