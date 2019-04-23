@@ -111,6 +111,7 @@
                 <li><a href="#hints_using_custom_customer_attribute">Using custom customer attribute</a></li>
                 <li><a href="#hints_translate_string">Translate a string <span class=red>(new)</span></a></li>
                 <li><a href="#hints_error_when_no_method">Display an error when no method is available <span class=red>(new)</span></a></li>
+                <li><a href="#hints_method_chaining">Method chaining <span class=red>(new)</span></a></li>
             </ul>
         </li>
 
@@ -1282,6 +1283,26 @@ php bin/magento setup:di:compile
                 if (count(getMethods(true)) == 0) {
                     addError('No shipping method available');
                 }
+            </script>
+        </div>
+
+        <h3 id="hints_method_chaining">Use method chaining</h3>
+        <div class=examples>
+            <script class=ex type="x-example">
+                /* Example */
+                // Both code give the same result
+                addMethod('__auto__', [
+                    'title'       => "My Shipping Method",
+                    'description' => "My Description",  // optional
+                    'enabled'     => true,              // optional
+                    'price'       => 10,
+                ]);
+
+                addMethod('__auto__')
+                    ->setTitle("My Shipping Method")
+                    ->setDescription("My Description")  // optional
+                    ->setEnabled(true)                  // optional
+                    ->setPrice(10);
             </script>
         </div>
     </div>

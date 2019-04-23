@@ -27,7 +27,7 @@ class CallbackHandler extends \Owebia\AdvancedSettingCore\Model\CallbackHandler
     public function addMethodCallback()
     {
         $args = func_get_args();
-        if (count($args) != 2) {
+        if (count($args) != 1 && count($args) != 2) {
             throw new \Magento\Framework\Exception\LocalizedException(
                 __("Invalid arguments count for addMethod FuncCall")
             );
@@ -43,24 +43,31 @@ class CallbackHandler extends \Owebia\AdvancedSettingCore\Model\CallbackHandler
         $this->currentMethodId = $methodId;
 
         $methodOptions = array_shift($args);
-        if (!is_array($methodOptions)) {
-            throw new \Magento\Framework\Exception\LocalizedException(
-                __("Invalid second argument for addMethod FuncCall: the second argument must be an array")
-            );
-        }
+        if (empty($methodOptions)) {
+            $methodOptions = [
+                'title' => 'Method Title',
+                'enabled' => true,
+            ];
+        } else {
+            if (!is_array($methodOptions)) {
+                throw new \Magento\Framework\Exception\LocalizedException(
+                    __("Invalid second argument for addMethod FuncCall: the second argument must be an array")
+                );
+            }
 
-        if (isset($this->parsingResult[$methodId])) {
-            throw new \Magento\Framework\Exception\LocalizedException(
-                __("The method %1 already exists", $methodId)
-            );
-        }
+            if (isset($this->parsingResult[$methodId])) {
+                throw new \Magento\Framework\Exception\LocalizedException(
+                    __("The method %1 already exists", $methodId)
+                );
+            }
 
-        $methodOptions = $methodOptions + [ 'enabled' => true ];
-        $price = isset($methodOptions['price']) ? $methodOptions['price'] : null;
-        if ($price === null | $price === false) {
-            throw new \Magento\Framework\Exception\LocalizedException(
-                __("Invalid price")
-            );
+            $methodOptions = $methodOptions + [ 'enabled' => true ];
+            $price = isset($methodOptions['price']) ? $methodOptions['price'] : null;
+            if ($price === null | $price === false) {
+                throw new \Magento\Framework\Exception\LocalizedException(
+                    __("Invalid price")
+                );
+            }
         }
 
         $method = $this->registry->create(RateResultWrapper\Method::class, [ 'data' => $methodOptions ]);
