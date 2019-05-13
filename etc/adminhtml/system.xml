@@ -13,7 +13,7 @@
                 <field id="about" translate="label" type="label" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>About</label>
                     <frontend_model>Owebia\AdvancedShipping\Block\System\Config\Form\Field\About</frontend_model>
-                    <comment><![CDATA[<p>To manage more carriers, you can use <a href="https://en.store.owebia.com/magento2-module-adv-ship-unlimited-carriers-addon.html" target="_blank">Unlimited Carriers Add-on</a>.</p><p>To make the writing of your configuration easier, you can use <a href="https://en.store.owebia.com/magento2-module-adv-ship-functions-addon.html" target="_blank">Functions Add-on</a>.</p>]]></comment>
+                    <comment><![CDATA[<p>Discover <a href="https://en.store.owebia.com/magento2-module-advanced-shipping-pro.html" target="_blank">Advanced Shipping Pro</a> and our <a href="https://en.store.owebia.com/magento2-module-advanced-shipping-pro.html#description" target="_blank">add-ons for Advanced Shipping</a></p>]]></comment>
                 </field>
                 <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enabled</label>
