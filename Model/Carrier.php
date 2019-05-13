@@ -24,14 +24,14 @@ class Carrier extends AbstractCarrier implements CarrierInterface
     protected $_code = self::CODE;
 
     /**
-     * @var \Magento\Framework\ObjectManagerInterface
-     */
-    protected $objectManager = null;
-
-    /**
      * @var \Magento\Shipping\Model\Rate\ResultFactory
      */
     protected $rateFactory = null;
+
+    /**
+     * @var \Magento\Quote\Model\Quote\Address\RateRequestFactory
+     */
+    protected $rateRequestFactory;
 
     /**
      * @var \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory
@@ -69,26 +69,32 @@ class Carrier extends AbstractCarrier implements CarrierInterface
     protected $debugLogger = null;
 
     /**
+     * @var \Owebia\AdvancedShipping\Model\CallbackHandlerFactory
+     */
+    protected $callbackHandlerFactory;
+
+    /**
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeInterface
      * @param \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory
      * @param \Psr\Log\LoggerInterface $logger
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
      * @param \Magento\Shipping\Model\Rate\ResultFactory $rateFactory
      * @param \Magento\Shipping\Model\Tracking\ResultFactory $trackFactory
      * @param \Magento\Shipping\Model\Tracking\Result\ErrorFactory $trackErrorFactory
      * @param \Magento\Shipping\Model\Tracking\Result\StatusFactory $trackStatusFactory
+     * @param \Magento\Quote\Model\Quote\Address\RateRequestFactory $rateRequestFactory
      * @param \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory
      * @param \Owebia\AdvancedSettingCore\Helper\Registry $registryHelper
      * @param \Owebia\AdvancedSettingCore\Helper\Config $configHelper
      * @param \Owebia\AdvancedSettingCore\Logger\Logger $debugLogger
+     * @param \Owebia\AdvancedShipping\Model\CallbackHandlerFactory $callbackHandlerFactory
      * @param array $data
      */
     public function __construct(
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeInterface,
         \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory,
         \Psr\Log\LoggerInterface $logger,
-        \Magento\Framework\ObjectManagerInterface $objectManager,
         \Magento\Shipping\Model\Rate\ResultFactory $rateFactory,
+        \Magento\Quote\Model\Quote\Address\RateRequestFactory $rateRequestFactory,
         \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory,
         \Magento\Shipping\Model\Tracking\ResultFactory $trackFactory,
         \Magento\Shipping\Model\Tracking\Result\ErrorFactory $trackErrorFactory,
@@ -96,11 +102,12 @@ class Carrier extends AbstractCarrier implements CarrierInterface
         \Owebia\AdvancedSettingCore\Helper\Registry $registryHelper,
         \Owebia\AdvancedSettingCore\Helper\Config $configHelper,
         \Owebia\AdvancedSettingCore\Logger\Logger $debugLogger,
+        \Owebia\AdvancedShipping\Model\CallbackHandlerFactory $callbackHandlerFactory,
         array $data = []
     ) {
         parent::__construct($scopeInterface, $rateErrorFactory, $logger, $data);
-        $this->objectManager = $objectManager;
         $this->rateFactory = $rateFactory;
+        $this->rateRequestFactory = $rateRequestFactory;
         $this->rateMethodFactory = $rateMethodFactory;
         $this->trackFactory = $trackFactory;
         $this->trackErrorFactory = $trackErrorFactory;
@@ -108,6 +115,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
         $this->registryHelper = $registryHelper;
         $this->configHelper = $configHelper;
         $this->debugLogger = $debugLogger;
+        $this->callbackHandlerFactory = $callbackHandlerFactory;
     }
 
     /**
@@ -207,7 +215,9 @@ class Carrier extends AbstractCarrier implements CarrierInterface
      */
     public function getAllowedMethods()
     {
-        $config = $this->getConfig($this->objectManager->create(RateRequest::class));
+        $config = $this->getConfig(
+            $this->rateRequestFactory->create()
+        );
         if (!isset($config) || !is_array($config)) {
             $this->_logger->debug("Owebia_AdvancedShipping : Invalid config");
             return [];
@@ -250,7 +260,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
         try {
             $this->initRegistry($request);
             $configString = $this->getConfigData('config');
-            $callbackHandler = $this->objectManager->create(CallbackHandler::class);
+            $callbackHandler = $this->callbackHandlerFactory->create();
             $callbackHandler->setRegistry($this->registryHelper);
             $this->configHelper->parse(
                 $configString,
