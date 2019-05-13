@@ -25,6 +25,9 @@ php bin/magento cache:clean
 php bin/magento module:enable Owebia_AdvancedSettingCore Owebia_AdvancedShipping
 php bin/magento setup:upgrade
 
+# Deploy static content for each used locale (here for en_US locale only)
+php bin/magento setup:static-content:deploy en_US
+
 # Execute setup:di:compile only if the store is in production mode
 php bin/magento setup:di:compile
 ```
