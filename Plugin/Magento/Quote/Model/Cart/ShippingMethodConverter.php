@@ -48,7 +48,7 @@ class ShippingMethodConverter
             }
 
             $customDataArray = $customData->toArray();
-            $extensionAttributes->setCustom([ $customDataArray ]);
+            $extensionAttributes->setCustom($customData);
             foreach ($customDataArray as $name => $value) {
                 $extensionAttributes->setData($name, $value);
             }

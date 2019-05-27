@@ -6,6 +6,9 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Reflection\DataObjectProcessor">
+        <plugin name="m2as-DataObjectProcessorPlugin" type="Owebia\AdvancedShipping\Plugin\Magento\Framework\Reflection\DataObjectProcessor" sortOrder="10"/>
+    </type>
     <type name="Magento\Quote\Model\Cart\ShippingMethodConverter">
         <plugin name="m2as-ShippingMethodConverterPlugin" type="Owebia\AdvancedShipping\Plugin\Magento\Quote\Model\Cart\ShippingMethodConverter" sortOrder="10"/>
     </type>

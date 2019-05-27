@@ -1365,7 +1365,7 @@ php bin/magento setup:di:compile
                 /* Cart Template */
                 &lt;!-- In template app/design/frontend/{vendor}/{theme}/Magento_Checkout/web/template/cart/shipping-rates.html --&gt;
 
-                &lt;!-- ko text: ((<span class="highlight">$data</span>.extension_attributes || {}).custom || [{}])[0].<span class="highlight">my_data</span> --&gt;&lt;!-- /ko --&gt;
+                &lt;!-- ko text: ((<span class="highlight">$data</span>.extension_attributes || {}).custom || {}).<span class="highlight">my_data</span> --&gt;&lt;!-- /ko --&gt;
             </script>
         </div>
         <div class="examples" data-language="html">
@@ -1373,7 +1373,7 @@ php bin/magento setup:di:compile
                 /* Checkout Template */
                 &lt;!-- In template app/design/frontend/{vendor}/{theme}/Magento_Checkout/web/template/shipping.html --&gt;
 
-                &lt;!-- ko text: ((<span class="highlight">method</span>.extension_attributes || {}).custom || [{}])[0].<span class="highlight">my_data</span> --&gt;&lt;!-- /ko --&gt;
+                &lt;!-- ko text: ((<span class="highlight">method</span>.extension_attributes || {}).custom || {}).<span class="highlight">my_data</span> --&gt;&lt;!-- /ko --&gt;
             </script>
         </div>
     </div>
