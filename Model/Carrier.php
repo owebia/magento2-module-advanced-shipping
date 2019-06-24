@@ -198,9 +198,9 @@ class Carrier extends AbstractCarrier implements CarrierInterface
             $error = $this->_rateErrorFactory->create();
             $error->setCarrier($this->_code);
             $error->setCarrierTitle($this->getConfigData('title'));
-            $methodTitle = empty($wrapper->title)
+            $methodTitle = !empty($wrapper->title)
                 ? $wrapper->title
-                : (empty($wrapper->id) ? "Method `{$wrapper->id}` - " : '');
+                : (!empty($wrapper->id) ? "Method `{$wrapper->id}` - " : '');
             $error->setErrorMessage("$methodTitle $msg");
             $result->append($error);
         }
