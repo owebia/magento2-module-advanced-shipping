@@ -1,6 +1,6 @@
 Each Owebia source file included in this distribution is licensed under proprietary license.
 
-Copyright © 2016-2019 Owebia. All rights reserved.
+Copyright © 2016-2020 Owebia. All rights reserved.
 No warranty, explicit or implicit, provided.
 Files can not be copied and/or distributed without the express permission of Owebia.
 

@@ -40,7 +40,7 @@ php bin/magento setup:di:compile
 
 ## License
 
-Copyright © 2016-2019 Owebia. All rights reserved.
+Copyright © 2016-2020 Owebia. All rights reserved.
 
 No warranty, explicit or implicit, provided.
 
