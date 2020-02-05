@@ -164,6 +164,7 @@
     <div id="whats_new">
         <h2>What's new?</h2>
         <ul>
+            <li>February, 2020 (version 2.6.5): <a href="#inventory_management">support of Inventory Management (Magento ≥ 2.3)</a></a></li>
             <li>April, 2019 (version 2.6.0): <a href="#hints_method_chaining">method chaining</a>, <a href="#hints_display_method_description_in_templates">display method description or custom data in checkout templates</a></li>
             <li>February, 2019 (version 2.5.0): new custom functions available <code>addError</code>, <code>getMethods</code></li>
             <li>February, 2019 (version 2.4.0): translate a string using <code>__</code> function, new functions available <code>array_keys</code>, <code>array_search</code>, <code>array_values</code>, <code>strlen</code> and <code>strpos</code>, <code>mb_strlen</code> and <code>mb_strpos</code></li>
@@ -411,6 +412,18 @@ php bin/magento setup:di:compile
                                     <li><code class=php>tax_class_id</code>: the taxclass id</li>
                                     <li><code class=php>getAttributeText('tax_class_id')</code>: the tax class name<br/>
                                         <span class="highlight">To get the text value of an attribute of type select, use <code class=php>getAttributeText('attribute_code')</code></span>
+                                    </li>
+                                    <li id="inventory_management"><code class=php>getSourceItems()</code>: returns an array of <code class=php>\Magento\InventoryApi\Api\Data\SourceItemInterface</code> to handle <a href="https://devdocs.magento.com/guides/v2.3/inventory/">Inventory Management (Magento ≥ 2.3)</a>
+                                        <br>Source item: (<code class=php>\Magento\InventoryApi\Api\Data\SourceItemInterface</code>)
+                                        <ul>
+                                            <li><code class=php>$sourceItem->*</code>: attribute of the source item<br/>
+                                                <ul>
+                                                    <li><code class=php>source_code</code>: the code of the inventory source</li>
+                                                    <li><code class=php>quantity</code>: the quantity of the product in the inventory source</li>
+                                                    <li>…</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
                                     </li>
                                     <li>…</li>
                                 </ul>
