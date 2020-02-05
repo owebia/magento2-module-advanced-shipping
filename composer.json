@@ -3,10 +3,10 @@
     "description": "N/A",
     "require": {
         "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0|~7.2.0|~7.3.0",
-        "owebia/magento2-module-advanced-setting-core": "^2.6.3"
+        "owebia/magento2-module-advanced-setting-core": "^2.7.0"
     },
     "type": "magento2-module",
-    "version": "2.6.5",
+    "version": "2.7.0",
     "license": [
         "proprietary"
     ],
