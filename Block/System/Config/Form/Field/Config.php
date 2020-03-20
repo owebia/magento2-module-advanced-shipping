@@ -18,11 +18,6 @@ class Config extends \Owebia\AdvancedSettingCore\Block\System\Config\Form\Field\
         return $this->getUrl('owebia_advancedshipping/help/display');
     }
 
-    protected function getToolbarContent(\Magento\Framework\Data\Form\Element\AbstractElement $element)
-    {
-        return parent::getToolbarContent($element);
-    }
-
     protected function getFooterContent(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
         return '';
