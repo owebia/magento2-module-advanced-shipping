@@ -36,6 +36,7 @@ class CallbackHandler extends \Owebia\AdvancedSettingCore\Model\CallbackHandler
         $methodId = array_shift($args);
         if (!is_string($methodId) || !preg_match('#^[a-z][a-z0-9_]*$#', $methodId)) {
             throw new \Magento\Framework\Exception\LocalizedException(
+                // phpcs:ignore Generic.Files.LineLength.TooLong
                 __("Invalid first argument for addMethod FuncCall: the first argument must be a string and match the following pattern : ^[a-z][a-z0-9_]*$")
             );
         }

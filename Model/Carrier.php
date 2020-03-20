@@ -339,7 +339,9 @@ class Carrier extends AbstractCarrier implements CarrierInterface
                     ->setTracking($tracking)
                     ->setUrl(
                         str_replace(
-                            '{{trackingNumber}}', $tracking, $this->getConfigData('tracking_url')
+                            '{{trackingNumber}}',
+                            $tracking,
+                            $this->getConfigData('tracking_url')
                         )
                     )
             );
