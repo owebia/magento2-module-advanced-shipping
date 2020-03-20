@@ -111,10 +111,11 @@
                 <li><a href="#hints_access_new_customer_data">Access new customer data (ex. VAT ID)</a></li>
                 <li><a href="#hints_using_custom_customer_attribute">Using custom customer attribute</a></li>
                 <li><a href="#hints_translate_string">Translate a string <span class=red>(new)</span></a></li>
-                <li><a href="#hints_error_when_no_method">Error when no method available <span class=red>(new)</span></a></li>
-                <li><a href="#hints_method_chaining">Method chaining <span class=red>(new)</span></a></li>
-                <li><a href="#hints_display_method_description_in_templates">Method description in templates <span class=red>(new)</span></a></li>
-                <li><a href="#hints_display_custom_method_data_in_templates">Custom data in templates <span class=red>(new)</span></a></li>
+                <li><a href="#hints_error_when_no_method">Error when no method available</a></li>
+                <li><a href="#hints_method_chaining">Method chaining</a></li>
+                <li><a href="#hints_display_method_description_in_templates">Method description in templates</a></li>
+                <li><a href="#hints_display_custom_method_data_in_templates">Custom data in templates</a></li>
+                <li><a href="#hints_anonymous_functions">Anonymous functions <span class=red>(new)</span></a></li>
             </ul>
         </li>
 
@@ -136,7 +137,7 @@
         <p class=bold>Technical Informations</p>
         <p>The usage of the PHP syntax (with an <a href="http://en.wikipedia.org/wiki/Abstract_syntax_tree">Abstract Syntax Tree</a>) has been preferred to the usage of a JSON syntax (with regular expressions and the eval function) as in previous versions of the extension. This is the result of considerations on security and performance.</p>
         <p>The PHP code defined in the configuration is not evaluated with the eval function for security reasons. The library <a href="https://github.com/nikic/PHP-Parser">PHP-Parser</a> is used to obtain an Abstract Syntax Tree (AST). The AST is browsed and only a limited set of functions and variables is allowed.</p>
-        <p>As the AST is not version-dependent, you can use the PHP 5.6 syntax even if your server uses a lower version of PHP.</p>
+        <p>The AST is not version-dependent, you can use the PHP syntax supported by the parser.</p>
     </div>
 
     <div id="addons">
@@ -164,14 +165,22 @@
     <div id="whats_new">
         <h2>What's new?</h2>
         <ul>
-            <li>February, 2020 (version 2.6.5): <a href="#inventory_management">support of Inventory Management (Magento ≥ 2.3)</a></a></li>
+            <li>March, 2020 (version 2.8.0):
+                <ul>
+                    <li>support functions <code>array_key_exists</code>, <code>json_decode</code>, <code>json_encode</code></li>
+                    <li>support assignment operators <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>, <code>**=</code>, <code>.=</code>, <code>&=</code>, <code>|=</code>, <code>^=</code>, <code>&lt;&lt;=</code>, <code>&gt;&gt;=</code></li>
+                    <li>support incrementing/decrementing operators <code>$a++</code>, <code>$a--</code>, <code>++$a</code>, <code>--$a</code></li>
+                    <li>inherit variables from the parent scope in anonymous functions with 'use' keyword</li>
+                </ul>
+            </li>
+            <li>February, 2020 (version 2.7.0): <a href="#inventory_management">support of Inventory Management (Magento ≥ 2.3)</a></li>
             <li>April, 2019 (version 2.6.0): <a href="#hints_method_chaining">method chaining</a>, <a href="#hints_display_method_description_in_templates">display method description or custom data in checkout templates</a></li>
             <li>February, 2019 (version 2.5.0): new custom functions available <code>addError</code>, <code>getMethods</code></li>
-            <li>February, 2019 (version 2.4.0): translate a string using <code>__</code> function, new functions available <code>array_keys</code>, <code>array_search</code>, <code>array_values</code>, <code>strlen</code> and <code>strpos</code>, <code>mb_strlen</code> and <code>mb_strpos</code></li>
+            <li>February, 2019 (version 2.4.0): translate a string using <code>__</code> function, support functions <code>array_keys</code>, <code>array_search</code>, <code>array_values</code>, <code>strlen</code>, <code>strpos</code>, <code>mb_strlen</code>, <code>mb_strpos</code></li>
             <li>February, 2019 (version 2.3.0): add tracking URL support (new configuration field)</li>
             <li>
-                December, 2017 (version 2.1.0): new functions available <code>mb_strtolower</code>, <code>mb_strtoupper</code>,
-                <code>mb_substr</code>, <code>preg_replace</code>, <code>strtolower</code>, <code>strtoupper</code> and <code>time</code>
+                December, 2017 (version 2.1.0): support functions <code>mb_strtolower</code>, <code>mb_strtoupper</code>,
+                <code>mb_substr</code>, <code>preg_replace</code>, <code>strtolower</code>, <code>strtoupper</code>, <code>time</code>
             </li>
             <li>Get <a href="https://en.store.owebia.com/magento2-module-adv-ship-functions-addon.html">Functions Add-On</a> and make configuration creation easy <a href="#formulas_functions_addon" class="fn_addon">with additional functions</a></li>
         </ul>
@@ -499,8 +508,8 @@ php bin/magento setup:di:compile
                     <ul>
                         <li><a href="http://php.net/manual/en/function.explode.php">explode</a></li>
                         <li><a href="http://php.net/manual/en/function.implode.php">implode</a></li>
-                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.strlen.php">strlen</a></li>
-                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.strpos.php">strpos</a></li>
+                        <li><a href="http://php.net/manual/en/function.strlen.php">strlen</a></li>
+                        <li><a href="http://php.net/manual/en/function.strpos.php">strpos</a></li>
                         <li><a href="http://php.net/manual/en/function.strtolower.php">strtolower</a></li>
                         <li><a href="http://php.net/manual/en/function.strtoupper.php">strtoupper</a></li>
                         <li><a href="http://php.net/manual/en/function.substr.php">substr</a></li>
@@ -509,8 +518,8 @@ php bin/magento setup:di:compile
                 <div>
                     <h5>Multibyte String Functions</h5>
                     <ul>
-                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.mb-strlen.php">mb_strlen</a></li>
-                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.mb-strpos.php">mb_strpos</a></li>
+                        <li><a href="http://php.net/manual/en/function.mb-strlen.php">mb_strlen</a></li>
+                        <li><a href="http://php.net/manual/en/function.mb-strpos.php">mb_strpos</a></li>
                         <li><a href="http://php.net/manual/en/function.mb-strtolower.php">mb_strtolower</a></li>
                         <li><a href="http://php.net/manual/en/function.mb-strtoupper.php">mb_strtoupper</a></li>
                         <li><a href="http://php.net/manual/en/function.mb-substr.php">mb_substr</a></li>
@@ -536,16 +545,24 @@ php bin/magento setup:di:compile
                     <ul>
                         <li><a href="http://php.net/manual/en/function.array-filter.php">array_filter</a></li>
                         <li><a href="http://php.net/manual/en/function.array-intersect.php">array_intersect</a></li>
-                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.array-keys.php">array_keys</a></li>
+                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.array-key-exists.php">array_key_exists</a></li>
+                        <li><a href="http://php.net/manual/en/function.array-keys.php">array_keys</a></li>
                         <li><a href="http://php.net/manual/en/function.array-map.php">array_map</a></li>
                         <li><a href="http://php.net/manual/en/function.array-reduce.php">array_reduce</a></li>
-                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.array-search.php">array_search</a></li>
+                        <li><a href="http://php.net/manual/en/function.array-search.php">array_search</a></li>
                         <li><a href="http://php.net/manual/en/function.array-sum.php">array_sum</a></li>
                         <li><a href="http://php.net/manual/en/function.array-unique.php">array_unique</a></li>
-                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.array-values.php">array_values</a></li>
+                        <li><a href="http://php.net/manual/en/function.array-values.php">array_values</a></li>
                         <li><a href="http://php.net/manual/en/function.count.php">count</a></li>
                         <li><a href="http://php.net/manual/en/function.in-array.php">in_array</a></li>
                         <li><a href="http://php.net/manual/en/function.range.php">range</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>JSON Functions</h5>
+                    <ul>
+                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.json-decode.php">json_decode</a></li>
+                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.json-encode.php">json_encode</a></li>
                     </ul>
                 </div>
             </div>
@@ -848,8 +865,7 @@ php bin/magento setup:di:compile
                             // In others cases, the price will be 7.50
                             addMethod('__auto__', [
                                 'title'      => "Shipping",
-                                'price'      => array_reduce([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ], function ($carry, $item) {
-                                                    global $request;
+                                'price'      => array_reduce([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ], function ($carry, $item) use ($request) {
                                                     if (isset($carry)) return $carry;
                                                     if (isset($item[0]) && ($request->package_weight <= $item[0] || $item[0] == '*')) {
                                                         $carry = $item[1];
@@ -872,8 +888,7 @@ php bin/magento setup:di:compile
                             // You can exclude the upper limit value by adding an argument false
                             addMethod('__auto__', [
                                 'title'      => "Shipping",
-                                'price'      => array_reduce([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ], function ($carry, $item) {
-                                                    global $request;
+                                'price'      => array_reduce([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ], function ($carry, $item) use ($request) {
                                                     if (isset($carry)) return $carry;
                                                     if (isset($item[0]) && ($request->package_weight < $item[0] || $item[0] == '*')) {
                                                         $carry = $item[1];
@@ -1389,6 +1404,27 @@ php bin/magento setup:di:compile
                 &lt;!-- ko text: ((<span class="highlight">method</span>.extension_attributes || {}).custom || {}).<span class="highlight">my_data</span> --&gt;&lt;!-- /ko --&gt;
             </script>
         </div>
+
+        <h3 id="hints_anonymous_functions">Anonymous functions</h3>
+        <p>You can assign an anonymous function to a variable in order use it later.</p>
+        <div class=examples>
+            <script class=ex type="x-example">
+                /* Example */
+                $fn = function ($price) use ($request) {
+                    return $price * $request->package_qty;
+                };
+
+                addMethod('__auto__', [
+                    'title'       => "My Shipping Method",
+                    'price'       => $fn(5),
+                ]);
+
+                addMethod('__auto__', [
+                    'title'       => "My Shipping Method",
+                    'price'       => $fn(10),
+                ]);
+            </script>
+        </div>
     </div>
 
     <div id="known_issues">
@@ -1410,7 +1446,7 @@ php bin/magento setup:di:compile
     </div>
 
     <!-- doc content end -->
-    <p style="padding-top:50px;">&copy; 2016-2019 <a href="http://www.owebia.com/">Owebia</a></p>
+    <p style="padding-top:50px;">&copy; 2016-2020 <a href="http://www.owebia.com/">Owebia</a></p>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
