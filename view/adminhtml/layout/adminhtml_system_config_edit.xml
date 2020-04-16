@@ -7,7 +7,7 @@
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
-        <css src="Owebia_AdvancedSettingCore::css/php-config-editor.css"/>
-        <script src="Owebia_AdvancedSettingCore::js/php-config-editor.js"/>
+        <css src="Owebia_SharedPhpConfig::css/php-config-editor.css"/>
+        <script src="Owebia_SharedPhpConfig::js/php-config-editor.js"/>
     </head>
 </page>

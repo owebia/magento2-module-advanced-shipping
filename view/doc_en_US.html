@@ -197,7 +197,7 @@
 # You must be in Magento root directory
 composer require owebia/magento2-module-advanced-shipping:^2.1.0
 php bin/magento cache:clean
-php bin/magento module:enable Owebia_AdvancedSettingCore
+php bin/magento module:enable Owebia_SharedPhpConfig
 php bin/magento module:enable Owebia_AdvancedShipping
 php bin/magento setup:upgrade
 # Execute setup:di:compile only if the store is in production mode

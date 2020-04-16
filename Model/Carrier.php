@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2016-2019 Owebia. All rights reserved.
+ * Copyright © 2016-2020 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Owebia\AdvancedShipping\Model;
@@ -8,7 +8,7 @@ namespace Owebia\AdvancedShipping\Model;
 use Magento\Shipping\Model\Carrier\AbstractCarrier;
 use Magento\Shipping\Model\Carrier\CarrierInterface;
 use Magento\Quote\Model\Quote\Address\RateRequest;
-use Owebia\AdvancedSettingCore\Model\Wrapper;
+use Owebia\SharedPhpConfig\Model\Wrapper;
 use Owebia\AdvancedShipping\Model\CallbackHandler;
 use Owebia\AdvancedShipping\Model\Wrapper\RateResult as RateResultWrapper;
 
@@ -54,17 +54,17 @@ class Carrier extends AbstractCarrier implements CarrierInterface
     protected $trackStatusFactory;
 
     /**
-     * @var \Owebia\AdvancedSettingCore\Helper\Registry
+     * @var \Owebia\SharedPhpConfig\Helper\Registry
      */
     protected $registryHelper = null;
 
     /**
-     * @var \Owebia\AdvancedSettingCore\Helper\Config
+     * @var \Owebia\SharedPhpConfig\Helper\Config
      */
     protected $configHelper = null;
 
     /**
-     * @var \Owebia\AdvancedSettingCore\Logger\Logger
+     * @var \Owebia\SharedPhpConfig\Logger\Logger
      */
     protected $debugLogger = null;
 
@@ -83,9 +83,9 @@ class Carrier extends AbstractCarrier implements CarrierInterface
      * @param \Magento\Shipping\Model\Tracking\Result\StatusFactory $trackStatusFactory
      * @param \Magento\Quote\Model\Quote\Address\RateRequestFactory $rateRequestFactory
      * @param \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory
-     * @param \Owebia\AdvancedSettingCore\Helper\Registry $registryHelper
-     * @param \Owebia\AdvancedSettingCore\Helper\Config $configHelper
-     * @param \Owebia\AdvancedSettingCore\Logger\Logger $debugLogger
+     * @param \Owebia\SharedPhpConfig\Helper\Registry $registryHelper
+     * @param \Owebia\SharedPhpConfig\Helper\Config $configHelper
+     * @param \Owebia\SharedPhpConfig\Logger\Logger $debugLogger
      * @param \Owebia\AdvancedShipping\Model\CallbackHandlerFactory $callbackHandlerFactory
      * @param array $data
      */
@@ -99,9 +99,9 @@ class Carrier extends AbstractCarrier implements CarrierInterface
         \Magento\Shipping\Model\Tracking\ResultFactory $trackFactory,
         \Magento\Shipping\Model\Tracking\Result\ErrorFactory $trackErrorFactory,
         \Magento\Shipping\Model\Tracking\Result\StatusFactory $trackStatusFactory,
-        \Owebia\AdvancedSettingCore\Helper\Registry $registryHelper,
-        \Owebia\AdvancedSettingCore\Helper\Config $configHelper,
-        \Owebia\AdvancedSettingCore\Logger\Logger $debugLogger,
+        \Owebia\SharedPhpConfig\Helper\Registry $registryHelper,
+        \Owebia\SharedPhpConfig\Helper\Config $configHelper,
+        \Owebia\SharedPhpConfig\Logger\Logger $debugLogger,
         \Owebia\AdvancedShipping\Model\CallbackHandlerFactory $callbackHandlerFactory,
         array $data = []
     ) {

@@ -1,14 +1,13 @@
 <?php
 /**
- * Copyright © 2016-2019 Owebia. All rights reserved.
+ * Copyright © 2016-2020 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Owebia\AdvancedShipping\Model;
 
-use Owebia\AdvancedSettingCore\Model\Wrapper;
 use Owebia\AdvancedShipping\Model\Wrapper\RateResult as RateResultWrapper;
 
-class CallbackHandler extends \Owebia\AdvancedSettingCore\Model\CallbackHandler
+class CallbackHandler extends \Owebia\SharedPhpConfig\Model\CallbackHandler
 {
     /**
      * @var array

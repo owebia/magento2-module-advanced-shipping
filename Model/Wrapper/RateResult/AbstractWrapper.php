@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright © 2019 Owebia. All rights reserved.
+ * Copyright © 2019-2020 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Owebia\AdvancedShipping\Model\Wrapper\RateResult;
 
-class AbstractWrapper extends \Owebia\AdvancedSettingCore\Model\Wrapper\ArrayWrapper
+class AbstractWrapper extends \Owebia\SharedPhpConfig\Model\Wrapper\ArrayWrapper
 {
     /**
      * @var string
@@ -22,7 +22,7 @@ class AbstractWrapper extends \Owebia\AdvancedSettingCore\Model\Wrapper\ArrayWra
 
     /**
      * {@inheritDoc}
-     * @see \Owebia\AdvancedSettingCore\Model\Wrapper\AbstractWrapper::loadData()
+     * @see \Owebia\SharedPhpConfig\Model\Wrapper\AbstractWrapper::loadData()
      */
     protected function loadData($key)
     {

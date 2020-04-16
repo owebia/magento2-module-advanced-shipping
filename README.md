@@ -22,7 +22,7 @@ composer remove owebia/magento2-module-advanced-shipping-setting
 composer require owebia/magento2-module-advanced-shipping:^2.8.0
 
 php bin/magento cache:clean
-php bin/magento module:enable Owebia_AdvancedSettingCore Owebia_AdvancedShipping
+php bin/magento module:enable Owebia_SharedPhpConfig Owebia_AdvancedShipping
 php bin/magento setup:upgrade
 
 # Deploy static content for each used locale (here for en_US locale only)

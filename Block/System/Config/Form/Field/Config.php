@@ -1,12 +1,12 @@
 <?php
 /**
- * Copyright © 2016-2019 Owebia. All rights reserved.
+ * Copyright © 2016-2020 Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
 
 namespace Owebia\AdvancedShipping\Block\System\Config\Form\Field;
 
-class Config extends \Owebia\AdvancedSettingCore\Block\System\Config\Form\Field\Config
+class Config extends \Owebia\SharedPhpConfig\Block\System\Config\Form\Field\Config
 {
     protected function getFullscreenTitle(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
