@@ -70,6 +70,7 @@ class CallbackHandler extends \Owebia\SharedPhpConfig\Model\CallbackHandler
             }
         }
 
+        /** @var \Owebia\AdvancedShipping\Model\Wrapper\RateResult\Method $method */
         $method = $this->registry->create(RateResultWrapper\Method::class, [ 'data' => $methodOptions ]);
         $method->setId($methodId);
         $this->parsingResult[$methodId] = $method;
@@ -91,6 +92,7 @@ class CallbackHandler extends \Owebia\SharedPhpConfig\Model\CallbackHandler
     protected function addError($message, $id = null)
     {
         $data = [ 'error' => $message ];
+        /** @var \Owebia\AdvancedShipping\Model\Wrapper\RateResult\Error $error */
         $error = $this->registry->create(RateResultWrapper\Error::class, [ 'data' => $data ]);
         if (!empty($id)) {
             $error->setId($id);
