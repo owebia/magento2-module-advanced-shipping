@@ -1,380 +1,614 @@
 <!doctype html>
-<html>
-<head lang="en">
-    <meta charset="utf-8"/>
-    <title>Documentation of Advanced Shipping extension for Magento 2</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.2/styles/github.min.css" integrity="sha256-3YM6A3pH4QFCl9WbSU8oXF5N6W/2ylvW0o2g+Z6TmLQ=" crossorigin="anonymous" />
-    <style>
-        body{padding-top:50px;}
-        h2{border-top:solid 1px #eee;padding-top:30px;margin-top:50px}
-        h3{padding-top:20px;margin-top:0}
-        h4{margin-top:1.5em}
-        code.hljs{display:inline;background:#eee;padding:4px;}pre code.hljs{background:none;padding:0;}
-        .hljs-comment{color:gray;}.hljs-string{color:purple;}.hljs-keyword{color:blue;font-weight:bold}.hljs-variable{color:DarkBlue}.hljs-number{color:#f50}
-        .config-id .hljs-string{color:#09f}.config-attr .hljs-string{color:maroon}.config-fn{color:Green;background:rgba(173,255,47,.7);font-weight:bold}
-        p.bold{margin:20px 0 5px;font-weight:bold;}
-        a[href^="#"]{color:green}a[href^="#"]:hover,a[href^="#"]:focus,a[href^="#"]:active{color:DarkGreen}
-        ul.ventilated>li{padding:.5em 0;}
-        /* sidebar */
-        #sidebar{position:fixed;top:0;left:0;right:0;max-width:280px;background:rgba(255,255,255,.5);z-index:100}
-        #sidebar > ul{padding-top:10px;padding-bottom:10px;background:#f0f0f0}
-        #sidebar ul a{display:block;color:#716b7a;padding:5px 20px;}
-        #sidebar ul a:hover,
-        #sidebar ul a:focus{text-decoration:none;background-color:#e5e3e9;}
-        #sidebar .nav .nav a{padding-top:3px;padding-bottom:3px;padding-left:30px;font-size:90%;}
-        @media screen and (min-width: 480px){#sidebar{right:auto}}
-        .highlight{background:#ffa;padding:4px;line-height:2em;}
-        .highlight code{background:#ffa;}
-        .hljs .highlight{padding:0;line-height:inherit}
-        .nav-tabs>li>a,
-        .nav-tabs>li>a:focus,
-        .nav-tabs>li>a:hover{text-transform:uppercase;font-weight:bold;color:#888;font-size:.8em}
-        .nav-tabs>li.active>a,
-        .nav-tabs>li.active>a:focus,
-        .nav-tabs>li.active>a:hover{background:#f5f5f5;}
-        .tab-pane > pre{border-top:0;border-radius:0;border-color:#ddd}
-        .icon-bar{background-color:#888;display:block;width:22px;height:2px;border-radius:1px;}
-        .icon-bar+.icon-bar{margin-top:4px;}
-        #sidebar.opened{background:#f0f0f0;bottom:0;overflow:auto;}
-        @media screen and (min-width: 1700px){
-            #sidebar{background:#f0f0f0;bottom:0;overflow:auto;}
-            #sidebar ul.collapse{display:block;}
-            .c-hamburger{display:none!important}
-        }
+<html lang="en">
+<head>
+<!-- phpcs:disable -->
+<meta charset="utf-8"/>
+<title>Documentation of Advanced Shipping extension for Magento 2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,light,medium&lang=en">
+<style>
+body,html{margin:0;padding:0;background-color:#fff;color:#212529}
+body{font-family:'Roboto','Helvetica','Arial',sans-serif;font-size:14px;font-weight:400;line-height:1.72}
+*{box-sizing:border-box}
 
-        .c-hamburger{display:block;position:relative;overflow:hidden;margin:0;width:50px;height:50px;font-size:0;text-indent:-9999px;border:none;appearance:none;cursor:pointer;transition:background 0.2s}
-        .navbar-inverse .navbar-toggle.c-hamburger:hover, .navbar-inverse .navbar-toggle.c-hamburger:focus{background:none}
-        .c-hamburger:focus{outline:none}
-        .c-hamburger span, .c-hamburger span::before, .c-hamburger span::after{position:absolute;display:block;height:2px;background-color:#333}
-        .c-hamburger span{top:24px;left:10px;right:10px}
-        .c-hamburger span::before, .c-hamburger span::after{left:0;width:100%;content:""}
-        .c-hamburger--htx span{transition:background 0s 0.2s}
-        .c-hamburger--htx span::before, .c-hamburger--htx span::after{transition-duration:0.2s, 0.2s}
-        .c-hamburger--htx span::before{transition-property:top, transform}
-        .c-hamburger--htx span::after{transition-property:bottom, transform}
-        .c-hamburger--htx span{background:none}
-        .c-hamburger--htx span::before{top:0;transform:rotate(45deg)}
-        .c-hamburger--htx span::after{bottom:0;transform:rotate(-45deg)}
-        .c-hamburger--htx span::before, .c-hamburger--htx span::after{transition-delay:0s, 0.2s}
-        .c-hamburger--htx.collapsed span{background:#333}
-        .c-hamburger--htx.collapsed span::before{top:-7px;transform:rotate(0)}
-        .c-hamburger--htx.collapsed span::after{bottom:-7px;transform:rotate(0)}
-        .c-hamburger--htx.collapsed span::before, .c-hamburger--htx.collapsed span::after{transition-delay:0.2s,0s}
+.red,.issue{color:red!important}
+.nowrap{white-space:nowrap}
+.multicolumns > div{break-inside:avoid-column;padding-top:1px}
+@media all and (min-width: 500px){
+    .multicolumns{-webkit-column-count:2;-moz-column-count:2;column-count:2}
+}
+@media all and (min-width: 1000px){
+    .multicolumns{-webkit-column-count:3;-moz-column-count:3;column-count:3}
+}
 
-        ul.fn_list > li+li{margin-top:1em}
-        .red,.issue{color:red!important}
-        code.hljs.red{color:red;background:#f2dede}
-        .nowrap{white-space:nowrap}
-        .multicolumns > div{break-inside:avoid-column;padding-top:1px}
-        @media screen and (min-width: 500px){
-            .multicolumns{-webkit-column-count:2;-moz-column-count:2;column-count:2}
-        }
-        @media screen and (min-width: 1000px){
-            .multicolumns{-webkit-column-count:3;-moz-column-count:3;column-count:3}
-        }
-    </style>
+/* Adapted from https://github.com/google/material-design-lite (Apache License 2.0) */
+nav a{display:block;text-decoration:none;opacity:.87}
+.o-title{display:block;position:relative;font-size:1.43em;line-height:1;letter-spacing:.02em;font-weight:400}
+/* tabs*/
+.o-tabs{margin-bottom:20px}
+.o-tabs-tab-bar{border-bottom:0}
+.o-tabs-tab{padding:0 24px;float:left;position:relative;display:block;text-decoration:none;height:48px;line-height:48px;text-align:center;font-weight:500;text-transform:uppercase;color:rgba(0,0,0,.54)}
+a.o-tabs-tab,
+a.o-tabs-tab:hover{text-decoration:none;color:rgba(0,0,0,.54)}
+.o-tabs.is-upgraded .o-tabs-panel{display:none}
+.o-tabs.is-upgraded .o-tabs-panel.is-active{display:block}
+.o-tabs.is-upgraded .o-tabs-tab.is-active{color:rgba(0,0,0,.87)}
+.o-tabs.is-upgraded .o-tabs-tab.is-active::after{height:2px;width:100%;display:block;content:" ";bottom:0;left:0;position:absolute;background:#d14;
+    animation:border-expand .2s cubic-bezier(.4,0,.4,1) .01s alternate forwards;transition:all 1s cubic-bezier(.4,0,1,1)}
+.o-tabs-panel{clear:left}
+/* header */
+#o-header{position:fixed;top:0;left:0;overflow:hidden;display:flex;flex-direction:column;flex-wrap:nowrap;justify-content:flex-start;flex-shrink:0;
+    width:100%;margin:0;padding:0;border:none;min-height:48px;max-height:1000px;z-index:3;background-color:#682749;color:#fff;
+    box-shadow:0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+    transition-duration:.2s;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-property:max-height,box-shadow}
+#o-header-row{display:flex;flex-direction:row;flex-wrap:nowrap;flex-shrink:0;align-self:stretch;align-items:center;height:48px;margin:0;padding:0 40px 0 80px}
+/* drawer */
+#o-drawer{display:flex;flex-direction:column;flex-wrap:nowrap;width:240px;position:fixed;top:0;left:0;bottom:0;overflow:auto;
+    box-shadow:0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);border-right:1px solid #e0e0e0;
+    background:#fafafa;transform:translateX(-250px);transform-style:preserve-3d;will-change:transform;transition-duration:.2s;
+    transition-timing-function:cubic-bezier(.4,0,.2,1);transition-property:transform;color:#424242;overflow:visible;overflow-y:auto;z-index:5}
+#o-drawer.is-visible{transform:translateX(0)}
+#o-drawer-btn{display:block;position:absolute;height:40px;width:48px;border:0;flex-shrink:0;overflow:hidden;text-align:center;cursor:pointer;font-size:26px;
+    margin:8px 12px;top:0;left:0;color:#fff;z-index:4}
+#o-obfuscator{background-color:rgba(0,0,0,.5);opacity:0;transition-property:opacity;transition-duration:.2s;
+    transition-timing-function:cubic-bezier(.4,0,.2,1);pointer-events:none;position:fixed;top:0;right:0;bottom:0;left:0;z-index:4}
+#o-obfuscator.is-visible{pointer-events:auto;opacity:1}
+#o-drawer nav a{flex-shrink:0;padding:12px 16px;color:#757575}
+#o-drawer nav a.o-sub{padding:5px 20px 5px 30px;position:relative;top:-8px}
+#o-drawer nav a:hover{background-color:#e0e0e0}
+#o-drawer>.o-title{line-height:56px;padding-left:16px}
+/* header tabs */
+#o-header-row{height:56px}
+#o-header-row nav{display:none;margin:0;padding:0;flex-direction:row;align-items:center;height:56px;margin-left:5vw}
+#o-header-row nav a{color:#fff;padding:6px 24px 0;text-transform:uppercase;font-weight:500;position:relative;line-height:50px;}
+#o-header-row nav a.is-active{opacity:1}
+#o-header-row nav a.is-active::after{position:absolute;display:block;content:" ";bottom:0;left:0;right:0;height:3px;background:#d14}
+@media screen and (min-width: 1340px) {
+    #o-header-row nav{display:flex}
+}
+
+
+body.noscroll{overflow:hidden}
+
+h2,h3,h4{line-height:1.3;padding:0;font-weight:500;margin:0 0 1.5em}
+h2{font-size:26px;font-weight:400;padding-left:1.35em;text-indent:-1.35em}
+h3{font-size:18px;color:rgba(0,0,0,.54);padding-left:1em;text-indent:-1em;text-transform:uppercase}
+h4{font-size:16px;color:rgba(0,0,0,.54);padding-left:1.5em;text-indent:-1.5em;line-height:1.5}
+p{margin:0 0 1em}
+a{color:#007bff}
+a:hover{color:#0056b3;text-decoration:underline}
+a[href^="#"]{text-decoration:none}
+
+section{padding:5rem 0vw 2.5rem;overflow:hidden}
+section>*{max-width:1000px}
+section code,
+section pre{background-color:#f6f8fa;font-size:87%;color:rgba(0,0,0,.87)}
+section pre{padding:12px 0vw;margin:0 0vw 16px;overflow-x:auto}
+section .o-tabs pre{border-top:1px solid #e0e0e0;margin-top:0}
+section ul pre{margin-left:-36px;padding-left:36px}
+ul{padding-left:30px}
+section code{padding:4px;border-radius:3px;white-space:nowrap}
+section pre code{white-space:pre}
+section code.inline\@medium{display:block;padding:16px 0vw;margin:0 -0vw;border-radius:0}
+article{margin:3rem 0}
+article article{margin:3rem 0}
+article::before{content:"";display:block;height:5rem;margin:-5rem 0 0}
+
+.doc-list{list-style:none;margin:0 0 0 3vw;padding:1em 0 0}
+.doc-list>li{margin:1em 0}
+.doc-list a{text-decoration:none}
+.doc-list>li>strong{font-size:1.6em;font-weight:300;;display:block}
+
+.doc-warning{margin:16px -0vw;padding:16px 0vw;background-color:#FFF9C4;border-radius:2px;color:#212121}
+doc-toc,
+.print-tab-title{display:none}
+
+doc-section-toc{display:block;margin-bottom:40px}
+doc-section-toc ol{padding-left:20px;list-style:none}
+doc-section-toc ol>li::before{content:attr(data-num)". "}
+
+/* Title counters */
+main{counter-reset:h2counter}
+h2{counter-reset:h3counter}
+h2::before{content:counter(h2counter)".\0000a0\0000a0";counter-increment:h2counter}
+h3{counter-reset:h4counter}
+h3::before{content:counter(h2counter)"."counter(h3counter)".\0000a0\0000a0";counter-increment:h3counter}
+h4::before{content:counter(h2counter)"."counter(h3counter)"."counter(h4counter)".\0000a0\0000a0";counter-increment:h4counter}
+
+section,
+footer,
+section .wide,
+section pre,
+section code.inline\@medium,
+.doc-warning{padding-left:16px;padding-right:16px}
+section .wide,
+section pre,
+section code.inline\@medium,
+.doc-warning{margin-left:-16px;margin-right:-16px}
+@media all and (min-width: 400px) {
+    section,
+    footer,
+    section .wide,
+    section pre,
+    section code.inline\@medium,
+    .doc-warning{padding-left:4vw;padding-right:4vw}
+    section .wide,
+    section pre,
+    section code.inline\@medium,
+    .doc-warning{margin-left:-4vw;margin-right:-4vw}
+}
+@media all and (min-width: 1025px) {
+    section,
+    footer{padding:5rem 10vw 0}
+    section code.inline\@medium{margin:0}
+    section pre,
+    .doc-warning{padding-left:24px;padding-right:24px}
+    section pre,
+    section ul pre,
+    .doc-warning{margin-left:0;margin-right:0}
+    section .wide{padding-left:40vw;padding-right:40vw}
+    section .wide{margin-left:-40vw;margin-right:-40vw}
+
+    .doc-fn-list{padding-left:30px;list-style-type:disc}
+
+    #o-drawer nav a{padding:12px 20px}
+    #o-drawer>.o-title{padding-left:20px}
+    .hide\@medium{display:none}
+    section code.inline\@medium{display:inline;padding:4px;border-radius:3px}
+    section div.inline\@medium{display:inline}
+    section code wbr{display:none}
+}
+
+@media print {
+    /* paddings/margins */
+    section,
+    footer{padding-left:0;padding-right:0}
+    section .wide,
+    section pre,
+    section code.inline\@medium,
+    .doc-warning{padding-left:16px;padding-right:16px}
+    section .wide,
+    section pre,
+    section code.inline\@medium,
+    .doc-warning{margin-left:0;margin-right:0}
+
+    /* Page breaks */
+    section{page-break-before:always}
+    h2,h3,h4{page-break-after:avoid}
+    pre,
+    .o-tabs-panel{page-break-inside:avoid}
+
+    /* Hidden */
+    #o-drawer,
+    #o-drawer-btn,
+    .o-tabs-tab-bar{display:none}
+
+    /* Fix */
+    #o-header{background:transparent;position:static}
+    section{margin:0;padding-top:2rem}
+    .print-tab-title{display:block}
+    .print-tab-title+pre{content:" ";clear:both}
+
+    /* TOC */
+    doc-toc{display:block}
+    doc-toc>ol{-webkit-column-count:2;-moz-column-count:2;column-count:2;list-style:none;margin-top:2em;padding-left:0;color:rgba(0,0,0,.87)}
+    doc-toc>ol>li{break-inside:avoid;margin-bottom:2em}
+    doc-toc>ol>li::before,
+    doc-toc>ol>li>a{font-size:1.4em}
+    doc-toc>ol>li>ol>li>ol>li::before,
+    doc-toc>ol>li>ol>li>ol>li>a{font-size:.9em}
+    doc-toc ol{counter-reset:item;padding-left:20px;text-indent:-20px;list-style:none}
+    doc-toc ol>li::before{content:counters(item, ".") ". ";counter-increment:item}
+}
+</style>
+<style>
+code.hljs{display:inline;background:#f6f8fa;padding:4px}
+pre code.hljs{background:none;padding:0}
+.config-id .hljs-string{color:#09f}
+.config-attr .hljs-string{color:maroon}
+.config-fn{color:Green;background:rgba(173,255,47,.7);font-weight:bold}
+ul.ventilated>li{padding:.5em 0;}
+.highlight{background:#ffa;padding:4px;line-height:2em;}
+.highlight code{background:#ffa;}
+.hljs .highlight{padding:0;line-height:inherit}
+code.hljs.red{color:red;background:#f2dede}
+
+.hljs{display:block;overflow-x:auto;padding:.5em;color:#333;background:#f8f8f8}
+.hljs-comment,.hljs-quote{color:#998;font-style:italic}
+.hljs-keyword,.hljs-selector-tag,.hljs-subst{color:#333;font-weight:700}
+.hljs-literal,.hljs-number,.hljs-tag .hljs-attr,.hljs-template-variable,.hljs-variable{color:teal}
+.hljs-doctag,.hljs-string{color:#d14}
+.hljs-section,.hljs-selector-id,.hljs-title{color:#900;font-weight:700}
+.hljs-subst{font-weight:400}
+.hljs-class .hljs-title,.hljs-type{color:#458;font-weight:700}
+.hljs-attribute,.hljs-name,.hljs-tag{color:navy;font-weight:400}
+.hljs-link,.hljs-regexp{color:#009926}.hljs-bullet,.hljs-symbol{color:#990073}
+.hljs-built_in,.hljs-builtin-name{color:#0086b3}
+.hljs-meta{color:#999;font-weight:700}
+.hljs-deletion{background:#fdd}
+.hljs-addition{background:#dfd}
+.hljs-emphasis{font-style:italic}
+.hljs-strong{font-weight:700}
+
+.hljs-keyword{color:DarkBlue}
+.hljs-number{color:#f50}
+
+.doc-fn-list{padding-left:0;list-style:none}
+.doc-fn-list > li+li{margin-top:1em}
+</style>
 </head>
 <body>
-<div id="sidebar">
-    <!-- doc sidebar start -->
-    <a class="c-hamburger c-hamburger--htx collapsed" role="button" title="Table of Contents" data-toggle="collapse" href="#tableOfContents" aria-expanded="false" aria-controls="tableOfContents">
-        <span>Show/Hide Table of Contents</span>
-    </a>
-    <ul id="tableOfContents" class="collapse nav sidenav">
-        <li><a href="#introduction">Introduction</a></li>
-        <li><a href="#addons">Add-ons</a></li>
-        <li><a href="#whats_new">What's new?</a></li>
-        <li><a href="#installation">Installation</a></li>
-        <li><a href="#quick_start">Quick start</a></li>
-        <li><a href="#formulas">Variables and functions</a>
-            <ul class="nav">
-                <li><a href="#formulas_variables">Variables <span class=red>(updated)</span></a></li>
-                <li><a href="#formulas_functions">Functions <span class=red>(updated)</span></a></li>
-            </ul>
-        </li>
-        <li><a href="#examples">Examples</a>
-            <ul class="nav">
-                <li><a href="#examples_simple">Free shipping</a></li>
-                <li><a href="#examples_using_destination">Filter on destination</a></li>
-                <li><a href="#examples_using_customer_groups">Filter on customer group</a></li>
-                <li><a href="#examples_using_formulas">Using formulas</a></li>
-                <li><a href="#examples_using_special_functions">Using special functions</a></li>
-                <li><a href="#examples_using_products">Using products</a></li>
-                <li><a href="#examples_using_categories">Using categories</a></li>
-            </ul>
-        </li>
-        <li><a href="#hints_and_tips">Hints and tips</a>
-            <ul class="nav">
-                <li><a href="#hints_using_if_elseif_else">Using if/elseif/else statements</a></li>
-                <li><a href="#hints_access_new_customer_data">Access new customer data (ex. VAT ID)</a></li>
-                <li><a href="#hints_using_custom_customer_attribute">Using custom customer attribute</a></li>
-                <li><a href="#hints_translate_string">Translate a string <span class=red>(new)</span></a></li>
-                <li><a href="#hints_error_when_no_method">Error when no method available</a></li>
-                <li><a href="#hints_method_chaining">Method chaining</a></li>
-                <li><a href="#hints_display_method_description_in_templates">Method description in templates</a></li>
-                <li><a href="#hints_display_custom_method_data_in_templates">Custom data in templates</a></li>
-                <li><a href="#hints_anonymous_functions">Anonymous functions <span class=red>(new)</span></a></li>
-            </ul>
-        </li>
 
-        <li><a href="#known_issues">Known issues</a></li>
-    </ul>
-    <!-- doc sidebar end -->
-</div>
-
-<div class="container">
-    <!-- doc content start -->
-    <h1>Documentation <small>of</small> Advanced Shipping <small>extension for Magento 2 by Owebia</small></h1>
-    <div id="introduction">
-        <h2>Introduction</h2>
-
-        <p><strong>Advanced Shipping</strong> is an extension for the e-commerce solution <a href="http://www.magentocommerce.com/">Magento</a>.</p>
-
-        <p>The syntax using <a href="http://php.net/manual/en/">PHP 7</a> allows a great flexibility in setting delivery charges.</p>
-
-        <p class=bold>Technical Informations</p>
-        <p>The usage of the PHP syntax (with an <a href="http://en.wikipedia.org/wiki/Abstract_syntax_tree">Abstract Syntax Tree</a>) has been preferred to the usage of a JSON syntax (with regular expressions and the eval function) as in previous versions of the extension. This is the result of considerations on security and performance.</p>
-        <p>The PHP code defined in the configuration is not evaluated with the eval function for security reasons. The library <a href="https://github.com/nikic/PHP-Parser">PHP-Parser</a> is used to obtain an Abstract Syntax Tree (AST). The AST is browsed and only a limited set of functions and variables is allowed.</p>
-        <p>The AST is not version-dependent, you can use the PHP syntax supported by the parser.</p>
-    </div>
-
-    <div id="addons">
-        <h2>Add-ons</h2>
-
-        <div class="jumbotron">
-            <h3>You want to do more with <strong>Advanced Shipping</strong>?</h3>
-            <p>Discover our add-ons on <a href="https://en.store.owebia.com/">Owebia Store</a>.</p>
-
-            <h4><a href="https://en.store.owebia.com/magento2-module-advanced-shipping-pro.html">Advanced Shipping Pro</a></h4>
-            Advanced Shipping with all its add-ons (see the list below)
-
-            <h4><a href="https://en.store.owebia.com/magento2-module-adv-ship-unlimited-carriers-addon.html">Unlimited Carriers Add-on</a></h4>
-            Create as many carrier as you need with Advanced Shipping
-
-            <h4><a href="https://en.store.owebia.com/magento2-module-adv-ship-functions-addon.html">Functions Add-on</a></h4>
-            Use functions to simplify the writing of your configuration
-            <br>Look at <strong>"With Functions Add-on"</strong> tabs in examples to see how easy it becomes with this add-on
-
-            <h4><a href="https://en.store.owebia.com/magento2-module-adv-ship-universal-setting-addon.html">Universal Setting Add-on</a></h4>
-            Hide or change price of methods regardless the shipping module
+    <header id="o-header">
+        <div id="o-header-row">
+            <h1 class="o-title">
+                Advanced Shipping
+                <small style="opacity:.5">by Owebia</small>
+            </h1>
+            <doc-nav></doc-nav>
+            <div></div>
         </div>
+    </header>
+
+    <div id="o-drawer">
+        <span class="o-title">Documentation</span>
+        <doc-nav></doc-nav>
     </div>
 
-    <div id="whats_new">
-        <h2>What's new?</h2>
-        <ul>
-            <li>March, 2020 (version 2.8.0):
-                <ul>
-                    <li>support functions <code>array_key_exists</code>, <code>json_decode</code>, <code>json_encode</code></li>
-                    <li>support assignment operators <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>, <code>**=</code>, <code>.=</code>, <code>&=</code>, <code>|=</code>, <code>^=</code>, <code>&lt;&lt;=</code>, <code>&gt;&gt;=</code></li>
-                    <li>support incrementing/decrementing operators <code>$a++</code>, <code>$a--</code>, <code>++$a</code>, <code>--$a</code></li>
-                    <li>inherit variables from the parent scope in anonymous functions with 'use' keyword</li>
-                </ul>
-            </li>
-            <li>February, 2020 (version 2.7.0): <a href="#inventory_management">support of Inventory Management (Magento ≥ 2.3)</a></li>
-            <li>April, 2019 (version 2.6.0): <a href="#hints_method_chaining">method chaining</a>, <a href="#hints_display_method_description_in_templates">display method description or custom data in checkout templates</a></li>
-            <li>February, 2019 (version 2.5.0): new custom functions available <code>addError</code>, <code>getMethods</code></li>
-            <li>February, 2019 (version 2.4.0): translate a string using <code>__</code> function, support functions <code>array_keys</code>, <code>array_search</code>, <code>array_values</code>, <code>strlen</code>, <code>strpos</code>, <code>mb_strlen</code>, <code>mb_strpos</code></li>
-            <li>February, 2019 (version 2.3.0): add tracking URL support (new configuration field)</li>
-            <li>
-                December, 2017 (version 2.1.0): support functions <code>mb_strtolower</code>, <code>mb_strtoupper</code>,
-                <code>mb_substr</code>, <code>preg_replace</code>, <code>strtolower</code>, <code>strtoupper</code>, <code>time</code>
-            </li>
-            <li>Get <a href="https://en.store.owebia.com/magento2-module-adv-ship-functions-addon.html">Functions Add-On</a> and make configuration creation easy <a href="#formulas_functions_addon" class="fn_addon">with additional functions</a></li>
-        </ul>
-    </div>
+    <main>
 
-    <div id="installation">
-        <h2>Installation</h2>
-        <div class="alert alert-danger">Please note that you can only install the extension using composer.</div>
-        <ul>
-            <li>Backup your store database and web directory</li>
-            <li>Open a terminal and move to Magento root directory</li>
-            <li>Run these commands in your terminal
-                <pre>
-# You must be in Magento root directory
-composer require owebia/magento2-module-advanced-shipping:^2.1.0
-php bin/magento cache:clean
-php bin/magento module:enable Owebia_SharedPhpConfig
-php bin/magento module:enable Owebia_AdvancedShipping
-php bin/magento setup:upgrade
-# Execute setup:di:compile only if the store is in production mode
-php bin/magento setup:di:compile
-</pre>
-            </li>
-            <li>If you are logged to Magento backend, logout from Magento backend and login again</li>
-        </ul>
-    </div>
+        <doc-toc></doc-toc>
 
-    <div id="quick_start">
-        <h2>Quick start</h2>
-        <p>
-            A call to <code>addMethod</code> function adds a shipping method.
-        </p>
-        <p><code class=php>addMethod ( string $method_id , array $method_properties ) : object</code></p>
-        <p>
-            List of method <strong>properties</strong>:<br/>
-        </p>
-        <ul>
-            <li id=property_title><code>title</code></li>
-            <li id=property_price><code>price</code></li>
-            <li id=property_description><code>description</code> (optional, not available on Magento frontend without code customization)</li>
-            <li id=property_enabled><code>enabled</code> (optional): conditions for displaying the shipping method</li>
-        </ul>
-        <div class=examples>
-            <script class=ex type="x-example">
-                /* Example */
-                // First shipping method
-                addMethod('method1', [
-                    'title' => "Standard Shipping",
-                    'price' => 10,
-                ]);
-                // Second shipping method
-                addMethod('method2', [
-                    'title' => "Express Shipping",
-                    'price' => 20,
-                ]);
-            </script>
-        </div>
-        <p><a href="#examples">More examples</a></p>
-        <p class="alert alert-danger">
-            <strong><u>Warning</u>:</strong> to avoid conflicts, use only the characters <code>a-z</code>, <code>0-9</code> and <code>_</code> for the method id.<br/>
-            You should also avoid identifiers that already correspond to variable names (<code>quote</code>, <code>request</code>…).
-        </p>
-    </div>
+        <section id="overview">
+            <h2>Overview</h2>
 
-    <div id="formulas">
-        <h2>Use Variables and Functions</h2>
-        <p>
-            You can use <a href="#formulas_variables">variables</a>, <a href="#formulas_functions">functions</a> and <a href="http://php.net/manual/en/language.operators.php">operators</a> to define a dynamic value (all operators are not supported).<br/>
-        </p>
-        <div class=examples>
-            <script class=ex type="x-example">
-                /* Example */
-                addMethod('__auto__', [
-                    // Dynamic title using the variable $request->dest_country_id
-                    'title' => "Delivery to " . $request->dest_country_id,
-                    // Dynamic price using the variable $request->package_value
-                    'price' => 0.2 * $request->package_value,
-                ]);
-                addMethod('__auto__', [
-                    'title'   => "Free Shipping",
-                    // Dynamic enabled using the function substr() and the variable $quote->coupon_code
-                    'enabled' => substr($quote->coupon_code, 0, 4) == 'free',
-                    'price'   => 0,
-                ]);
-            </script>
-        </div>
-        <div id="formulas_variables">
-            <h3>1. Variables</h3>
-            <p>There are <a href="#formulas_variables_global">global variables</a> and local variables that you can access with array functions and callbacks.</p>
-            <p class="alert alert-info">
-                If you activate the debug option, you can see all data available for each object that you use.<br/>
-                Remember that you don't have access to all methods of the original objects because they are not accessed directly.
+            <p>
+                <strong>Advanced Shipping</strong> is an extension for the e-commerce solution <a href="http://www.magentocommerce.com/">Magento</a>.
             </p>
 
-            <div id="formulas_variables_global">
-                <h4>1.1. Global variables</h4>
-                <p>These variables are global variables and can be accessed everywhere (use the <code class=php>global</code> keyword when you are inside a function).</p>
+            <p>
+                The syntax using <a href="http://php.net/manual/en/">PHP 7</a> allows a great flexibility in setting delivery charges.
+            </p>
 
-                <ul class=ventilated>
-                    <li id="formulas_variables_request">The <strong>request</strong> object (<code class=php>\Magento\Quote\Model\Quote\Address\RateRequest</code>) given by Magento:
-                        <ul class=ventilated>
-                            <li><code class=php>$request->all_items</code>: array of items in cart</li>
-                            <li>The source address:
-                                <ul>
-                                    <li><code class=php>$request->country_id</code> *</li>
-                                    <li><code class=php>$request->region_id</code></li>
-                                    <li><code class=php>$request->city</code></li>
-                                    <li><code class=php>$request->postcode</code></li>
-                                </ul>
-                            </li>
-                            <li>The destination address:
-                                <ul>
-                                    <li><code class=php>$request->dest_country_id</code> *</li>
-                                    <li><code class=php>$request->dest_region_id</code></li>
-                                    <li><code class=php>$request->dest_region_code</code></li>
-                                    <li><code class=php>$request->dest_street</code> (<a href="#issue_inconsistent_data_with_magento_lt_2_1_8" class=issue>known issue with Magento CE < 2.1.8</a>)</li>
-                                    <li><code class=php>$request->dest_city</code> (<a href="#issue_inconsistent_data_with_magento_lt_2_1_8" class=issue>known issue with Magento CE < 2.1.8</a>)</li>
-                                    <li><code class=php>$request->dest_postcode</code></li>
-                                </ul>
-                            </li>
-                            <li>The package:</p>
-                                <ul>
-                                    <li><code class=php>$request->package_value</code>: value of the package</li>
-                                    <li><code class=php>$request->package_value_with_discount</code>: value of the package with discount</li>
-                                    <li><code class=php>$request->package_weight</code>: weight of the package</li>
-                                    <li><code class=php>$request->package_qty</code>: number of products in the package</li>
-                                </ul>
-                            </li>
-                            <li>Other attributes:
-                                <ul>
-                                    <li><code class=php>$request->free_shipping</code>: free shipping calculated by Magento rules</li>
-                                    <li><code class=php>$request->*</code>: property of the request object</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li id="formulas_variables_quote">The <strong>quote</strong> (<code class=php>\Magento\Quote\Model\Quote</code>):  (<a href="#issue_infinite_loop_when_using_quote" class=issue>known issue #2</a>, <a href="#issue_unexpected_behaviors_when_using_quote_grand_total" class=issue>known issue #3</a>)
-                        <ul>
-                            <li><code class=php>$quote->subtotal</code>: subtotal (excluding tax)</li>
-                            <li><code class=php>$quote->subtotal_with_discount</code>: subtotal (excluding tax) with discount</li>
-                            <li><code class="php red">$quote->grand_total</code>: total (including tax) with discount (<a href="#issue_unexpected_behaviors_when_using_quote_grand_total" class=issue>known issues #3</a>, <strong class="red">you should avoid using this value</strong>)</li>
-                            <li><code class=php>$quote->base_subtotal</code>: subtotal (excluding tax) in base currency</li>
-                            <li><code class=php>$quote->base_subtotal_with_discount</code>: subtotal (excluding tax) with discount in base currency</li>
-                            <li><code class="php red">$quote->base_grand_total</code>: total (including tax) with discount in base currency (<a href="#issue_unexpected_behaviors_when_using_quote_grand_total" class=issue>known issues #3</a>, <strong class="red">you should avoid using this value</strong>)</li>
-                            <li><code class=php>$quote->coupon_code</code>: the coupon code used in cart</li>
-                            <li><code class=php>$quote->*</code>: property of the quote (ex: <code class=php>$quote->subtotal</code>)</li>
-                        </ul>
-                    </li>
-                    <li id="formulas_variables_customer_group">The <strong>customer group</strong> (<code class=php>\Magento\Customer\Model\Group</code>):
-                        <ul>
-                            <li><code class=php>$customer_group->id</code>: alias of <code class=php>$customer_group->customer_group_id</code></li>
-                            <li><code class=php>$customer_group->code</code>: alias of <code class=php>$customer_group->customer_group_code</code></li>
-                            <li><code class=php>$customer_group->name</code>: alias of <code class=php>$customer_group->customer_group_code</code></li>
-                            <li><code class=php>$customer_group->*</code>: property of the customer group (ex: <code class=php>$customer_group->tax_class_id</code>)</li>
-                        </ul>
-                    </li>
-                    <li id="formulas_variables_customer">The <strong>customer</strong> (<code class=php>\Magento\Customer\Model\Customer</code>):
-                        <ul>
-                            <li><code class=php>$customer->id</code>: alias of <code class=php>$customer->entity_id</code></li>
-                            <li><code class=php>$customer->*</code>: attribute of the customer (ex: email, lastname, firstname, group_id…)</li>
-                            <li><code class=php>$customer->getCustomAttribute('my_custom_attribute')->value</code>: custom attribute of the customer (where 'my_custom_attribute' should be replaced by custom attribute's code)</li>
-                        </ul>
-                    </li>
-                    <li id="formulas_variables_customvar">Custom <strong>variables</strong> (<code class=php>\Magento\Variable\Model\Variable</code>):
-                        <ul>
-                            <li><code class=php>$variable->*</code>: custom variable defined in Magento (ex: <code class=php>$variable->my_var</code>)</li>
-                        </ul>
-                    </li>
-                    <li id="formulas_variables_store">The <strong>store</strong> (<code class=php>\Magento\Store\Model\Store</code>):
-                        <ul>
-                            <li><code class=php>$store->id</code>, <code class=php>$store->code</code>, <code class=php>$store->name</code>, <code class=php>$store->address</code>, <code class=php>$store->phone</code></li>
-                        </ul>
-                    </li>
-                    <li id="formulas_variables_store">The <strong>app</strong> (see <code class=php>\Magento\Framework\App\State</code>):
-                        <ul>
-                            <li><code class=php>$app->area_code</code></li>
-                            <li><code class=php>$app->isAdminArea()</code> (area_code == 'adminhtml')</li>
-                            <li><code class=php>$app->isFrontendArea()</code> (area_code == 'webapi_rest')</li>
-                        </ul>
-                    </li>
-                </ul>
-                <p class="alert alert-warning">
-                    * Magento apparently uses the <a href="http://fr.wikipedia.org/wiki/ISO_3166-1">ISO 3166-1 alpha-2 codes</a>.<br/>
-                    Note that the country code for United Kingdom is GB and not UK.
+            <doc-section-toc></doc-section-toc>
+
+            <article id="overview:technical">
+                <h3>Technical Informations</h3>
+
+                <p>
+                    The usage of the PHP syntax (with an <a href="http://en.wikipedia.org/wiki/Abstract_syntax_tree">Abstract Syntax Tree</a>)
+                    has been preferred to the usage of a JSON syntax (with regular expressions and the eval function) as in previous versions of the extension.
+                    This is the result of considerations on security and performance.
                 </p>
-            </div>
+                <p>
+                    The PHP code defined in the configuration is not evaluated with the eval function for security reasons.
+                    The library <a href="https://github.com/nikic/PHP-Parser">PHP-Parser</a> is used to obtain an Abstract Syntax Tree (AST).
+                    The AST is browsed and only a limited set of functions and variables is allowed.
+                </p>
+                <p>
+                    The AST is not version-dependent, you can use the PHP syntax supported by the parser.
+                </p>
+            </article>
 
-            <div id="formulas_variables_local">
-                <h4>1.2. Accessing items</h4>
+            <article id="overview:addons">
+                <h3>Add-ons</h3>
 
-                <p class="alert alert-info">You can use <code class=php>$request->all_items</code> with array functions.</p>
+                <div class="wide" style="background:#f5f5f5;padding-top:60px;padding-bottom:40px;color:rgba(0,0,0,.54)">
+                    <div>
+                        <p style="font-weight:300;font-size:1.8em;margin-bottom:0">You want to do more with <strong>Advanced Shipping</strong>?</p>
+                        <p style="font-weight:300;font-size:1.4em">Discover our add-ons on <a href="https://en.store.owebia.com/">Owebia Store</a>.</p>
+                    </div>
 
-                <div class=examples>
-                    <script class=ex type="x-example">
+                    <ul class="doc-list">
+                        <li>
+                            <strong><a href="https://en.store.owebia.com/magento2-module-advanced-shipping-pro.html">Advanced Shipping Pro</a></strong>
+                            <p>Advanced Shipping with all its add-ons (see the list below)</p>
+                        </li>
+                        <li>
+                            <strong><a href="https://en.store.owebia.com/magento2-module-adv-ship-unlimited-carriers-addon.html">Unlimited Carriers Add-on</a></strong>
+                            <p>Create as many carrier as you need with Advanced Shipping</p>
+                        </li>
+                        <li>
+                            <strong><a href="https://en.store.owebia.com/magento2-module-adv-ship-functions-addon.html">Functions Add-on</a></strong>
+                            <p>
+                                Use functions to simplify the writing of your configuration
+                                <br>Look at <strong>"With Functions Add-on"</strong> tabs in examples to see how easy it becomes with this add-on
+                            </p>
+                        </li>
+                        <li>
+                            <strong><a href="https://en.store.owebia.com/magento2-module-adv-ship-universal-setting-addon.html">Universal Setting Add-on</a></strong>
+                            <p>Hide or change price of methods regardless the shipping module</p>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+
+        </section>
+
+        <section id="whats_new">
+            <h2>What's new?</h2>
+
+            <ul class="doc-list">
+                <li>
+                    <strong>March, 2020 (version 2.8.0)</strong>
+                    <ul>
+                        <li>support functions <code>array_key_exists</code>, <code>json_decode</code>, <code>json_encode</code></li>
+                        <li>support assignment operators <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>,
+                            <code>**=</code>, <code>.=</code>, <code>&=</code>, <code>|=</code>, <code>^=</code>, <code>&lt;&lt;=</code>, <code>&gt;&gt;=</code>
+                        </li>
+                        <li>support incrementing/decrementing operators <code>$a++</code>, <code>$a--</code>, <code>++$a</code>, <code>--$a</code></li>
+                        <li>inherit variables from the parent scope in anonymous functions with 'use' keyword</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>February, 2020 (version 2.7.0)</strong>
+                    <span>
+                        <a href="#ref:var:product:inventory">support of Inventory Management (Magento ≥ 2.3)</a>
+                    </span>
+                </li>
+                <li>
+                    <strong>April, 2019 (version 2.6.0)</strong>
+                    <span>
+                        <a href="#tips:method_chaining">method chaining</a>,
+                        <a href="#tips:frontend:display_method_description">display method description or custom data in checkout templates</a>
+                    </span>
+                </li>
+                <li>
+                    <strong>February, 2019 (version 2.5.0)</strong>
+                    <span>
+                        new custom functions available <code>addError</code>, <code>getMethods</code>
+                    </span>
+                </li>
+                <li>
+                    <strong>February, 2019 (version 2.4.0)</strong>
+                    <span>
+                        translate a string using <code>__</code> function, support functions <code>array_keys</code>,
+                        <code>array_search</code>, <code>array_values</code>, <code>strlen</code>, <code>strpos</code>,
+                        <code>mb_strlen</code>, <code>mb_strpos</code>
+                    </span>
+                </li>
+                <li>
+                    <strong>February, 2019 (version 2.3.0)</strong>
+                    <span>
+                        add tracking URL support (new configuration field)
+                    </span>
+                </li>
+                <li>
+                    <strong>December, 2017 (version 2.1.0)</strong>
+                    <span>
+                        support functions <code>mb_strtolower</code>, <code>mb_strtoupper</code>, <code>mb_substr</code>,
+                        <code>preg_replace</code>, <code>strtolower</code>, <code>strtoupper</code>, <code>time</code>
+                    </span>
+                </li>
+                <li>
+                    <strong>Get <a href="https://en.store.owebia.com/magento2-module-adv-ship-functions-addon.html">Functions Add-On</a></strong>
+                    <span>
+                        and make configuration creation easy <a href="#ref:fn:addon" class="fn_addon">with additional functions</a>
+                    </span>
+                </li>
+            </ul>
+
+        </section>
+
+        <section id="quick_start">
+            <h2>Quick start</h2>
+
+            <doc-section-toc></doc-section-toc>
+
+            <article id="quick_start:install">
+                <h3>Installation</h3>
+
+                <p class="doc-warning">
+                    Please note that you can only install the extension using composer.
+                </p>
+                <ul>
+                    <li>Backup your store database and web directory</li>
+                    <li>Open a terminal and move to Magento root directory</li>
+                    <li>Run these commands in your terminal
+                </ul>
+                <pre>
+                    # You must be in Magento root directory
+                    composer require owebia/magento2-module-advanced-shipping:^2.8.1
+                    php bin/magento cache:clean
+                    php bin/magento module:enable Owebia_SharedPhpConfig Owebia_AdvancedShipping
+                    php bin/magento setup:upgrade
+                    # Execute setup:di:compile only if the store is in production mode
+                    php bin/magento setup:di:compile
+                </pre>
+                <ul>
+                    <li>If you are logged to Magento backend, logout from Magento backend and login again</li>
+                </ul>
+            </article>
+
+            <article id="quick_start:config">
+                <h3>Configuration</h3>
+
+                <p>
+                    A call to <code>addMethod</code> function adds a shipping method.
+                </p>
+                <div>
+                    <code class="php inline@medium">
+                        addMethod (
+                        <br class="hide@medium" data-spaces="2">string $method_id ,
+                        <br class="hide@medium" data-spaces="2">array $method_properties
+                        <br class="hide@medium" data-spaces="2">) : object
+                    </code>
+                </div>
+
+                <p>
+                    List of method <strong>properties</strong>:<br>
+                </p>
+                <ul>
+                    <li><code>title</code></li>
+                    <li><code>price</code></li>
+                    <li><code>description</code> (optional, not available on Magento frontend without code customization)</li>
+                    <li><code>enabled</code> (optional): conditions for displaying the shipping method</li>
+                </ul>
+
+                <script type="doc/example">
+                    /* Example */
+                    // First shipping method
+                    addMethod('method1', [
+                        'title' => "Standard Shipping",
+                        'price' => 10,
+                    ]);
+                    // Second shipping method
+                    addMethod('method2', [
+                        'title' => "Express Shipping",
+                        'price' => 20,
+                    ]);
+                </script>
+
+                <p><a href="#ex">More examples</a></p>
+
+                <p class="doc-warning">
+                    <strong><u>Warning</u>:</strong> to avoid conflicts, use only the characters <code>a-z</code>, <code>0-9</code> and <code>_</code> for the method id.<br>
+                    You should also avoid identifiers that already correspond to variable names (<code>quote</code>, <code>request</code>…).
+                </p>
+            </article>
+
+        </section>
+
+        <section id="ref">
+            <h2>References</h2>
+
+            <doc-section-toc></doc-section-toc>
+
+            <article id="ref:introduction">
+                <h3>Introduction</h3>
+
+                <p>
+                    You can use <a href="#ref:var">variables</a>, <a href="#ref:fn">functions</a> and <a href="http://php.net/manual/en/language.operators.php">operators</a> to define a dynamic value (all operators are not supported).<br>
+                </p>
+                <script type="doc/example">
+                    /* Example */
+                    addMethod('__auto__', [
+                        // Dynamic title using the variable $request->dest_country_id
+                        'title' => "Delivery to " . $request->dest_country_id,
+                        // Dynamic price using the variable $request->package_value
+                        'price' => 0.2 * $request->package_value,
+                    ]);
+                    addMethod('__auto__', [
+                        'title'   => "Free Shipping",
+                        // Dynamic enabled using the function substr() and the variable $quote->coupon_code
+                        'enabled' => substr($quote->coupon_code, 0, 4) == 'free',
+                        'price'   => 0,
+                    ]);
+                </script>
+            </article>
+
+            <article id="ref:var">
+                <h3>Variables</h3>
+
+                <p>There are <a href="#ref:var:global">global variables</a> and local variables that you can access with array functions and callbacks.</p>
+                <p class="doc-warning">
+                    If you activate the debug option, you can see all data available for each object that you use.<br>
+                    Remember that you don't have access to all methods of the original objects because they are not accessed directly.
+                </p>
+
+                <article id="ref:var:global">
+                    <h4>Global variables</h4>
+                    <p>These variables are global variables and can be accessed everywhere (use the <code class=php>global</code> keyword when you are inside a function).</p>
+
+                    <p id="ref:var:request">The <strong>request</strong> object (<code class=php>\Magento\Quote\Model\Quote\Address\RateRequest</code>) given by Magento:</p>
+                    <ul class=ventilated>
+                        <li><code class=php>$request-&gt;all_items</code>: array of items in cart</li>
+                        <li>The source address:
+                            <ul>
+                                <li><code class=php>$request-&gt;country_id</code> *</li>
+                                <li><code class=php>$request-&gt;region_id</code></li>
+                                <li><code class=php>$request-&gt;city</code></li>
+                                <li><code class=php>$request-&gt;postcode</code></li>
+                            </ul>
+                        </li>
+                        <li>The destination address:
+                            <ul>
+                                <li><code class=php>$request-&gt;dest_country_id</code> *</li>
+                                <li><code class=php>$request-&gt;dest_region_id</code></li>
+                                <li><code class=php>$request-&gt;dest_region_code</code></li>
+                                <li><code class=php>$request-&gt;dest_street</code> (<a href="#issues:magento218-" class=issue>known issue with Magento CE &lt; 2.1.8</a>)</li>
+                                <li><code class=php>$request-&gt;dest_city</code> (<a href="#issues:magento218-" class=issue>known issue with Magento CE &lt; 2.1.8</a>)</li>
+                                <li><code class=php>$request-&gt;dest_postcode</code></li>
+                            </ul>
+                        </li>
+                        <li>The package:
+                            <ul>
+                                <li><code class=php>$request-&gt;package_value</code>: value of the package</li>
+                                <li><code class=php>$request-&gt;package_value_with_discount</code>: value of the package with discount</li>
+                                <li><code class=php>$request-&gt;package_weight</code>: weight of the package</li>
+                                <li><code class=php>$request-&gt;package_qty</code>: number of products in the package</li>
+                            </ul>
+                        </li>
+                        <li>Other attributes:
+                            <ul>
+                                <li><code class=php>$request-&gt;free_shipping</code>: free shipping calculated by Magento rules</li>
+                                <li><code class=php>$request-&gt;*</code>: property of the request object</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <p id="ref:var:quote">
+                        The <strong>quote</strong> (<code class=php>\Magento\Quote\Model\Quote</code>):
+                        (<a href="#issues:quote:infinite_loop" class=issue>known issue #2</a>, <a href="#issues:quote:grand_total" class=issue>known issue #3</a>):
+                    </p>
+                    <ul>
+                        <li><code class=php>$quote-&gt;subtotal</code>: subtotal (excluding tax)</li>
+                        <li><code class=php>$quote-&gt;subtotal_with_discount</code>: subtotal (excluding tax) with discount</li>
+                        <li><code class="php red">$quote-&gt;grand_total</code>: total (including tax) with discount
+                            (<a href="#issues:quote:grand_total" class=issue>known issues #3</a>, <strong class="red">you should avoid using this value</strong>)</li>
+                        <li><code class=php>$quote-&gt;base_subtotal</code>: subtotal (excluding tax) in base currency</li>
+                        <li><code class=php>$quote-&gt;base_subtotal_with_discount</code>: subtotal (excluding tax) with discount in base currency</li>
+                        <li><code class="php red">$quote-&gt;base_grand_total</code>: total (including tax) with discount in base currency
+                            (<a href="#issues:quote:grand_total" class=issue>known issues #3</a>, <strong class="red">you should avoid using this value</strong>)</li>
+                        <li><code class=php>$quote-&gt;coupon_code</code>: the coupon code used in cart</li>
+                        <li><code class=php>$quote-&gt;*</code>: property of the quote (ex: <code class=php>$quote-&gt;subtotal</code>)</li>
+                    </ul>
+
+                    <p id="ref:var:customer_group">The <strong>customer group</strong> (<code class=php>\Magento\Customer\Model\Group</code>):</p>
+                    <ul>
+                        <li><code class=php>$customer_group-&gt;id</code>: alias of <code class=php>$customer_group-&gt;customer_group_id</code></li>
+                        <li><code class=php>$customer_group-&gt;code</code>: alias of <code class=php>$customer_group-&gt;customer_group_code</code></li>
+                        <li><code class=php>$customer_group-&gt;name</code>: alias of <code class=php>$customer_group-&gt;customer_group_code</code></li>
+                        <li><code class=php>$customer_group-&gt;*</code>: property of the customer group (ex: <code class=php>$customer_group-&gt;tax_class_id</code>)</li>
+                    </ul>
+
+                    <p id="ref:var:customer">The <strong>customer</strong> (<code class=php>\Magento\Customer\Model\Customer</code>):</p>
+                    <ul>
+                        <li><code class=php>$customer-&gt;id</code>: alias of <code class=php>$customer-&gt;entity_id</code></li>
+                        <li><code class=php>$customer-&gt;*</code>: attribute of the customer (ex: email, lastname, firstname, group_id…)</li>
+                        <li><code class=php>$customer-&gt;getCustomAttribute('my_custom_attribute')-&gt;value</code>: custom attribute of the customer (where 'my_custom_attribute' should be replaced by custom attribute's code)</li>
+                    </ul>
+
+                    <p id="ref:var:customvar">Custom <strong>variables</strong> (<code class=php>\Magento\Variable\Model\Variable</code>):</p>
+                    <ul>
+                        <li><code class=php>$variable-&gt;*</code>: custom variable defined in Magento (ex: <code class=php>$variable-&gt;my_var</code>)</li>
+                    </ul>
+
+                    <p id="ref:var:store">The <strong>store</strong> (<code class=php>\Magento\Store\Model\Store</code>):</p>
+                    <ul>
+                        <li><code class=php>$store-&gt;id</code>, <code class=php>$store-&gt;code</code>, <code class=php>$store-&gt;name</code>, <code class=php>$store-&gt;address</code>, <code class=php>$store-&gt;phone</code></li>
+                    </ul>
+
+                    <p id="ref:var:app">The <strong>app</strong> (see <code class=php>\Magento\Framework\App\State</code>):</p>
+                    <ul>
+                        <li><code class=php>$app-&gt;area_code</code></li>
+                        <li><code class=php>$app-&gt;isAdminArea()</code> (area_code == 'adminhtml')</li>
+                        <li><code class=php>$app-&gt;isFrontendArea()</code> (area_code == 'webapi_rest')</li>
+                    </ul>
+
+                    <p class="doc-warning">
+                        * Magento apparently uses the <a href="http://fr.wikipedia.org/wiki/ISO_3166-1">ISO 3166-1 alpha-2 codes</a>.<br>
+                        Note that the country code for United Kingdom is GB and not UK.
+                    </p>
+                </article>
+
+                <article id="ref:var:items">
+                    <h4>Accessing items</h4>
+
+                    <p class="doc-warning">
+                        You can use <code class=php>$request-&gt;all_items</code> with array functions.
+                    </p>
+                    <script type="doc/example">
                         /* Example */
                         addMethod('__auto__', [
                             'title'      => "If at least one product has the attribute 'name' equal to 'Cat'",
@@ -395,287 +629,440 @@ php bin/magento setup:di:compile
                             'price'      => 10
                         ]);
                     </script>
-                </div>
-                <ul class=ventilated>
-                    <li id="formulas_variables_item">The <strong>item</strong> (<code class=php>\Magento\Quote\Model\Quote\Item</code>):
-                        <ul>
-                            <li><code class=php>$item->qty</code>: quantity of the item</li>
-                            <li><code class=php>$item->weight</code>: weight of the item</li>
-                            <li><code class=php>$item->base_original_price</code>: price excluding tax without discount</li>
-                            <li><code class=php>$item->price_incl_tax</code>: price including tax without discount</li>
-                            <!--<li><code class=php>$item->price-tax+discount</code>: price excluding tax with discount</li>
-                            <li><code class=php>$item->price+tax+discount</code>: price including tax with discount</li>
-                            <li><code class=php>$item->price+tax-discount</code>: price including tax without discount</li>-->
-                            <li><code class=php>$item->options->*</code>: option (the available options depend on the product)</li>
-                        </ul>
-                    </li>
-                    <li id="formulas_variables_product">The <strong>product</strong> (<code class=php>\Magento\Catalog\Model\Product</code>):
-                        <ul class=ventilated>
-                            <li><code class=php>$item->product->*</code><br/>
-                                <ul>
-                                    <li><code class=php>sku</code></li>
-                                    <li><code class=php>name</code></li>
-                                    <li><code class=php>weight</code></li>
-                                    <li><code class=php>price</code> (as defined in Magento backoffice)</li>
-                                    <li><code class=php>special_price</code>: (as defined in Magento backoffice)</li>
-                                    <li><code class=php>tax_class_id</code>: the taxclass id</li>
-                                    <li><code class=php>getAttributeText('tax_class_id')</code>: the tax class name<br/>
-                                        <span class="highlight">To get the text value of an attribute of type select, use <code class=php>getAttributeText('attribute_code')</code></span>
-                                    </li>
-                                    <li id="inventory_management"><code class=php>getSourceItems()</code>: returns an array of <code class=php>\Magento\InventoryApi\Api\Data\SourceItemInterface</code> to handle <a href="https://devdocs.magento.com/guides/v2.3/inventory/">Inventory Management (Magento ≥ 2.3)</a>
-                                        <br>Source item: (<code class=php>\Magento\InventoryApi\Api\Data\SourceItemInterface</code>)
-                                        <ul>
-                                            <li><code class=php>$sourceItem->*</code>: attribute of the source item<br/>
-                                                <ul>
-                                                    <li><code class=php>source_code</code>: the code of the inventory source</li>
-                                                    <li><code class=php>quantity</code>: the quantity of the product in the inventory source</li>
-                                                    <li>…</li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>…</li>
-                                </ul>
-                            </li>
-                            <li>Categories of the product: (<code class=php>\Magento\Catalog\Model\Category</code>)
-                                <ul>
-                                    <li><code class=php>$item->product->category->*</code>: attribute of the first category<br/>
-                                        <ul>
-                                            <li><code class=php>id</code></li>
-                                            <li><code class=php>name</code></li>
-                                            <li><code class=php>is_active</code></li>
-                                            <li>…</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>All product categories (returns an array, <a href="#examples_using_categories">examples</a>):
-                                <ul>
-                                    <!--<li><code class=php>$item->product->categories</code>: array of categories</li>-->
-                                    <li><code class=php>$item->product->category_ids</code>: array of id of the categories</li>
-                                    <!--<li><code class=php>$item->product->category_names</code>: array of name of the categories</li>-->
-                                </ul>
-                            </li>
-                            <li>The attribute set (<code class=php>\Magento\Eav\Model\Entity\Attribute\Set</code>):
-                                <ul>
-                                    <li><code class=php>$item->product->attribute_set</code>: the attribute set</li>
-                                    <li><code class=php>$item->product->attribute_set->*</code>: attribute of the attribute set<br/>
+
+                    <p id="ref:var:item">
+                        The <strong>item</strong> (<code class=php>\Magento\Quote\Model\Quote\Item</code>)
+                    </p>
+                    <ul>
+                        <li>
+                            <code class="php">$item-&gt;qty</code>
+                            <div class="inline@medium">quantity of the item</div>
+                        </li>
+                        <li>
+                            <code class="php">$item-&gt;weight</code>
+                            <div class="inline@medium">weight of the item</div>
+                        </li>
+                        <li>
+                            <code class="php">$item-&gt;base_original_price</code>
+                            <div class="inline@medium">price excluding tax without discount</div>
+                        </li>
+                        <li>
+                            <code class="php">$item-&gt;price_incl_tax</code>
+                            <div class="inline@medium">price including tax without discount</div>
+                        </li>
+                        <li>
+                            <code class="php">$item-&gt;options-&gt;*</code>
+                            <div class="inline@medium">option (the available options depend on the product)</div>
+                        </li>
+                    </ul>
+
+                    <p id="ref:var:product">
+                        The <strong>product</strong> (<code class="php">\Magento\Catalog\Model\Product</code>)
+                    </p>
+                    <ul>
+                        <li>
+                            <code class="php">$item-&gt;product-&gt;*</code>
+                            <ul>
+                                <li><code class=php>sku</code></li>
+                                <li><code class=php>name</code></li>
+                                <li><code class=php>weight</code></li>
+                                <li><code class=php>price</code> (as defined in Magento backoffice)</li>
+                                <li><code class=php>special_price</code>: (as defined in Magento backoffice)</li>
+                                <li><code class=php>tax_class_id</code>: the taxclass id</li>
+                                <li><code class=php>getAttributeText('tax_class_id')</code>: the tax class name<br>
+                                    <span class="highlight">To get the text value of an attribute of type select, use <code class=php>getAttributeText('attribute_code')</code></span>
+                                </li>
+                                <li id="ref:var:product:inventory"><code class=php>getSourceItems()</code>: returns an array of <code class=php>\Magento\InventoryApi\Api\Data\SourceItemInterface</code> to handle <a href="https://devdocs.magento.com/guides/v2.3/inventory/">Inventory Management (Magento ≥ 2.3)</a>
+                                    <br>Source item: (<code class=php>\Magento\InventoryApi\Api\Data\SourceItemInterface</code>)
+                                    <ul>
+                                        <li><code class=php>$sourceItem-&gt;*</code>: attribute of the source item<br>
+                                            <ul>
+                                                <li><code class=php>source_code</code>: the code of the inventory source</li>
+                                                <li><code class=php>quantity</code>: the quantity of the product in the inventory source</li>
+                                                <li>…</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>…</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Categories of the product: (<code class=php>\Magento\Catalog\Model\Category</code>)
+                            <ul>
+                                <li><code class="php">$item-&gt;product-&gt;category-&gt;*</code></li>
+                                <li>attribute of the first category
+                                    <br>
+                                    <ul>
+                                        <li><code class=php>id</code></li>
+                                        <li><code class=php>name</code></li>
+                                        <li><code class=php>is_active</code></li>
+                                        <li>…</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            All product categories (returns an array, <a href="#ex:categories">examples</a>)
+                            <ul>
+                                <!--<li>
+                                    <code class="php">$item-&gt;product-&gt;categories</code>
+                                    <div class="inline@medium">array of categories</div>
+                                </li>-->
+                                <li><code class="php">$item-&gt;product-&gt;category_ids</code>
+                                    <div class="inline@medium">array of id of the categories</div>
+                                </li>
+                                <!--<li><code class="php">$item-&gt;product-&gt;category_names</code>
+                                    <div class="inline@medium">array of name of the categories</div>
+                                </li>-->
+                            </ul>
+                        </li>
+                        <li>
+                            The attribute set (<code class="php">\Magento\Eav\Model\Entity\Attribute\Set</code>)
+                            <ul>
+                                <li>
+                                    <code class="php">$item-&gt;product-&gt;attribute_set</code>
+                                    <div class="inline@medium">the attribute set</div>
+                                </li>
+                                <li>
+                                    <code class="php">$item-&gt;product-&gt;attribute_set-&gt;*</code>
+                                    <div class="inline@medium">
+                                        attribute of the attribute set
+                                        <br>
                                         <ul>
                                             <li><code class=php>id</code></li>
                                             <li><code class=php>attribute_set_name</code></li>
                                             <li>…</li>
                                         </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>The stock item (<code class=php>\Magento\CatalogInventory\Model\Stock\Item</code>):
-                                <ul>
-                                    <li><code class=php>$item->product->stock_item->*</code>: attribute of the product stock<br/>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            The stock item (<code class=php>\Magento\CatalogInventory\Model\Stock\Item</code>)
+                            <ul>
+                                <li>
+                                    <code class="php">$item-&gt;product-&gt;stock_item-&gt;*</code>
+                                    <div class="inline@medium">
+                                        attribute of the product stock
+                                        <br>
                                         <ul>
                                             <li><code class=php>is_in_stock</code></li>
                                             <li><code class=php>qty</code></li>
                                             <li>…</li>
                                         </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </article>
 
-        <div id="formulas_functions">
-            <h3>2. Functions</h3>
+            </article>
 
-            <h4>2.1. Native functions allowed</h4>
+            <article id="ref:fn">
+                <h3>Functions</h3>
 
-            <p class="alert alert-warning">Look at the PHP documentation if you want to know how to use these functions.</p>
-            <div class=multicolumns>
-                <div>
-                    <h5>Math Functions</h5>
-                    <ul>
-                        <li><a href="http://php.net/manual/en/function.abs.php">abs</a></li>
-                        <li><a href="http://php.net/manual/en/function.ceil.php">ceil</a></li>
-                        <li><a href="http://php.net/manual/en/function.floor.php">floor</a></li>
-                        <li><a href="http://php.net/manual/en/function.max.php">max</a></li>
-                        <li><a href="http://php.net/manual/en/function.min.php">min</a></li>
-                        <li><a href="http://php.net/manual/en/function.round.php">round</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5>String Functions</h5>
-                    <ul>
-                        <li><a href="http://php.net/manual/en/function.explode.php">explode</a></li>
-                        <li><a href="http://php.net/manual/en/function.implode.php">implode</a></li>
-                        <li><a href="http://php.net/manual/en/function.strlen.php">strlen</a></li>
-                        <li><a href="http://php.net/manual/en/function.strpos.php">strpos</a></li>
-                        <li><a href="http://php.net/manual/en/function.strtolower.php">strtolower</a></li>
-                        <li><a href="http://php.net/manual/en/function.strtoupper.php">strtoupper</a></li>
-                        <li><a href="http://php.net/manual/en/function.substr.php">substr</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5>Multibyte String Functions</h5>
-                    <ul>
-                        <li><a href="http://php.net/manual/en/function.mb-strlen.php">mb_strlen</a></li>
-                        <li><a href="http://php.net/manual/en/function.mb-strpos.php">mb_strpos</a></li>
-                        <li><a href="http://php.net/manual/en/function.mb-strtolower.php">mb_strtolower</a></li>
-                        <li><a href="http://php.net/manual/en/function.mb-strtoupper.php">mb_strtoupper</a></li>
-                        <li><a href="http://php.net/manual/en/function.mb-substr.php">mb_substr</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5>PCRE Functions</h5>
-                    <ul>
-                        <li><a href="http://php.net/manual/en/function.preg-match.php">preg_match</a></li>
-                        <li><a href="http://php.net/manual/en/function.preg-replace.php">preg_replace</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5>Date/Time Functions</h5>
-                    <ul>
-                        <li><a href="http://php.net/manual/en/function.date.php">date</a>
-                        <li><a href="http://php.net/manual/en/function.strtotime.php">strtotime</a></li>
-                        <li><a href="http://php.net/manual/en/function.time.php">time</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5>Array Functions</h5>
-                    <ul>
-                        <li><a href="http://php.net/manual/en/function.array-filter.php">array_filter</a></li>
-                        <li><a href="http://php.net/manual/en/function.array-intersect.php">array_intersect</a></li>
-                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.array-key-exists.php">array_key_exists</a></li>
-                        <li><a href="http://php.net/manual/en/function.array-keys.php">array_keys</a></li>
-                        <li><a href="http://php.net/manual/en/function.array-map.php">array_map</a></li>
-                        <li><a href="http://php.net/manual/en/function.array-reduce.php">array_reduce</a></li>
-                        <li><a href="http://php.net/manual/en/function.array-search.php">array_search</a></li>
-                        <li><a href="http://php.net/manual/en/function.array-sum.php">array_sum</a></li>
-                        <li><a href="http://php.net/manual/en/function.array-unique.php">array_unique</a></li>
-                        <li><a href="http://php.net/manual/en/function.array-values.php">array_values</a></li>
-                        <li><a href="http://php.net/manual/en/function.count.php">count</a></li>
-                        <li><a href="http://php.net/manual/en/function.in-array.php">in_array</a></li>
-                        <li><a href="http://php.net/manual/en/function.range.php">range</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5>JSON Functions</h5>
-                    <ul>
-                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.json-decode.php">json_decode</a></li>
-                        <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.json-encode.php">json_encode</a></li>
-                    </ul>
-                </div>
-            </div>
+                <article id="ref:fn:core">
+                    <h4>Core functions</h4>
 
-            <div id="formulas_functions_addon">
-                <h4>2.2. Functions available with Functions Add-On</h4>
-                <ul class="fn_list">
-                    <li>
-                        <code class=php>_country ( string $country_id1 [, string $... ] ) : bool</code>:
-                        <br>Returns true if the destination country matches one of the given country IDs,
-                        <a href="#examples_using_destination" class="fn_addon">see examples</a>
-                    </li>
-                    <li>
-                        <code class=php>_postcode ( string $postcode_or_pattern1 [, mixed $... ] ) : bool</code>:
-                        <br>Returns true if the destination postcode matches one of the given postcodes or regular expression patterns,
-                        <a href="#examples_using_destination" class="fn_addon">see examples</a>
-                    </li>
-                    <li>
-                        <code class=php>_customerGroup ( mixed $customer_group_id_or_name1 [, mixed $... ] ) : bool</code>:
-                        <br>Returns true if the customer group matches one of the given ids or names,
-                        <a href="#examples_using_customer_groups" class="fn_addon">see examples</a>
-                    </li>
-                    <li>
-                        <code class=php>_sum ( mixed $value1 [, mixed $... ] ) : mixed</code>:
-                        <br>Returns the sum of the given values,
-                        <a href="#examples_using_sum" class="fn_addon">see examples</a>
-                    </li>
-                    <li>
-                        <code class=php>_min ( mixed $value1 [, mixed $... ] ) : mixed</code>:
-                        <br>Returns the minimum of the given values,
-                        <a href="#examples_using_minmax" class="fn_addon">see examples</a>
-                    </li>
-                    <li>
-                        <code class=php>_max ( mixed $value1 [, mixed $... ] ) : mixed</code>:
-                        <br>Returns the maximum of the given values,
-                        <a href="#examples_using_minmax" class="fn_addon">see examples</a>
-                    </li>
-                    <li>
-                        <code class=php>_count ( callable $callback ) : int</code>:
-                        <br>Returns the number of matching items using a callback function,
-                        <a href="#examples_using_count" class="fn_addon">see examples</a>
-                    </li>
-                    <li>
-                        <code class=php>_anyCat ( object $item, int $category_id1 [, int $... ] ) : bool</code>:
-                        <br>Returns true if the item belongs to one of the given categories,
-                        <a href="#examples_using_categories" class="fn_addon">see examples</a>
-                    </li>
-                    <li>
-                        <code class=php>_allCat ( object $item, int $category_id1 [, int $... ] ) : bool</code>:
-                        <br>Returns true if the item belongs to all given categories,
-                        <a href="#examples_using_categories" class="fn_addon">see examples</a>
-                    </li>
-                    <li>
-                        <code class=php>_table ( array $table [, string $attribute_name = 'package_weight' [, bool $include_upper_limit = true ]] ) : mixed</code>:
-                        <br>Returns true if the item belongs to all given categories,
-                        <a href="#examples_functions__table" class="fn_addon">see examples</a>
-                    </li>
-                    <li>
-                        <code class=php>_setStopAtFirstMatch ( bool $stop_at_first_match ) : void</code>:
-                        <br>Sets option to stop adding methods at first match (must be used at the beginning of the configuration)
-                        <div class=examples>
-                            <script class=ex type="x-example">
-                                /* With Functions Add-on */
-                                _setStopAtFirstMatch(true);
+                    <ul class="doc-fn-list">
+                        <li>
+                            <code class="php inline@medium">
+                                __ (
+                                <br class="hide@medium" data-spaces="2">string $string_to_translate
+                                <br class="hide@medium" data-spaces="2">) : string
+                            </code>
+                            <p>
+                                Translates the input string, <a href="#tips:translation">see example</a>
+                            </p>
+                        </li>
+                        <li>
+                            <code class="php inline@medium">
+                                addMethod (
+                                <br class="hide@medium" data-spaces="2">string $method_id ,
+                                <br class="hide@medium" data-spaces="2">array $method_properties
+                                <br class="hide@medium" data-spaces="2">) : object
+                            </code>
+                            <p>
+                                Adds a new shipping method
+                            </p>
+                        </li>
+                        <li>
+                            <code class="php inline@medium">
+                                addError (
+                                <br class="hide@medium" data-spaces="2">string $message
+                                <br class="hide@medium" data-spaces="2">) : object
+                            </code>
+                            <p>
+                                Adds an error, <a href="#tips:frontend:error_when_no_method">see example</a>
+                            </p>
+                        </li>
+                        <li>
+                            <code class="php inline@medium">
+                                getMethods (
+                                <br class="hide@medium" data-spaces="2">[ bool $only_enabled = false ]
+                                <br class="hide@medium" data-spaces="2">) : array
+                            </code>
+                            <p>
+                                Gets an array of defined shipping methods, if <code class=php>$only_enabled</code> is true,
+                                only enabled methods will be returned, <a href="#tips:frontend:error_when_no_method">see example</a>
+                            </p>
+                        </li>
+                    </ul>
+                </article>
 
-                                addMethod('__auto__', [
-                                    'title'      => "Delivery to US",
-                                    'enabled'    => $request->dest_country_id == 'US',
-                                    'price'      => 10,
-                                ]);
+                <article id="ref:fn:native">
+                    <h4>Native functions allowed</h4>
 
-                                // This method will be added only if the first one is not enabled
-                                addMethod('__auto__', [
-                                    'title'      => "Delivery to the rest of the world",
-                                    'price'      => 15,
-                                ]);
-                            </script>
+                    <p class="doc-warning">
+                        Look at the PHP documentation if you want to know how to use these functions.
+                    </p>
+                    <div class=multicolumns>
+                        <div>
+                            <h5>Math Functions</h5>
+                            <ul>
+                                <li><a href="http://php.net/manual/en/function.abs.php">abs</a></li>
+                                <li><a href="http://php.net/manual/en/function.ceil.php">ceil</a></li>
+                                <li><a href="http://php.net/manual/en/function.floor.php">floor</a></li>
+                                <li><a href="http://php.net/manual/en/function.max.php">max</a></li>
+                                <li><a href="http://php.net/manual/en/function.min.php">min</a></li>
+                                <li><a href="http://php.net/manual/en/function.round.php">round</a></li>
+                            </ul>
                         </div>
-                    </li>
-                </ul>
-            </div>
+                        <div>
+                            <h5>String Functions</h5>
+                            <ul>
+                                <li><a href="http://php.net/manual/en/function.explode.php">explode</a></li>
+                                <li><a href="http://php.net/manual/en/function.implode.php">implode</a></li>
+                                <li><a href="http://php.net/manual/en/function.strlen.php">strlen</a></li>
+                                <li><a href="http://php.net/manual/en/function.strpos.php">strpos</a></li>
+                                <li><a href="http://php.net/manual/en/function.strtolower.php">strtolower</a></li>
+                                <li><a href="http://php.net/manual/en/function.strtoupper.php">strtoupper</a></li>
+                                <li><a href="http://php.net/manual/en/function.substr.php">substr</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5>Multibyte String Functions</h5>
+                            <ul>
+                                <li><a href="http://php.net/manual/en/function.mb-strlen.php">mb_strlen</a></li>
+                                <li><a href="http://php.net/manual/en/function.mb-strpos.php">mb_strpos</a></li>
+                                <li><a href="http://php.net/manual/en/function.mb-strtolower.php">mb_strtolower</a></li>
+                                <li><a href="http://php.net/manual/en/function.mb-strtoupper.php">mb_strtoupper</a></li>
+                                <li><a href="http://php.net/manual/en/function.mb-substr.php">mb_substr</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5>PCRE Functions</h5>
+                            <ul>
+                                <li><a href="http://php.net/manual/en/function.preg-match.php">preg_match</a></li>
+                                <li><a href="http://php.net/manual/en/function.preg-replace.php">preg_replace</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5>Date/Time Functions</h5>
+                            <ul>
+                                <li><a href="http://php.net/manual/en/function.date.php">date</a>
+                                <li><a href="http://php.net/manual/en/function.strtotime.php">strtotime</a></li>
+                                <li><a href="http://php.net/manual/en/function.time.php">time</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5>Array Functions</h5>
+                            <ul>
+                                <li><a href="http://php.net/manual/en/function.array-filter.php">array_filter</a></li>
+                                <li><a href="http://php.net/manual/en/function.array-intersect.php">array_intersect</a></li>
+                                <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.array-key-exists.php">array_key_exists</a></li>
+                                <li><a href="http://php.net/manual/en/function.array-keys.php">array_keys</a></li>
+                                <li><a href="http://php.net/manual/en/function.array-map.php">array_map</a></li>
+                                <li><a href="http://php.net/manual/en/function.array-reduce.php">array_reduce</a></li>
+                                <li><a href="http://php.net/manual/en/function.array-search.php">array_search</a></li>
+                                <li><a href="http://php.net/manual/en/function.array-sum.php">array_sum</a></li>
+                                <li><a href="http://php.net/manual/en/function.array-unique.php">array_unique</a></li>
+                                <li><a href="http://php.net/manual/en/function.array-values.php">array_values</a></li>
+                                <li><a href="http://php.net/manual/en/function.count.php">count</a></li>
+                                <li><a href="http://php.net/manual/en/function.in-array.php">in_array</a></li>
+                                <li><a href="http://php.net/manual/en/function.range.php">range</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5>JSON Functions</h5>
+                            <ul>
+                                <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.json-decode.php">json_decode</a></li>
+                                <li><strong>(new)</strong> <a href="http://php.net/manual/en/function.json-encode.php">json_encode</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
 
-            <div id="custom_functions">
-                <h4>2.3. Custom functions</h4>
-                <ul class="fn_list">
-                    <li>
-                        <code class=php>__ ( string $string_to_translate ) : string</code>:
-                        <br> Translates the input string, <a href="#hints_translate_string">see example</a>
-                    </li>
-                    <li>
-                        <code class=php>addMethod ( string $method_id , array $method_properties ) : object</code>:
-                        <br>Adds a new shipping method
-                    </li>
-                    <li>
-                        <code class=php>addError ( string $message ) : object</code>:
-                        <br>Adds an error, <a href="#hints_error_when_no_method">see example</a>
-                    </li>
-                    <li>
-                        <code class=php>getMethods ( [ bool $only_enabled = false ] ) : array</code>:
-                        <br>Gets an array of defined shipping methods, if <code class=php>$only_enabled</code> is true, only enabled methods will be returned, <a href="#hints_error_when_no_method">see example</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+                <article id="ref:fn:addon">
+                    <h4>Functions available with Functions Add-On</h4>
 
-    <div id="examples">
-        <h2>Examples</h2>
+                    <ul class="doc-fn-list">
+                        <li>
+                            <code class="php inline@medium">
+                                _country (
+                                <br class="hide@medium" data-spaces="2">string $country_id1
+                                <br class="hide@medium" data-spaces="2">[, string $... ]
+                                <br class="hide@medium" data-spaces="2">) : bool
+                            </code>
+                            <p>
+                                Returns true if the destination country matches one of the given country IDs,
+                                <a href="#ex:destination" class="fn_addon">see examples</a>
+                            </p>
+                        </li>
+                        <li>
+                            <code class="php inline@medium">
+                                _postcode (
+                                <br class="hide@medium" data-spaces="2">string $postcode_or_pattern1
+                                <br class="hide@medium" data-spaces="2">[, mixed $... ]
+                                <br class="hide@medium" data-spaces="2">) : bool
+                            </code>
+                            <p>
+                                Returns true if the destination postcode matches one of the given postcodes or regular expression patterns,
+                                <a href="#ex:destination" class="fn_addon">see examples</a>
+                            </p>
+                        </li>
+                        <li>
+                            <code class="php inline@medium">
+                                _customerGroup (
+                                <br class="hide@medium" data-spaces="2">mixed $customer_group_id_or_name1
+                                <br class="hide@medium" data-spaces="2">[, mixed $... ]
+                                <br class="hide@medium" data-spaces="2">) : bool
+                            </code>
+                            <p>
+                                Returns true if the customer group matches one of the given ids or names,
+                                <a href="#ex:customer_groups" class="fn_addon">see examples</a>
+                            </p>
+                        </li>
+                        <li>
+                            <code class="php inline@medium">
+                                _sum (
+                                <br class="hide@medium" data-spaces="2">mixed $value1
+                                <br class="hide@medium" data-spaces="2">[, mixed $... ]
+                                <br class="hide@medium" data-spaces="2">) : mixed
+                            </code>
+                            <p>
+                                Returns the sum of the given values,
+                                <a href="#ex:sum" class="fn_addon">see examples</a>
+                            </p>
+                        </li>
+                        <li>
+                            <code class="php inline@medium">
+                                _min (
+                                <br class="hide@medium" data-spaces="2">mixed $value1
+                                <br class="hide@medium" data-spaces="2">[, mixed $... ]
+                                <br class="hide@medium" data-spaces="2">) : mixed
+                            </code>
+                            <p>
+                                Returns the minimum of the given values,
+                                <a href="#ex:minmax" class="fn_addon">see examples</a>
+                            </p>
+                        </li>
+                        <li>
+                            <code class="php inline@medium">
+                                _max (
+                                <br class="hide@medium" data-spaces="2">mixed $value1
+                                <br class="hide@medium" data-spaces="2">[, mixed $... ]
+                                <br class="hide@medium" data-spaces="2">) : mixed
+                            </code>
+                            <p>
+                                Returns the maximum of the given values,
+                                <a href="#ex:minmax" class="fn_addon">see examples</a>
+                            </p>
+                        </li>
+                        <li>
+                            <code class="php inline@medium">
+                                _count (
+                                <br class="hide@medium" data-spaces="2">callable $callback
+                                <br class="hide@medium" data-spaces="2">) : int
+                            </code>
+                            <p>
+                                Returns the number of matching items using a callback function,
+                                <a href="#ex:count" class="fn_addon">see examples</a>
+                            </p>
+                        </li>
+                        <li>
+                            <code class="php inline@medium">
+                                _anyCat (
+                                <br class="hide@medium" data-spaces="2">object $item ,
+                                <br class="hide@medium" data-spaces="2">int $category_id1
+                                <br class="hide@medium" data-spaces="2">[, int $... ]
+                                <br class="hide@medium" data-spaces="2">) : bool
+                            </code>
+                            <p>
+                                Returns true if the item belongs to one of the given categories,
+                                <a href="#ex:categories" class="fn_addon">see examples</a>
+                            </p>
+                        </li>
+                        <li>
+                            <code class="php inline@medium">
+                                _allCat (
+                                <br class="hide@medium" data-spaces="2">object $item ,
+                                <br class="hide@medium" data-spaces="2">int $category_id1
+                                <br class="hide@medium" data-spaces="2">[, int $... ]
+                                <br class="hide@medium" data-spaces="2">) : bool
+                            </code>
+                            <p>
+                                Returns true if the item belongs to all given categories,
+                                <a href="#ex:categories" class="fn_addon">see examples</a>
+                            </p>
+                        </li>
+                        <li>
+                            <code class="php inline@medium">
+                                _table (
+                                <br class="hide@medium" data-spaces="2">array $table
+                                <br class="hide@medium" data-spaces="2">[, string $attribute_name = 'package_weight'
+                                <br class="hide@medium" data-spaces="2">[, bool $include_upper_limit = true ]]
+                                <br class="hide@medium" data-spaces="2">) : mixed
+                            </code>
+                            <p>
+                                Returns true if the item belongs to all given categories,
+                                <a href="#ex:fn:__table" class="fn_addon">see examples</a>
+                            </p>
+                        </li>
+                        <li>
+                            <code class="php inline@medium">
+                                _setStopAtFirstMatch (
+                                <br class="hide@medium" data-spaces="2">bool $stop_at_first_match
+                                <br class="hide@medium" data-spaces="2">) : void
+                            </code>
+                            <div>
+                                Sets option to stop adding methods at first match (must be used at the beginning of the configuration)
+                                <script type="doc/example">
+                                    /* With Functions Add-on */
+                                    _setStopAtFirstMatch(true);
 
-        <div id="examples_simple">
-            <h3>Free shipping</h3>
-            <div class=examples>
-                <script class=ex type="x-example">
+                                    addMethod('__auto__', [
+                                        'title'      => "Delivery to US",
+                                        'enabled'    => $request->dest_country_id == 'US',
+                                        'price'      => 10,
+                                    ]);
+
+                                    // This method will be added only if the first one is not enabled
+                                    addMethod('__auto__', [
+                                        'title'      => "Delivery to the rest of the world",
+                                        'price'      => 15,
+                                    ]);
+                                </script>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+
+            </article>
+
+        </section>
+
+        <section id="ex">
+            <h2>Examples</h2>
+
+            <doc-section-toc></doc-section-toc>
+
+            <article id="ex:basic">
+                <h3>Free shipping</h3>
+
+                <script type="doc/example">
                     /* Example */
                     addMethod('__auto__', [
                         'title'      => "Free shipping",
@@ -688,14 +1075,12 @@ php bin/magento setup:di:compile
                         'price'      => 0,
                     ]);
                 </script>
-            </div>
-        </div>
+            </article>
 
-        <div id="examples_using_destination">
-            <h3>Filter on destination</h3>
+            <article id="ex:destination">
+                <h3>Filter on destination</h3>
 
-            <div class=examples>
-                <script class=ex type="x-example">
+                <script type="doc/example">
                     /* Example */
                     addMethod('__auto__', [
                         'title'      => "France, Germany, Switzerland, Spain, Italy",
@@ -709,8 +1094,7 @@ php bin/magento setup:di:compile
                         'enabled'    => _country('FR', 'DE', 'CH', 'ES', 'IT'),
                         'price'      => 10,
                     ]);
-                </script>
-                <script class=ex type="x-example">
+                    //---
                     /* Example */
                     addMethod('__auto__', [
                         'title'      => "Postcode starting with 25",
@@ -724,8 +1108,7 @@ php bin/magento setup:di:compile
                         'enabled'    => _country('FR') && _postcode('/^25/'),
                         'price'      => 10,
                     ]);
-                </script>
-                <script class=ex type="x-example">
+                    //---
                     /* Example */
                     addMethod('__auto__', [
                         'title'      => "Regular expressions allowing postal codes beginning with 'PO' (case insensitive)",
@@ -740,11 +1123,11 @@ php bin/magento setup:di:compile
                         'price'      => 10,
                     ]);
                 </script>
-            </div>
-            <div id="examples_excluding_domtom_postcode">
-                <p class=bold>France excluding DOM/TOM</p>
-                <div class=examples>
-                    <script class=ex type="x-example">
+
+                <article id="ex:destination:excluding_domtom">
+                    <h4>France excluding DOM/TOM</h4>
+
+                    <script type="doc/example">
                         /* Example */
                         // Regular Expression refusing delivery to France with postal codes
                         // beginning with 97 and 98 (with or without interspersed zeros and spaces)
@@ -765,801 +1148,958 @@ php bin/magento setup:di:compile
                             'price'      => 10,
                         ]);
                     </script>
-                </div>
-            </div>
+                </article>
 
-            <div id="examples_using_customer_groups">
+            </article>
+
+            <article id="ex:customer_groups">
                 <h3>Filter on customer group</h3>
+
                 <p>You can use the name or ID of the customer groups.</p>
-                <div class=examples>
-                    <script class=ex type="x-example">
-                        /* Example */
-                        addMethod('__auto__', [
-                            'title'      => "Retailer group",
-                            'enabled'    => $customer_group->code == "Retailer",
-                            'price'      => 10,
-                        ]);
-                        //---
-                        /* With Functions Add-on */
-                        addMethod('__auto__', [
-                            'title'      => "Retailer group",
-                            'enabled'    => _customerGroup('Retailer'),
-                            'price'      => 10,
-                        ]);
-                    </script>
-                    <script class=ex type="x-example">
-                        /* Example */
-                        addMethod('__auto__', [
-                            'title'      => "NOT LOGGED IN or General groups",
-                            'enabled'    => in_array($customer_group->code, ['NOT LOGGED IN', 'General']),
-                            'price'      => 10,
-                        ]);
-                        //---
-                        /* With Functions Add-on */
-                        addMethod('__auto__', [
-                            'title'      => "NOT LOGGED IN or General groups",
-                            'enabled'    => _customerGroup('NOT LOGGED IN', 'General'),
-                            'price'      => 10,
-                        ]);
-                    </script>
-                    <script class=ex type="x-example">
-                        /* Example */
-                        addMethod('__auto__', [
-                            'title'      => "NOT LOGGED IN or General groups by their ID",
-                            'enabled'    => in_array($customer_group->id, [0, 1]),
-                            'price'      => 10,
-                        ]);
-                        //---
-                        /* With Functions Add-on */
-                        addMethod('__auto__', [
-                            'title'      => "NOT LOGGED IN or General groups by their ID",
-                            'enabled'    => _customerGroup(0, 1),
-                            'price'      => 10,
-                        ]);
-                    </script>
-                </div>
-            </div>
+                <script type="doc/example">
+                    /* Example */
+                    addMethod('__auto__', [
+                        'title'      => "Retailer group",
+                        'enabled'    => $customer_group->code == "Retailer",
+                        'price'      => 10,
+                    ]);
+                    //---
+                    /* With Functions Add-on */
+                    addMethod('__auto__', [
+                        'title'      => "Retailer group",
+                        'enabled'    => _customerGroup('Retailer'),
+                        'price'      => 10,
+                    ]);
+                    //---
+                    /* Example */
+                    addMethod('__auto__', [
+                        'title'      => "NOT LOGGED IN or General groups",
+                        'enabled'    => in_array($customer_group->code, ['NOT LOGGED IN', 'General']),
+                        'price'      => 10,
+                    ]);
+                    //---
+                    /* With Functions Add-on */
+                    addMethod('__auto__', [
+                        'title'      => "NOT LOGGED IN or General groups",
+                        'enabled'    => _customerGroup('NOT LOGGED IN', 'General'),
+                        'price'      => 10,
+                    ]);
+                    //---
+                    /* Example */
+                    addMethod('__auto__', [
+                        'title'      => "NOT LOGGED IN or General groups by their ID",
+                        'enabled'    => in_array($customer_group->id, [0, 1]),
+                        'price'      => 10,
+                    ]);
+                    //---
+                    /* With Functions Add-on */
+                    addMethod('__auto__', [
+                        'title'      => "NOT LOGGED IN or General groups by their ID",
+                        'enabled'    => _customerGroup(0, 1),
+                        'price'      => 10,
+                    ]);
+                </script>
+            </article>
 
-            <div id="examples_using_formulas">
+            <article id="ex:formulas">
                 <h3>Using formulas</h3>
+
                 <p>Formulas can be used to calculate the price of the delivery.</p>
-                <div class=examples>
-                    <script class=ex type="x-example">
-                        /* Example */
-                        addMethod('__auto__', [
-                            'title'      => "Shipping",
-                            'price'      => 0.1 * $request->package_value + 10.00,
-                        ]);
-                    </script>
-                </div>
+                <script type="doc/example">
+                    /* Example */
+                    addMethod('__auto__', [
+                        'title'      => "Shipping",
+                        'price'      => 0.1 * $request->package_value + 10.00,
+                    ]);
+                </script>
 
-                <p class=bold>Using the configuration of another element</p>
-                <div class=examples>
-                    <script class=ex type="x-example">
-                        /* Example */
-                        $standard = addMethod('standard', [
-                            'title'      => "Standard Shipping",
-                            'enabled'    => $request->package_value < 1000.00,
-                            'price'      => 10,
-                        ]);
-                        addMethod('express', [
-                            'title'      => "Express Shipping",
-                            'enabled'    => $standard->enabled && $request->package_weight < 10,
-                            'price'      => 12,
-                        ]);
-                    </script>
-                </div>
-            </div>
+                <p>Using the configuration of another element:</p>
+                <script type="doc/example">
+                    /* Example */
+                    $standard = addMethod('standard', [
+                        'title'      => "Standard Shipping",
+                        'enabled'    => $request->package_value < 1000.00,
+                        'price'      => 10,
+                    ]);
+                    addMethod('express', [
+                        'title'      => "Express Shipping",
+                        'enabled'    => $standard->enabled && $request->package_weight < 10,
+                        'price'      => 12,
+                    ]);
+                </script>
+            </article>
 
-            <div id="examples_using_special_functions">
+            <article id="ex:fn">
                 <h3>Using special functions</h3>
 
-                <div id="examples_functions__table">
-                    <p class=bold>Defining a table</p>
+                <article id="ex:fn:__table">
+                    <h4>Defining a table</h4>
 
-                    <div class=examples>
-                        <script class=ex type="x-example">
-                            /* Example */
-                            // If the package weight is lower or equal to 0.7, the price will be 5.30
-                            // If the package weight is lower or equal to 1.0, the price will be 6.50
-                            // In others cases, the price will be 7.50
-                            addMethod('__auto__', [
-                                'title'      => "Shipping",
-                                'price'      => array_reduce([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ], function ($carry, $item) use ($request) {
-                                                    if (isset($carry)) return $carry;
-                                                    if (isset($item[0]) && ($request->package_weight <= $item[0] || $item[0] == '*')) {
-                                                        $carry = $item[1];
-                                                    }
-                                                    return $carry;
-                                                }),
-                            ]);
-                            //---
-                            /* With Functions Add-on */
-                            // If the package weight is lower or equal to 0.7, the price will be 5.30
-                            // If the package weight is lower or equal to 1.0, the price will be 6.50
-                            // In others cases, the price will be 7.50
-                            addMethod('__auto__', [
-                                'title'      => "Shipping",
-                                'price'      => _table([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ]),
-                            ]);
-                        </script>
-                        <script class=ex type="x-example">
-                            /* Example */
-                            // You can exclude the upper limit value by adding an argument false
-                            addMethod('__auto__', [
-                                'title'      => "Shipping",
-                                'price'      => array_reduce([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ], function ($carry, $item) use ($request) {
-                                                    if (isset($carry)) return $carry;
-                                                    if (isset($item[0]) && ($request->package_weight < $item[0] || $item[0] == '*')) {
-                                                        $carry = $item[1];
-                                                    }
-                                                    return $carry;
-                                                }),
-                            ]);
-                            //---
-                            /* With Functions Add-on */
-                            // You can exclude the upper limit value by adding an argument false
-                            addMethod('__auto__', [
-                                'title'      => "Shipping",
-                                'price'      => _table([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ], 'package_weight', false),
-                            ]);
-                        </script>
-                    </div>
-                </div>
+                    <script type="doc/example">
+                        /* Example */
+                        // If the package weight is lower or equal to 0.7, the price will be 5.30
+                        // If the package weight is lower or equal to 1.0, the price will be 6.50
+                        // In others cases, the price will be 7.50
+                        addMethod('__auto__', [
+                            'title'      => "Shipping",
+                            'price'      => array_reduce([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ], function ($carry, $item) use ($request) {
+                                                if (isset($carry)) return $carry;
+                                                if (isset($item[0]) && ($request->package_weight <= $item[0] || $item[0] == '*')) {
+                                                    $carry = $item[1];
+                                                }
+                                                return $carry;
+                                            }),
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        // If the package weight is lower or equal to 0.7, the price will be 5.30
+                        // If the package weight is lower or equal to 1.0, the price will be 6.50
+                        // In others cases, the price will be 7.50
+                        addMethod('__auto__', [
+                            'title'      => "Shipping",
+                            'price'      => _table([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ]),
+                        ]);
+                        //---
+                        /* Example */
+                        // You can exclude the upper limit value by adding an argument false
+                        addMethod('__auto__', [
+                            'title'      => "Shipping",
+                            'price'      => array_reduce([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ], function ($carry, $item) use ($request) {
+                                                if (isset($carry)) return $carry;
+                                                if (isset($item[0]) && ($request->package_weight < $item[0] || $item[0] == '*')) {
+                                                    $carry = $item[1];
+                                                }
+                                                return $carry;
+                                            }),
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        // You can exclude the upper limit value by adding an argument false
+                        addMethod('__auto__', [
+                            'title'      => "Shipping",
+                            'price'      => _table([ [0.7, 5.30], [1.0, 6.50], ['*', 7.50] ], 'package_weight', false),
+                        ]);
+                    </script>
+                </article>
 
-                <div id="examples_functions__switch">
-                    <p class=bold>Using an associative table</p>
-                    <div class=examples>
-                        <script class=ex type="x-example">
-                            /* Example */
-                            // If the coupon code is equal to "coupon1", the price will be 5.30
-                            // If the coupon code is equal to "coupon2", the price will be 6.50
-                            // In others cases, the price will be 7.50
-                            addMethod('__auto__', [
-                                'title'      => "Shipping",
-                                'price'      => [ 'coupon1' => 5.30, 'coupon2' => 6.50 ][$quote->coupon_code] ?? 7.50,
-                            ]);
-                        </script>
-                    </div>
-                </div>
-            </div>
+                <article id="ex:fn:__switch">
+                    <h4>Using an associative table:</h4>
 
-            <div id="examples_using_products">
-                <h3>Using the attributes and options of products</h3>
+                    <script type="doc/example">
+                        /* Example */
+                        // If the coupon code is equal to "coupon1", the price will be 5.30
+                        // If the coupon code is equal to "coupon2", the price will be 6.50
+                        // In others cases, the price will be 7.50
+                        addMethod('__auto__', [
+                            'title'      => "Shipping",
+                            'price'      => [ 'coupon1' => 5.30, 'coupon2' => 6.50 ][$quote->coupon_code] ?? 7.50,
+                        ]);
+                    </script>
+                </article>
 
-                <div id="examples_using_count">
+            </article>
+
+            <article id="ex:products">
+                <h3>Using attributes and options of products</h3>
+
+                <article id="ex:count">
                     <h4>Count items</h4>
-                    <div class=examples>
-                        <script class=ex type="x-example">
-                            /* Example */
-                            addMethod('__auto__', [
-                                'title'      => "If at least one product has the attribute 'name' equal to 'Cat'",
-                                'enabled'    => count(
-                                                    array_filter($request->all_items, function ($item) {
-                                                        return $item->product->name == 'Cat';
-                                                    })
-                                                ) > 0,
-                                'price'      => 10
-                            ]);
-                            //---
-                            /* With Functions Add-on */
-                            addMethod('__auto__', [
-                                'title'      => "If at least one product has the attribute 'name' equal to 'Cat'",
-                                'enabled'    => _count(function ($item) {
+                    <script type="doc/example">
+                        /* Example */
+                        addMethod('__auto__', [
+                            'title'      => "If at least one product has the attribute 'name' equal to 'Cat'",
+                            'enabled'    => count(
+                                                array_filter($request->all_items, function ($item) {
                                                     return $item->product->name == 'Cat';
-                                                }) > 0,
-                                'price'      => 10
-                            ]);
-                        </script>
-                        <script class=ex type="x-example">
-                            /* Example */
-                            addMethod('__auto__', [
-                                'title'      => "If all items have the option 'Size' greater or equal to 1",
-                                'enabled'    => count(
-                                                    array_filter($request->all_items, function ($item) {
-                                                        return isset($item->options['Size']) && $item->options['Size']['value'] >= 1;
-                                                    })
-                                                ) == $request->package_qty,
-                                'price'      => 10
-                            ]);
-                            //---
-                            /* With Functions Add-on */
-                            addMethod('__auto__', [
-                                'title'      => "If all items have the option 'Size' greater or equal to 1",
-                                'enabled'    => _count(function ($item) {
+                                                })
+                                            ) > 0,
+                            'price'      => 10
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        addMethod('__auto__', [
+                            'title'      => "If at least one product has the attribute 'name' equal to 'Cat'",
+                            'enabled'    => _count(function ($item) {
+                                                return $item->product->name == 'Cat';
+                                            }) > 0,
+                            'price'      => 10
+                        ]);
+                        //---
+                        /* Example */
+                        addMethod('__auto__', [
+                            'title'      => "If all items have the option 'Size' greater or equal to 1",
+                            'enabled'    => count(
+                                                array_filter($request->all_items, function ($item) {
                                                     return isset($item->options['Size']) && $item->options['Size']['value'] >= 1;
-                                                }) == $request->package_qty,
-                                'price'      => 10
-                            ]);
-                        </script>
-                        <script class=ex type="x-example">
-                            /* Example */
-                            addMethod('__auto__', [
-                                'title'      => "More than 3 sku differents",
-                                'enabled'    => count(
-                                                    array_unique(
-                                                        array_map(function ($item) {
-                                                            return $item->product->sku;
-                                                        }, $request->all_items)
-                                                    )
-                                                ) > 3,
-                                'price'      => 10
-                            ]);
-                            //---
-                            /* With Functions Add-on */
-                            addMethod('__auto__', [
-                                'title'      => "More than 3 sku differents",
-                                'enabled'    => count(
-                                                    array_unique(
-                                                        array_map(function ($item) {
-                                                            return $item->product->sku;
-                                                        }, $request->all_items)
-                                                    )
-                                                ) > 3,
-                                'price'      => 10
-                            ]);
-                        </script>
-                    </div>
-                </div>
+                                                })
+                                            ) == $request->package_qty,
+                            'price'      => 10
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        addMethod('__auto__', [
+                            'title'      => "If all items have the option 'Size' greater or equal to 1",
+                            'enabled'    => _count(function ($item) {
+                                                return isset($item->options['Size']) && $item->options['Size']['value'] >= 1;
+                                            }) == $request->package_qty,
+                            'price'      => 10
+                        ]);
+                        //---
+                        /* Example */
+                        addMethod('__auto__', [
+                            'title'      => "More than 3 sku differents",
+                            'enabled'    => count(
+                                                array_unique(
+                                                    array_map(function ($item) {
+                                                        return $item->product->sku;
+                                                    }, $request->all_items)
+                                                )
+                                            ) > 3,
+                            'price'      => 10
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        addMethod('__auto__', [
+                            'title'      => "More than 3 sku differents",
+                            'enabled'    => count(
+                                                array_unique(
+                                                    array_map(function ($item) {
+                                                        return $item->product->sku;
+                                                    }, $request->all_items)
+                                                )
+                                            ) > 3,
+                            'price'      => 10
+                        ]);
+                    </script>
+                </article>
 
-                <div id="examples_using_minmax">
-                        <h4>Get minimum value, get maximum value</h4>
-                    <div class=examples>
-                        <script class=ex type="x-example">
-                            /* Example */
-                            addMethod('__auto__', [
-                                'title'      => "Minimum price excluding tax without discount is greater to 10",
-                                'enabled'    => min(
-                                                    array_map(
-                                                        function ($item) {
-                                                            return $item->base_original_price;
-                                                        },
-                                                        $request->all_items
-                                                    )
-                                                ) > 10,
-                                'price'      => 10
-                            ]);
-                            //---
-                            /* With Functions Add-on */
-                            addMethod('__auto__', [
-                                'title'      => "Minimum price excluding tax without discount is greater to 10",
-                                'enabled'    => _min(function ($item) {
-                                                    return $item->base_original_price;
-                                                }) > 10,
-                                'price'      => 10
-                            ]);
-                        </script>
-                        <script class=ex type="x-example">
-                            /* Example */
-                            addMethod('__auto__', [
-                                'title'      => "Maximum value of the option 'Size' is lower than 50",
-                                'enabled'    => max(
-                                                    array_map(
-                                                        function ($item) {
-                                                            return $item->options['Size']['value'] ?? 0;
-                                                        },
-                                                        $request->all_items
-                                                    )
-                                                ) < 50,
-                                'price'      => 10
-                            ]);
-                            //---
-                            /* With Functions Add-on */
-                            addMethod('__auto__', [
-                                'title'      => "Maximum value of the option 'Size' is lower than 50",
-                                'enabled'    => _max(function ($item) {
-                                                    return $item->options['Size']['value'] ?? 0;
-                                                }) < 50,
-                                'price'      => 10
-                            ]);
-                        </script>
-                    </div>
-                </div>
+                <article id="ex:minmax">
+                    <h4>Get minimum value, get maximum value</h4>
+                    <script type="doc/example">
+                        /* Example */
+                        addMethod('__auto__', [
+                            'title'      => "Minimum price excluding tax without discount is greater to 10",
+                            'enabled'    => min(
+                                                array_map(
+                                                    function ($item) {
+                                                        return $item->base_original_price;
+                                                    },
+                                                    $request->all_items
+                                                )
+                                            ) > 10,
+                            'price'      => 10
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        addMethod('__auto__', [
+                            'title'      => "Minimum price excluding tax without discount is greater to 10",
+                            'enabled'    => _min(function ($item) {
+                                                return $item->base_original_price;
+                                            }) > 10,
+                            'price'      => 10
+                        ]);
+                        //---
+                        /* Example */
+                        addMethod('__auto__', [
+                            'title'      => "Maximum value of the option 'Size' is lower than 50",
+                            'enabled'    => max(
+                                                array_map(
+                                                    function ($item) {
+                                                        return $item->options['Size']['value'] ?? 0;
+                                                    },
+                                                    $request->all_items
+                                                )
+                                            ) < 50,
+                            'price'      => 10
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        addMethod('__auto__', [
+                            'title'      => "Maximum value of the option 'Size' is lower than 50",
+                            'enabled'    => _max(function ($item) {
+                                                return $item->options['Size']['value'] ?? 0;
+                                            }) < 50,
+                            'price'      => 10
+                        ]);
+                    </script>
+                </article>
 
-                <div id="examples_using_sum">
+                <article id="ex:sum">
                     <h4>Sum</h4>
-                    <div class=examples>
-                        <script class=ex type="x-example">
-                            /* Example */
-                            addMethod('__auto__', [
-                                'title'      => "Sum of all options 'Size' is greater than 30",
-                                'enabled'    => array_sum(
-                                                    array_map(
-                                                        function ($item) {
-                                                            return $item->options['Size']['value'] ?? 0;
-                                                        },
-                                                        $request->all_items
-                                                    )
-                                                ) > 30,
-                                'price'      => 10
-                            ]);
-                            //---
-                            /* With Functions Add-on */
-                            addMethod('__auto__', [
-                                'title'      => "Sum of all options 'Size' is greater than 30",
-                                'enabled'    => _sum(function ($item) {
-                                                    return $item->options['Size']['value'] ?? 0;
-                                                }) > 30,
-                                'price'      => 10
-                            ]);
-                        </script>
-                        <script class=ex type="x-example">
-                            /* Example */
-                            addMethod('__auto__', [
-                                'title'      => "Calculate shipping fees by product",
-                                'price'      => array_sum(
-                                                    array_map(
-                                                        function ($item) {
-                                                            // shipping is a custom product attribute
-                                                            return $item->product->shipping * $item->qty;
-                                                        },
-                                                        $request->all_items
-                                                    )
-                                                ),
-                            ]);
-                            //---
-                            /* With Functions Add-on */
-                            addMethod('__auto__', [
-                                'title'      => "Calculate shipping fees by product",
-                                'price'      => _sum(function ($item) {
-                                                    // shipping is a custom product attribute
-                                                    return $item->product->shipping * $item->qty;
-                                                }),
-                            ]);
-                        </script>
-                        <script class=ex type="x-example">
-                            /* Example */
-                            addMethod('__auto__', [
-                                'title'      => "5 x weight of products that are in categories 2 or 3",
-                                'price'      => array_sum(
-                                                    array_map(
-                                                        function ($item) {
-                                                            return count(array_intersect($item->product->category_ids, [2, 3]))>= 1
-                                                                ? $item->product->weight * $item->qty
-                                                                : 0;
-                                                        },
-                                                        $request->all_items
-                                                    )
-                                                ) * 5.0,
-                            ]);
-                            //---
-                            /* With Functions Add-on */
-                            addMethod('__auto__', [
-                                'title'      => "5 x weight of products that are in categories 2 or 3",
-                                'price'      => _sum(function ($item) {
-                                                    return _anyCat($item, 2, 3)
-                                                        ? $item->product->weight * $item->qty
-                                                        : 0;
-                                                }) * 5.0,
-                            ]);
-                        </script>
-                    </div>
-                </div>
-            </div>
+                    <script type="doc/example">
+                        /* Example */
+                        addMethod('__auto__', [
+                            'title'      => "Sum of all options 'Size' is greater than 30",
+                            'enabled'    => array_sum(
+                                                array_map(
+                                                    function ($item) {
+                                                        return $item->options['Size']['value'] ?? 0;
+                                                    },
+                                                    $request->all_items
+                                                )
+                                            ) > 30,
+                            'price'      => 10
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        addMethod('__auto__', [
+                            'title'      => "Sum of all options 'Size' is greater than 30",
+                            'enabled'    => _sum(function ($item) {
+                                                return $item->options['Size']['value'] ?? 0;
+                                            }) > 30,
+                            'price'      => 10
+                        ]);
+                        //---
+                        /* Example */
+                        addMethod('__auto__', [
+                            'title'      => "Calculate shipping fees by product",
+                            'price'      => array_sum(
+                                                array_map(
+                                                    function ($item) {
+                                                        // shipping is a custom product attribute
+                                                        return $item->product->shipping * $item->qty;
+                                                    },
+                                                    $request->all_items
+                                                )
+                                            ),
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        addMethod('__auto__', [
+                            'title'      => "Calculate shipping fees by product",
+                            'price'      => _sum(function ($item) {
+                                                // shipping is a custom product attribute
+                                                return $item->product->shipping * $item->qty;
+                                            }),
+                        ]);
+                        //---
+                        /* Example */
+                        addMethod('__auto__', [
+                            'title'      => "5 x weight of products that are in categories 2 or 3",
+                            'price'      => array_sum(
+                                                array_map(
+                                                    function ($item) {
+                                                        return count(array_intersect($item->product->category_ids, [2, 3]))>= 1
+                                                            ? $item->product->weight * $item->qty
+                                                            : 0;
+                                                    },
+                                                    $request->all_items
+                                                )
+                                            ) * 5.0,
+                        ]);
+                        //---
+                        /* With Functions Add-on */
+                        addMethod('__auto__', [
+                            'title'      => "5 x weight of products that are in categories 2 or 3",
+                            'price'      => _sum(function ($item) {
+                                                return _anyCat($item, 2, 3)
+                                                    ? $item->product->weight * $item->qty
+                                                    : 0;
+                                            }) * 5.0,
+                        ]);
+                    </script>
+                </article>
 
-            <div id="examples_using_categories">
+            </article>
+
+            <article id="ex:categories">
                 <h3>Using categories</h3>
-                <p class="alert alert-danger">Warning: you must notice that in Magento, <strong>a product can be in multiple categories</strong>.<br/>So be particularly careful how you use this property.</p>
-                <div class=examples>
-                    <script class=ex type="x-example">
-                        /* Example */
-                        addMethod('__auto__', [
-                            'title'      => "Sum of weight attributes of products in category 12",
-                            'price'      => array_sum(
-                                                array_map(
-                                                    function ($item) {
-                                                        return in_array(12, $item->product->category_ids)
-                                                            ? $item->product->weight : 0;
-                                                    },
-                                                    $request->all_items
-                                                )
-                                            ),
-                        ]);
-                        //---
-                        /* With Functions Add-on */
-                        addMethod('__auto__', [
-                            'title'      => "Sum of weight attributes of products in category 12",
-                            'price'      => _sum(
+
+                <p class="doc-warning">
+                    Warning: you must notice that in Magento, <strong>a product can be in multiple categories</strong>.
+                    <br>So be particularly careful how you use this property.
+                </p>
+
+                <script type="doc/example">
+                    /* Example */
+                    addMethod('__auto__', [
+                        'title'      => "Sum of weight attributes of products in category 12",
+                        'price'      => array_sum(
+                                            array_map(
                                                 function ($item) {
-                                                    return _anyCat($item, 12)
-                                                            ? $item->product->weight : 0;
-                                                }
-                                            ),
-                        ]);
-                    </script>
-                    <script class=ex type="x-example">
-                        /* Example */
-                        addMethod('__auto__', [
-                            'title'      => "Sum of weight attributes of products in categories whose id is 11 and 12",
-                            'price'      => array_sum(
-                                                array_map(
-                                                    function ($item) {
-                                                        return count(array_intersect($item->product->category_ids, [11, 12])) >= 1
-                                                            ? $item->product->weight : 0;
-                                                    },
-                                                    $request->all_items
-                                                )
-                                            ),
-                        ]);
-                        //---
-                        /* With Functions Add-on */
-                        addMethod('__auto__', [
-                            'title'      => "Sum of weight attributes of products in categories whose id is 11 and 12",
-                            'price'      => _sum(
-                                                function ($item) {
-                                                    return _allCat($item, 11, 12)
+                                                    return in_array(12, $item->product->category_ids)
                                                         ? $item->product->weight : 0;
-                                                }
-                                            ),
-                        ]);
-                    </script>
-                    <script class=ex type="x-example">
-                        /* Example */
-                        addMethod('__auto__', [
-                            'title'      => "Sum of weights of products having for first category id 12",
-                            'price'      => array_sum(
-                                                array_map(
-                                                    function ($item) {
-                                                        return $item->product->category_id == 12
-                                                            ? $item->product->weight : 0;
-                                                    },
-                                                    $request->all_items
-                                                )
-                                            ),
-                        ]);
-                        //---
-                        /* With Functions Add-on */
-                        addMethod('__auto__', [
-                            'title'      => "Sum of weights of products having for first category id 12",
-                            'price'      => _sum(
+                                                },
+                                                $request->all_items
+                                            )
+                                        ),
+                    ]);
+                    //---
+                    /* With Functions Add-on */
+                    addMethod('__auto__', [
+                        'title'      => "Sum of weight attributes of products in category 12",
+                        'price'      => _sum(
+                                            function ($item) {
+                                                return _anyCat($item, 12)
+                                                        ? $item->product->weight : 0;
+                                            }
+                                        ),
+                    ]);
+                    //---
+                    /* Example */
+                    addMethod('__auto__', [
+                        'title'      => "Sum of weight attributes of products in categories whose id is 11 and 12",
+                        'price'      => array_sum(
+                                            array_map(
+                                                function ($item) {
+                                                    return count(array_intersect($item->product->category_ids, [11, 12])) >= 1
+                                                        ? $item->product->weight : 0;
+                                                },
+                                                $request->all_items
+                                            )
+                                        ),
+                    ]);
+                    //---
+                    /* With Functions Add-on */
+                    addMethod('__auto__', [
+                        'title'      => "Sum of weight attributes of products in categories whose id is 11 and 12",
+                        'price'      => _sum(
+                                            function ($item) {
+                                                return _allCat($item, 11, 12)
+                                                    ? $item->product->weight : 0;
+                                            }
+                                        ),
+                    ]);
+                    //---
+                    /* Example */
+                    addMethod('__auto__', [
+                        'title'      => "Sum of weights of products having for first category id 12",
+                        'price'      => array_sum(
+                                            array_map(
                                                 function ($item) {
                                                     return $item->product->category_id == 12
                                                         ? $item->product->weight : 0;
-                                                }
-                                            ),
+                                                },
+                                                $request->all_items
+                                            )
+                                        ),
+                    ]);
+                    //---
+                    /* With Functions Add-on */
+                    addMethod('__auto__', [
+                        'title'      => "Sum of weights of products having for first category id 12",
+                        'price'      => _sum(
+                                            function ($item) {
+                                                return $item->product->category_id == 12
+                                                    ? $item->product->weight : 0;
+                                            }
+                                        ),
+                    ]);
+                </script>
+            </article>
+
+        </section><!-- end examples -->
+
+        <section id="tips">
+            <h2>Tips</h2>
+
+            <doc-section-toc></doc-section-toc>
+
+            <article id="tips:if">
+                <h3>if/elseif/else statements</h3>
+
+                <script type="doc/example">
+                    /* Example */
+                    if ($request->dest_country_id == 'US') {
+                        addMethod('__auto__', [
+                            'title'      => "If destination country is US",
+                            'price'      => 0,
+                        ]);
+                    } elseif ($request->dest_country_id == 'CA') {
+                        addMethod('__auto__', [
+                            'title'      => "Else if destination country is CA",
+                            'price'      => 0,
+                        ]);
+                    } else {
+                        addMethod('__auto__', [
+                            'title'      => "Other countries",
+                            'price'      => 10,
+                        ]);
+                    }
+                    //---
+                    /* With Functions Add-on */
+                    if (_country('US')) {
+                        addMethod('__auto__', [
+                            'title'      => "If destination country is US",
+                            'price'      => 0,
+                        ]);
+                    } elseif (_country('CA')) {
+                        addMethod('__auto__', [
+                            'title'      => "Else if destination country is CA",
+                            'price'      => 0,
+                        ]);
+                    } else {
+                        addMethod('__auto__', [
+                            'title'      => "Other countries",
+                            'price'      => 10,
+                        ]);
+                    }
+                </script>
+            </article>
+
+            <article id="tips:customer">
+                <h3>Customer Data</h3>
+
+                <article id="tips:customer:new_customer_data">
+                    <h4>Access new customer data (ex. VAT ID)</h4>
+
+                    <p class="doc-warning">
+                        <a href="#issues:magento218-" class=issue>Known issue with Magento CE &lt; 2.1.8</a>.
+                    </p>
+
+                    <script type="doc/example">
+                        /* Example */
+                        if (!$customer->id && $quote->getShippingAddress()->vat_id) {
+                            addMethod('__auto__', [
+                                'title'      => "Display shipping method for new customer with VAT ID",
+                                'price'      => 0,
+                            ]);
+                        }
+                    </script>
+                </article>
+
+                <article id="tips:customer:custom_data">
+                    <h4>Using custom customer attribute</h4>
+
+                    <p>In the following example, <code>my_custom_attribute</code> is a custom customer attribute created by a custom extension.</p>
+                    <script type="doc/example">
+                        /* Example */
+                        if ($customer->getCustomAttribute('my_custom_attribute')->value == 5) {
+                            addMethod('__auto__', [
+                                'title'      => "Display shipping method only for customers having 'my_custom_attribute' set to 5",
+                                'price'      => 0,
+                            ]);
+                        }
+                    </script>
+                </article>
+
+            </article>
+
+            <article id="tips:translation">
+                <h3>Translate a string</h3>
+
+                <p>
+                    You can translate a string by using the <code>__</code> function (two underscore characters).
+                    It will use Magento dictionary to translate the input string.
+                </p>
+                <script type="doc/example">
+                    /* Example */
+                    addMethod('__auto__', [
+                        'title'      => __("My Shipping Method"),
+                        'price'      => 10,
+                    ]);
+                </script>
+            </article>
+
+            <article id="tips:method_chaining">
+                <h3>Method chaining</h3>
+
+                <script type="doc/example">
+                    /* Example */
+                    // Both code give the same result
+                    addMethod('__auto__', [
+                        'title'       => "My Shipping Method",
+                        'description' => "My Description",  // optional
+                        'enabled'     => true,              // optional
+                        'price'       => 10,
+                    ]);
+
+                    addMethod('__auto__')
+                        ->setTitle("My Shipping Method")
+                        ->setDescription("My Description")  // optional
+                        ->setEnabled(true)                  // optional
+                        ->setPrice(10);
+                </script>
+            </article>
+
+            <article id="tips:frontend">
+                <h3>Display in frontend</h3>
+
+                <article id="tips:frontend:error_when_no_method">
+                    <h4>Display error when no method is available</h4>
+
+                    <p>Add this at the end of your configuration:</p>
+                    <script type="doc/example">
+                        /* Example */
+                        if (count(getMethods(true)) == 0) {
+                            addError('No shipping method available');
+                        }
+                    </script>
+                </article>
+
+                <article id="tips:frontend:display_method_description">
+                    <h4>Display method description in frontend</h4>
+
+                    <p class="doc-warning">
+                        Read <a href="https://devdocs.magento.com/">Magento DevDocs</a> to understand how to override a template.
+                    </p>
+
+                    <script type="doc/example">
+                        /* Set your custom data */
+                        addMethod('__auto__', [
+                            'title'       => "My Shipping Method",
+                            'description' => "My Description",      // Define the method description
+                            'price'       => 10,
                         ]);
                     </script>
-                </div>
-            </div>
+                    <script type="doc/example" class="is-template">
+                        /* Cart Template */
+                        &lt;!-- In template app/design/frontend/{vendor}/{theme}/Magento_Checkout/web/template/cart/shipping-rates.html --&gt;
 
-        </div><!-- end examples_using_destination -->
+                        &lt;!-- ko text: (<span class="highlight">$data</span>.extension_attributes || {}).<span class="highlight">description</span> --&gt;&lt;!-- /ko --&gt;
+                    </script>
+                    <script type="doc/example" class="is-template">
+                        /* Checkout Template */
+                        &lt;!-- In template app/design/frontend/{vendor}/{theme}/Magento_Checkout/web/template/shipping.html --&gt;
 
-    </div><!-- end examples -->
+                        &lt;!-- ko text: (<span class="highlight">method</span>.extension_attributes || {}).<span class="highlight">description</span> --&gt;&lt;!-- /ko --&gt;
+                    </script>
+                </article>
 
-    <div id="hints_and_tips">
-        <h2>Hints and tips</h2>
+                <article id="tips:frontend:display_method_data">
+                    <h4>Display custom method data in frontend</h4>
 
-        <h3 id="hints_using_if_elseif_else">Using if/elseif/else statements</h3>
-        <div class=examples>
-            <script class=ex type="x-example">
-                /* Example */
-                if ($request->dest_country_id == 'US') {
+                    <p class="doc-warning">
+                        Read <a href="https://devdocs.magento.com/">Magento DevDocs</a> to understand how to override a template.
+                    </p>
+
+                    <script type="doc/example">
+                        /* Set your custom data */
+                        addMethod('__auto__', [
+                            'title'       => "My Shipping Method",
+                            'price'       => 10,
+                        ]) // No semicolon after closing parenthesis
+                        ->set('my_data', 'Hello World !');
+
+                        // Or with method chaining
+                        addMethod('__auto__')
+                            ->setTitle("My Shipping Method")
+                            ->setPrice(10)
+                            ->set('my_data', 'Hello World !');
+                    </script>
+                    <script type="doc/example" data-language="html">
+                        /* Cart Template */
+                        &lt;!-- In template app/design/frontend/{vendor}/{theme}/Magento_Checkout/web/template/cart/shipping-rates.html --&gt;
+
+                        &lt;!-- ko text: ((<span class="highlight">$data</span>.extension_attributes || {}).custom || {}).<span class="highlight">my_data</span> --&gt;&lt;!-- /ko --&gt;
+                    </script>
+                    <script type="doc/example" data-language="html">
+                        /* Checkout Template */
+                        &lt;!-- In template app/design/frontend/{vendor}/{theme}/Magento_Checkout/web/template/shipping.html --&gt;
+
+                        &lt;!-- ko text: ((<span class="highlight">method</span>.extension_attributes || {}).custom || {}).<span class="highlight">my_data</span> --&gt;&lt;!-- /ko --&gt;
+                    </script>
+                </article>
+
+            </article>
+
+            <article id="tips:anonymous_fn">
+                <h3>Anonymous functions</h3>
+
+                <p>You can assign an anonymous function to a variable in order use it later.</p>
+                <script type="doc/example">
+                    /* Example */
+                    $fn = function ($price) use ($request) {
+                        return $price * $request->package_qty;
+                    };
+
                     addMethod('__auto__', [
-                        'title'      => "If destination country is US",
-                        'price'      => 0,
+                        'title'       => "My Shipping Method",
+                        'price'       => $fn(5),
                     ]);
-                } elseif ($request->dest_country_id == 'CA') {
+
                     addMethod('__auto__', [
-                        'title'      => "Else if destination country is CA",
-                        'price'      => 0,
+                        'title'       => "My Shipping Method",
+                        'price'       => $fn(10),
                     ]);
-                } else {
-                    addMethod('__auto__', [
-                        'title'      => "Other countries",
-                        'price'      => 10,
-                    ]);
-                }
-                //---
-                /* With Functions Add-on */
-                if (_country('US')) {
-                    addMethod('__auto__', [
-                        'title'      => "If destination country is US",
-                        'price'      => 0,
-                    ]);
-                } elseif (_country('CA')) {
-                    addMethod('__auto__', [
-                        'title'      => "Else if destination country is CA",
-                        'price'      => 0,
-                    ]);
-                } else {
-                    addMethod('__auto__', [
-                        'title'      => "Other countries",
-                        'price'      => 10,
-                    ]);
-                }
-            </script>
-        </div>
+                </script>
+            </article>
 
-        <h3 id="hints_access_new_customer_data">Access new customer data (ex. VAT ID)</h3>
-        <p><a href="#issue_inconsistent_data_with_magento_lt_2_1_8" class=issue>Known issue with Magento CE < 2.1.8</a></p>
-        <div class=examples>
-            <script class=ex type="x-example">
-                /* Example */
-                if (!$customer->id && $quote->getShippingAddress()->vat_id) {
-                    addMethod('__auto__', [
-                        'title'      => "Display shipping method for new customer with VAT ID",
-                        'price'      => 0,
-                    ]);
-                }
-            </script>
-        </div>
+        </section>
 
-        <h3 id="hints_using_custom_customer_attribute">Using custom customer attribute</h3>
-        <p>In the following example, <code>my_custom_attribute</code> is a custom customer attribute created by a custom extension.</p>
-        <div class=examples>
-            <script class=ex type="x-example">
-                /* Example */
-                if ($customer->getCustomAttribute('my_custom_attribute')->value == 5) {
-                    addMethod('__auto__', [
-                        'title'      => "Display shipping method only for customers having 'my_custom_attribute' set to 5",
-                        'price'      => 0,
-                    ]);
-                }
-            </script>
-        </div>
+        <section id="issues">
+            <h2>Known issues</h2>
 
-        <h3 id="hints_translate_string">Translate a string</h3>
-        <p>You can translate a string by using the <code>__</code> function (two underscore characters). It will use Magento dictionary to translate the input string.</p>
-        <div class=examples>
-            <script class=ex type="x-example">
-                /* Example */
-                addMethod('__auto__', [
-                    'title'      => __("My Shipping Method"),
-                    'price'      => 10,
-                ]);
-            </script>
-        </div>
+            <doc-section-toc></doc-section-toc>
 
-        <h3 id="hints_error_when_no_method">Display an error when no method is available</h3>
-        <p>Add this at the end of your configuration:</p>
-        <div class=examples>
-            <script class=ex type="x-example">
-                /* Example */
-                if (count(getMethods(true)) == 0) {
-                    addError('No shipping method available');
-                }
-            </script>
-        </div>
+            <article id="issues:magento218-">
+                <h3>Issue #1: Magento &lt; 2.1.8</h3>
 
-        <h3 id="hints_method_chaining">Use method chaining</h3>
-        <div class=examples>
-            <script class=ex type="x-example">
-                /* Example */
-                // Both code give the same result
-                addMethod('__auto__', [
-                    'title'       => "My Shipping Method",
-                    'description' => "My Description",  // optional
-                    'enabled'     => true,              // optional
-                    'price'       => 10,
-                ]);
+                <p class="doc-warning">
+                    With earlier version than CE 2.1.8, Magento does not correctly update some variables:
+                    <code class=php>$request-&gt;dest_street</code>, <code class=php>$request-&gt;dest_city</code>
+                    and <code class="php nowrap">$quote-&gt;getShippingAddress()-&gt;*</code>
+                </p>
+            </article>
 
-                addMethod('__auto__')
-                    ->setTitle("My Shipping Method")
-                    ->setDescription("My Description")  // optional
-                    ->setEnabled(true)                  // optional
-                    ->setPrice(10);
-            </script>
-        </div>
+            <article id="issues:quote:infinite_loop">
+                <h3>Issue #2: Infinite Loop with Quote</h3>
 
-        <h3 id="hints_display_method_description_in_templates">Display method description in frontend templates</h3>
-        <p class="alert alert-warning">Read <a href="https://devdocs.magento.com/">Magento DevDocs</a> to understand how to override a template.</p>
-        <div class="examples">
-            <script class=ex type="x-example">
-                /* Set your custom data */
-                addMethod('__auto__', [
-                    'title'       => "My Shipping Method",
-                    'description' => "My Description",      // Define the method description
-                    'price'       => 10,
-                ]);
-            </script>
-        </div>
-        <div class="examples is-template">
-            <script class=ex type="x-template">
-                /* Cart Template */
-                &lt;!-- In template app/design/frontend/{vendor}/{theme}/Magento_Checkout/web/template/cart/shipping-rates.html --&gt;
+                <p class="doc-warning">
+                    With some configurations, you can enter in an infinite loop when using <code class=php>$quote</code> variable.
+                    <br><strong>If you have more information on this issue, please contact us.</strong>
+                </p>
+            </article>
 
-                &lt;!-- ko text: (<span class="highlight">$data</span>.extension_attributes || {}).<span class="highlight">description</span> --&gt;&lt;!-- /ko --&gt;
-            </script>
-        </div>
-        <div class="examples is-template">
-            <script class=ex type="x-template">
-                /* Checkout Template */
-                &lt;!-- In template app/design/frontend/{vendor}/{theme}/Magento_Checkout/web/template/shipping.html --&gt;
+            <article id="issues:quote:grand_total">
+                <h3>Issue #3: Quote Grand Total</h3>
 
-                &lt;!-- ko text: (<span class="highlight">method</span>.extension_attributes || {}).<span class="highlight">description</span> --&gt;&lt;!-- /ko --&gt;
-            </script>
-        </div>
+                <p class="doc-warning">
+                    You can encounter unexpected behaviors when using <code class=php>$quote-&gt;grand_total</code>
+                    and <code class=php>$quote-&gt;base_grand_total</code> as these values include shipping fees.
+                </p>
+            </article>
 
-        <h3 id="hints_display_custom_method_data_in_templates">Display custom method data in frontend templates</h3>
-        <p class="alert alert-warning">Read <a href="https://devdocs.magento.com/">Magento DevDocs</a> to understand how to override a template.</p>
-        <div class="examples">
-            <script class=ex type="x-example">
-                /* Set your custom data */
-                addMethod('__auto__', [
-                    'title'       => "My Shipping Method",
-                    'price'       => 10,
-                ]) // No semicolon after closing parenthesis
-                ->set('my_data', 'Hello World !');
+        </section>
 
-                // Or with method chaining
-                addMethod('__auto__')
-                    ->setTitle("My Shipping Method")
-                    ->setPrice(10)
-                    ->set('my_data', 'Hello World !');
-            </script>
-        </div>
-        <div class="examples" data-language="html">
-            <script class=ex type="x-example">
-                /* Cart Template */
-                &lt;!-- In template app/design/frontend/{vendor}/{theme}/Magento_Checkout/web/template/cart/shipping-rates.html --&gt;
+        <footer>
+            <p>&copy; 2016-2020 <a href="https://owebia.com">Owebia</a></p>
+        </footer>
 
-                &lt;!-- ko text: ((<span class="highlight">$data</span>.extension_attributes || {}).custom || {}).<span class="highlight">my_data</span> --&gt;&lt;!-- /ko --&gt;
-            </script>
-        </div>
-        <div class="examples" data-language="html">
-            <script class=ex type="x-example">
-                /* Checkout Template */
-                &lt;!-- In template app/design/frontend/{vendor}/{theme}/Magento_Checkout/web/template/shipping.html --&gt;
+    </main>
 
-                &lt;!-- ko text: ((<span class="highlight">method</span>.extension_attributes || {}).custom || {}).<span class="highlight">my_data</span> --&gt;&lt;!-- /ko --&gt;
-            </script>
-        </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js" integrity="sha256-l2UBp0BIlmKgfSSMlsHCOoKDJ4N7nE0mqxKZX/u3AJA=" crossorigin="anonymous"></script>
 
-        <h3 id="hints_anonymous_functions">Anonymous functions</h3>
-        <p>You can assign an anonymous function to a variable in order use it later.</p>
-        <div class=examples>
-            <script class=ex type="x-example">
-                /* Example */
-                $fn = function ($price) use ($request) {
-                    return $price * $request->package_qty;
-                };
-
-                addMethod('__auto__', [
-                    'title'       => "My Shipping Method",
-                    'price'       => $fn(5),
-                ]);
-
-                addMethod('__auto__', [
-                    'title'       => "My Shipping Method",
-                    'price'       => $fn(10),
-                ]);
-            </script>
-        </div>
-    </div>
-
-    <div id="known_issues">
-        <h2>Known issues</h2>
-
-        <ul>
-            <li id="issue_inconsistent_data_with_magento_lt_2_1_8">
-                #1: With earlier version than CE 2.1.8, Magento does not correctly update some variables:
-                <code class=php>$request->dest_street</code>, <code class=php>$request->dest_city</code> and <code class="php nowrap">$quote->getShippingAddress()->*</code>
-            </li>
-            <li id="issue_infinite_loop_when_using_quote">
-                #2: With some configurations, you can enter in an infinite loop when using <code class=php>$quote</code> variable.
-                <br/><strong>If you have more information on this issue, please contact us.</strong>
-            </li>
-            <li id="issue_unexpected_behaviors_when_using_quote_grand_total">
-                #3: You can encounter unexpected behaviors when using <code class=php>$quote->grand_total</code> and <code class=php>$quote->base_grand_total</code> as these values include shipping fees.
-            </li>
-        </ul>
-    </div>
-
-    <!-- doc content end -->
-    <p style="padding-top:50px;">&copy; 2016-2020 <a href="http://www.owebia.com/">Owebia</a></p>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.2/highlight.min.js" integrity="sha256-M332mcsg+ryTwdcH0VcF02PjFlq6PdotsrQ+fi+vQSQ=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.2/languages/php.min.js" integrity="sha256-kQl5TmPctu+deBgPgPOss+mbKTJoOpe3LOAflXvuMUY=" crossorigin="anonymous"></script>
 <script>
-<!-- doc scripts start -->
-$(function(){
-    /*$('a[href^="#"]').each(function (e) {
-        var anchor = $(this).attr('href').replace('#', '');
-        if (anchor == '') return;
-        var jelem = $('#' + anchor);
-        if (!jelem.length) {
-            $(this).css('border', 'solid 1px red').css('padding', 3);
-        }
-    });*/
+(function(){
+    const d = document;
+    const o = {
+        fn: {
+            oo: true,
+            _addClass: function(s){s.split(/ /).forEach(c=>this.classList.add(c));return this},
+            _removeClass: function(c){this.classList.remove(c);return this},
+            _on: function(t,f){this.addEventListener(t,f);return this},
+            _attr: function(n,v){if(v===undefined){return this.getAttribute(n)}else{this.setAttribute(n,v);return this}},
+            _html: function(v){if(v===undefined){return this.innerHTML}else{this.innerHTML=v;return this}},
+            _append: function(n){(n.forEach?n:[n]).forEach(c=>this.appendChild(c));return this},
+            _find: function(s){return o._wrap(this.querySelectorAll(s))},
+            _children: function(s){return o._wrap(Array.prototype.filter.call(this.childNodes,n=>n.matches&&n.matches(s)))},
+            _closest: function(s){let n=this;while(n&&n!=d){if(n.matches(s))return n;n=n.parentNode}return null}
+        },
+        _wrap: function(a){return Array.prototype.map.call(a,n=>this._(n))},
+        _all: function(s){return this._wrap(d.querySelectorAll(s))},
+        _first: function(s){return this._(d.querySelector(s))},
+        _new: function(t){return this._(d.createElement(t))},
+        _: function(n){if(!n.oo){for(const k in o.fn){n[k]=o.fn[k]}}return n}
+    };
 
-    var counter = 1;
-    hljs.getLanguage("php").k += " bool int string object void mixed callable";
-    hljs.initHighlightingOnLoad();
+    function removeExtraIndent(text) {
+        text = text.replace(/^[\r\n]+/, '');
+        return text.replace(new RegExp('^' + text.substr(0, text.search(/\S/)), 'gm'), '');
+    }
 
-    var zoneIndex = 0;
-    $('.examples').each(function () {
-        var language = $(this).data('language') || 'php';
-        var parts = [];
-        var tabNames = [];
-        $(this).find('.ex').each(function () {
-            var text = $(this).text();
-            text = text.replace(/^(\r|\n)+|(\r|\n)+$/g, '');
-            var indentLength = text.search(/\S/);
-            var indent = text.substr(0, indentLength);
-            var regexp = new RegExp('^' + indent, 'gm');
-            text = text.replace(regexp, '');
-            text = text.replace(/\b(_[a-zA-Z]+)\b/g, '<span class="config-fn">$1</span>');
-            while (text.match(/'(title|enabled|price|description)'(\s*)=>/)) {
-                text = text.replace(/'(title|enabled|price|description)'(\s*)=>/, '<span class="config-attr">\'$1\'</span>$2=>');
-            }
-            var elems = text.split(/\/\/---/g);
-            var n = 0;
-            $.each(elems, function (index, element) {
+    // Remove leading spaces in <pre>
+    {
+        o._all('pre').forEach(function (pre) {
+            pre.textContent = removeExtraIndent(pre.textContent.trimEnd());
+        });
+    }
+
+    // Example tabs
+    {
+        hljs.getLanguage('php').keywords.keyword += ' mixed';
+        hljs.initHighlightingOnLoad();
+        let idCounter = 1;
+        let zone = 0;
+        const exampleNodes = [];
+        const isActiveClass = 'is-active';
+        o._all('script[type="doc/example"]').forEach(function (example) {
+            const language = example._attr('data-language') || 'php';
+            const data = {};
+            let text = removeExtraIndent(example.textContent)
+                .replace(/\b(_[a-zA-Z]+)\b/g, '<span class="config-fn">$1</span>')
+                .replace(/'(title|enabled|price|description)'(\s*)=>/g, '<span class="config-attr">\'$1\'</span>$2=>');
+            let n;
+            text.split(/\/\/---/g).forEach(function (part, i) {
                 n = 0;
-                while (element.match(/'__auto__'/)) {
-                    element = element.replace(/'__auto__'/, '<span class="config-id">\'id_' + ('000' + counter).slice(-3) + '\'</span>');
-                    counter++;
+                while (part.match(/'__auto__'/)) {
+                    part = part.replace(/'__auto__'/, '<span class="config-id">\'id_' + ('000' + idCounter).slice(-3) + '\'</span>');
+                    idCounter++;
                     n++;
                 }
-                counter -= n;
-                if (typeof parts[index] == 'undefined') {
-                    parts[index] = '';
-                }
-                var splitted = element.split(/\/\* (.*?) \*\//);
-                if (splitted.length == 3) {
-                    tabNames[index] = splitted[1];
-                    parts[index] += splitted[2].trim() + "\n";
-                } else {
-                    tabNames[index] = 'Example';
-                    parts[index] += element.trim() + "\n";
+                idCounter -= n;
+                const set = part.match(/^\s*(?:\/\* (.*?) \*\/)?([\s\S]*)$/);
+                const title = set && set[1] || 'Example';
+                const content = set && set[2].trim();
+                data[title] = {
+                    id: 'tab-' + zone + '-' + i,
+                    title: title,
+                    content: (data[title] === undefined ? '' : data[title].content) + content + "\n\n"
                 }
             });
-            counter += n;
+            idCounter += n;
+            const tabs = [];
+            const panels = [];
+            Object.values(data).forEach(function (item, i) {
+                const activeClass = i == 0 ? ' is-active' : '';
+                tabs.push(
+                    o._new('a')._addClass('o-tabs-tab' + activeClass)._attr('href', '#' + item.id)._html(item.title)
+                );
+                panels.push(
+                    o._new('div')._addClass('o-tabs-panel' + activeClass)._attr('id', item.id)
+                    ._append([
+                        o._new('div')._addClass('print-tab-title o-tabs-tab is-active')._html(item.title),
+                        o._new('pre')._append(
+                            o._new('code')._addClass(language)._html(item.content.trim())
+                        )
+                    ])
+                );
+            });
+            const el = o._new('div')._addClass('o-tabs')
+                ._append(o._new('div')._addClass('o-tabs-tab-bar')._append(tabs))
+                ._append(panels);
+            exampleNodes.push(el);
+            example.parentNode.insertBefore(el, example);
+            zone++;
         });
-        var tabList = [];
-        var tabContent = [];
-        $.each(parts, function (index, part) {
-            tabList.push(
-                $('<li role="presentation"/>')
-                    .addClass(index == 0 ? 'active' : '')
-                    .append(
-                        $('<a role="tab" data-toggle="tab"/>')
-                            .attr('href', '#tab-' + zoneIndex + '-' + index)
-                            .text(tabNames[index])
-                    )
-            );
-            tabContent.push(
-                $('<div role="tabpanel" class="tab-pane"/>')
-                    .addClass(index == 0 ? 'active' : '')
-                    .attr('id', 'tab-' + zoneIndex + '-' + index)
-                    .append(
-                        $('<pre/>').append(
-                            $('<code/>').addClass(language).html(part.trim())
+        o._all('code.php, code.html').forEach(function (block) {
+            hljs.highlightBlock(block);
+            let html = block._html().replace(/<br class="hide@medium" data-spaces="2">/g, '<wbr><span class="hide@medium"><br>&nbsp;&nbsp;</span>');
+            if (!block._closest('pre')) {
+                html = html.replace(/(-&gt;|\\)/g, '<wbr>$1').replace(/\(<span class="hljs-string">'/g, '\(<wbr><span class="hljs-string">\'');
+            }
+            block._html(html);
+        });
+        o._all('a.fn_addon').forEach(
+            a => a._on('click', function (e) {
+                console.log(e);
+                exampleNodes.forEach(
+                    tab => tab._find('.o-tabs-tab:first-child, .o-tabs-panel:first-child').forEach(
+                        el => el._addClass(isActiveClass).parentNode.childNodes.forEach(
+                            z => o._(z)._removeClass(isActiveClass)
                         )
                     )
-            );
-        });
-        $(this).html(
-            $('<div/>')
-                .append(
-                    $('<ul class="nav nav-tabs" role="tablist"/>').append(tabList)
-                )
-                .append(
-                    $('<div class="tab-content"/>').append(tabContent)
-                )
+                );
+            })
         );
-        zoneIndex++;
-    });
-    $('code.php, code.html').each(function(i, block) {
-        hljs.highlightBlock(block);
-    });
-    $('a.fn_addon').click(function(e){
-        $('.nav').each(function () {
-            $(this).find('> li:eq(1) > a').tab('show');
+    }
+
+    // Tabs
+    {
+        const isActiveClass = 'is-active';
+        o._all('.o-tabs').forEach(t => t._addClass('is-upgraded'));
+        o._(document)._on('click', function (e) {
+            const tab = o._(e.target);
+            if (tab.matches('.o-tabs-tab')) {
+                e.preventDefault();
+                const panel = o._first(tab._attr('href'));
+                panel._addClass(isActiveClass);
+                tab._addClass(isActiveClass);
+                tab._closest('.o-tabs')._find('.o-tabs-tab, .o-tabs-panel').forEach(el => el != tab && el != panel && el._removeClass(isActiveClass));
+            }
         });
-    });
-    $(document).on('click', '#sidebar ul a', function (e) {
-        $('ul', '#sidebar').removeClass('in');
-        $('a.c-hamburger', '#sidebar').addClass('collapsed');
-        $('#sidebar').removeClass('opened');
-    });
-    $(document).on('click', '#sidebar a.c-hamburger', function (e) {
-        $('#sidebar').toggleClass('opened');
-    });
-});
-<!-- doc scripts end -->
+    }
+
+    // Nav
+    {
+        const l = window.location;
+        const body = o._first('body');
+        const header = o._first('header');
+        const drawer = o._first('#o-drawer')
+            ._on('click', function (e) {
+                if (e.target.matches('a')) {
+                    l.hash = '';
+                    l.hash = o._(e.target)._attr('href');
+                    closeDrawer();
+                }
+            });
+        const obfuscator = o._new('div')._attr('id', 'o-obfuscator')
+            ._on('click', function (e) {
+                closeDrawer();
+            });
+        // SVG from https://material.io/resources/icons/ (Apache license version 2.0)
+        const btn = o._new('div')._attr('aria-expanded', 'false')._attr('role', 'button')._attr('tabindex', 0)._attr('id', 'o-drawer-btn')
+            ._html('<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" fill="#fff"/></svg>')
+            ._on('click', function (e) {
+                drawer._addClass('is-visible');
+                obfuscator._addClass('is-visible');
+                body._addClass('noscroll');
+            });
+        const closeDrawer = function () {
+            drawer._removeClass('is-visible');
+            obfuscator._removeClass('is-visible');
+            body._removeClass('noscroll');
+        };
+        header.insertBefore(btn, header.firstChild);
+        body._append(obfuscator);
+    }
+
+    // Header nav + drawer
+    {
+        const sections = o._all('section');
+        o._all('doc-nav').forEach(function (el) {
+            const nav = o._new('nav');
+            sections.forEach(
+                (section, i) => nav._append(
+                        o._new('a')._addClass(i == 0 ? 'is-active' : '-')
+                        ._attr('href', '#' + section._attr('id'))
+                        ._html(section._attr('data-title') || section._children('h2,h3,h4')[0]._html())
+                    )
+            );
+            el._append(nav);
+        });
+    }
+
+    // Header tabs click
+    {
+        const l = window.location;
+        o._(document)._on('click', function (e) {
+            if (e.target.matches('header a')) {
+                l.hash = '';
+                l.hash = o._(e.target)._attr('href');
+            }
+        });
+    }
+
+    // Header tabs scroll spy
+    {
+        const headerTabs = o._all('header a');
+        const tabToSection = headerTabs.map(tab => o._first(tab._attr('href')));
+        o._(window)._on('scroll', function () {
+            let currentTab = null;
+            headerTabs.forEach((tab, i) => currentTab = currentTab == null
+                || (tabToSection[i]).offsetTop <= this.scrollY + 90
+                || window.innerHeight + window.scrollY >= document.body.offsetHeight ? tab : currentTab);
+            headerTabs.filter(tab => tab !== currentTab).forEach(tab => tab._removeClass('is-active'));
+            currentTab && currentTab._addClass('is-active');
+        });
+    }
+
+    // Table of content
+    {
+        const numAttr = 'data-num';
+        const buildToc = function (el, num) {
+            const children = [];
+            el._children('section, article').forEach(function (child, i) {
+                const itemNum = num + '.' + (i + 1);
+                const hn = child._children('h2,h3,h4')[0];
+                children.push(
+                    o._new('li')._attr(numAttr, itemNum)
+                    ._append(o._new('a')._html(hn.innerHTML)._attr('href', '#' + hn.parentNode.id))
+                    ._append(buildToc(child, itemNum))
+                );
+            });
+            return children.length ? o._new('ol')._append(children) : [];
+        };
+        o._all('section').forEach((section, i) => section._attr(numAttr, i + 1));
+        o._all('doc-toc, doc-section-toc').forEach(function (toc) {
+            const selector = toc._attr('data-target');
+            const section = o._(selector && selector != "" ? document.querySelector(selector) : toc.parentNode);
+            toc._append(buildToc(section, section._attr(numAttr)));
+        });
+    }
+
+    // Dead links
+    {
+        o._all('a').forEach(function (a) {
+            const href = a._attr('href');
+            if (/^#/.test(href) && o._all(href.replace(/:/g, '\\:')).length == 0) {
+                console.log('dead link: ', href);
+            }
+        });
+    }
+})();
 </script>
+
 </body>
 </html>
