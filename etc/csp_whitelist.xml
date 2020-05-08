@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2020 Owebia. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp/etc/csp_whitelist.xsd">
+    <policies>
+        <policy id="script-src">
+            <values>
+                <!-- highlight.js (doc, debug), jquery (debug), bootstrap (debug) -->
+                <value id="cdnjs-cloudflare-com" type="host">https://cdnjs.cloudflare.com</value>
+            </values>
+        </policy>
+        <policy id="style-src">
+            <values>
+                <!-- Roboto font (doc) -->
+                <value id="fonts-googleapis-com" type="host">https://fonts.googleapis.com</value>
+                <!-- bootstrap (debug), highlight.js (doc, debug) -->
+                <value id="cdnjs-cloudflare-com" type="host">https://cdnjs.cloudflare.com</value>
+            </values>
+        </policy>
+        <policy id="font-src">
+            <values>
+                <!-- bootstrap (debug) -->
+                <value id="cdnjs-cloudflare-com" type="host">https://cdnjs.cloudflare.com</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>
