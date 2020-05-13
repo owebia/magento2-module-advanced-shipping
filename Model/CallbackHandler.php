@@ -28,7 +28,7 @@ class CallbackHandler extends \Owebia\SharedPhpConfig\Model\CallbackHandler
         $args = func_get_args();
         if (count($args) != 1 && count($args) != 2) {
             throw new \Magento\Framework\Exception\LocalizedException(
-                __("Invalid arguments count for addMethod FuncCall")
+                __("Invalid arguments count for %1 FuncCall", 'addMethod')
             );
         }
 
@@ -36,7 +36,7 @@ class CallbackHandler extends \Owebia\SharedPhpConfig\Model\CallbackHandler
         if (!is_string($methodId) || !preg_match('#^[a-z][a-z0-9_]*$#', $methodId)) {
             throw new \Magento\Framework\Exception\LocalizedException(
                 // phpcs:ignore Generic.Files.LineLength.TooLong
-                __("Invalid first argument for addMethod FuncCall: the first argument must be a string and match the following pattern : ^[a-z][a-z0-9_]*$")
+                __("Invalid first argument for %1 FuncCall: the first argument must be a string and match the following pattern: %2", 'addMethod', '^[a-z][a-z0-9_]*$')
             );
         }
 

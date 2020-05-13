@@ -1,5 +1,36 @@
-About,About,module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+"Advanced Shipping Configuration","Advanced Shipping Configuration",module,Owebia_AdvancedShipping,Block/System/Config/Form/Field/Config.php
+
 "<p>Discover <a href=""https://en.store.owebia.com/magento2-module-advanced-shipping-pro.html"" target=""_blank"">Advanced Shipping Pro</a> and our <a href=""https://en.store.owebia.com/magento2-module-advanced-shipping-pro.html#description"" target=""_blank"">add-ons for Advanced Shipping</a></p>","<p>Discover <a href=""https://en.store.owebia.com/magento2-module-advanced-shipping-pro.html"" target=""_blank"">Advanced Shipping Pro</a> and our <a href=""https://en.store.owebia.com/magento2-module-advanced-shipping-pro.html#description"" target=""_blank"">add-ons for Advanced Shipping</a></p>",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
-"Required Fields","Required Fields",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+About,About,module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+Configuration,Configuration,module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+Debug,Debug,module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+Enabled,Enabled,module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+"Ex: https://www.carrier-website.com/?trackingNumber={{trackingNumber}}","Ex: https://www.carrier-website.com/?trackingNumber={{trackingNumber}}",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
 "If the value of a selected field is changed, the shipping methods will be recalculated","If the value of a selected field is changed, the shipping methods will be recalculated",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+"Required Fields","Required Fields",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+"Show Method if Not Applicable","Show Method if Not Applicable",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+"Sort Order","Sort Order",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+Title,Title,module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
 "Tracking URL","Tracking URL",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+
+"Invalid arguments count for %1 FuncCall","Invalid arguments count for %1 FuncCall",module,Owebia_AdvancedShipping,Model/CallbackHandler.php
+"Invalid first argument for %1 FuncCall: the first argument must be a string and match the following pattern: %2","Invalid first argument for %1 FuncCall: the first argument must be a string and match the following pattern: %2",module,Owebia_AdvancedShipping,Model/CallbackHandler.php
+"Invalid price","Invalid price",module,Owebia_AdvancedShipping,Model/CallbackHandler.php
+"Invalid second argument for addMethod FuncCall: the second argument must be an array","Invalid second argument for addMethod FuncCall: the second argument must be an array",module,Owebia_AdvancedShipping,Model/CallbackHandler.php
+"The method %1 already exists","The method %1 already exists",module,Owebia_AdvancedShipping,Model/CallbackHandler.php
+
+City,City,module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+Company,Company,module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+Country,Country,module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+"First Name","First Name",module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+"Last Name","Last Name",module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+"Phone Number","Phone Number",module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+Region/State,Region/State,module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+"Street Address","Street Address",module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+"VAT number","VAT number",module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+"ZIP/Postal Code","ZIP/Postal Code",module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+
+"My Shipping Method","My Shipping Method",module,Owebia_AdvancedShipping,view/doc_en_US.html
+
+" is required."," is required.",module,Owebia_AdvancedShipping,view/frontend/web/js/model/shipping-rates-validator.js
+"Field ","Field ",module,Owebia_AdvancedShipping,view/frontend/web/js/model/shipping-rates-validator.js

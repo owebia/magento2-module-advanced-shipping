@@ -1,5 +1,36 @@
-About,"À propos",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+"Advanced Shipping Configuration","Configuration de Advanced Shipping",module,Owebia_AdvancedShipping,Block/System/Config/Form/Field/Config.php
+
 "<p>Discover <a href=""https://en.store.owebia.com/magento2-module-advanced-shipping-pro.html"" target=""_blank"">Advanced Shipping Pro</a> and our <a href=""https://en.store.owebia.com/magento2-module-advanced-shipping-pro.html#description"" target=""_blank"">add-ons for Advanced Shipping</a></p>","<p>Découvrez <a href=""https://fr.store.owebia.com/magento2-module-advanced-shipping-pro.html"" target=""_blank"">Advanced Shipping Pro</a> et nos <a href=""https://fr.store.owebia.com/magento2-module-advanced-shipping-pro.html#description"" target=""_blank"">plugins pour Advanced Shipping</a></p>",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
-"Required Fields","Champs obligatoires",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+About,"À propos",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+Configuration,Configuration,module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+Debug,Débogage,module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+Enabled,Activé,module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+"Ex: https://www.carrier-website.com/?trackingNumber={{trackingNumber}}","Ex: https://www.carrier-website.com/?trackingNumber={{trackingNumber}}",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
 "If the value of a selected field is changed, the shipping methods will be recalculated","Si la valeur d'un champ sélectionné est modifiée, les méthodes de livraison seront recalculées",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+"Required Fields","Champs obligatoires",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+"Show Method if Not Applicable","Afficher la méthode si elle n'est pas disponible",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+"Sort Order","Ordre de tri",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+Title,Titre,module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
 "Tracking URL","URL de suivi",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
+
+"Invalid arguments count for %1 FuncCall","Nombre d'arguments invalide lors de l'appel à %1",module,Owebia_AdvancedShipping,Model/CallbackHandler.php
+"Invalid first argument for %1 FuncCall: the first argument must be a string and match the following pattern: %2","Premier argument invalide lors de l'appel à %1 : le premier argument doit être une chaîne de caractères qui suit le modèle suivant : %2",module,Owebia_AdvancedShipping,Model/CallbackHandler.php
+"Invalid price","Prix invalide",module,Owebia_AdvancedShipping,Model/CallbackHandler.php
+"Invalid second argument for addMethod FuncCall: the second argument must be an array","Second argument invalide lors de l'appel à addMethod : le second argument doit être un tableau",module,Owebia_AdvancedShipping,Model/CallbackHandler.php
+"The method %1 already exists","La méthode %1 existe déjà",module,Owebia_AdvancedShipping,Model/CallbackHandler.php
+
+City,Ville,module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+Company,Société,module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+Country,Pays,module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+"First Name",Prénom,module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+"Last Name",Nom,module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+"Phone Number","Numéro de téléphone",module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+Region/State,Région/État,module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+"Street Address",Adresse,module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+"VAT number","Numéro de TVA",module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+"ZIP/Postal Code","Code postal",module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
+
+"My Shipping Method","My Shipping Method",module,Owebia_AdvancedShipping,view/doc_en_US.html
+
+" is required."," requis.",module,Owebia_AdvancedShipping,view/frontend/web/js/model/shipping-rates-validator.js
+"Field ","Champ ",module,Owebia_AdvancedShipping,view/frontend/web/js/model/shipping-rates-validator.js
