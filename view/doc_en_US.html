@@ -291,7 +291,7 @@ code.hljs.red{color:red;background:#f2dede}
             </article>
 
             <article id="overview:addons">
-                <h3>Add-ons</h3>
+                <h3>Add-Ons</h3>
 
                 <div class="wide" style="background:#f5f5f5;padding-top:60px;padding-bottom:40px;color:rgba(0,0,0,.54)">
                     <div>
@@ -305,18 +305,18 @@ code.hljs.red{color:red;background:#f2dede}
                             <p>Advanced Shipping with all its add-ons (see the list below)</p>
                         </li>
                         <li>
-                            <strong><a href="https://en.store.owebia.com/magento2-module-adv-ship-unlimited-carriers-addon.html">Unlimited Carriers Add-on</a></strong>
+                            <strong><a href="https://en.store.owebia.com/magento2-module-adv-ship-unlimited-carriers-addon.html">Unlimited Carriers Add-On</a></strong>
                             <p>Create as many carrier as you need with Advanced Shipping</p>
                         </li>
                         <li>
-                            <strong><a href="https://en.store.owebia.com/magento2-module-adv-ship-functions-addon.html">Functions Add-on</a></strong>
+                            <strong><a href="https://en.store.owebia.com/magento2-module-adv-ship-functions-addon.html">Functions Add-On</a></strong>
                             <p>
                                 Use functions to simplify the writing of your configuration
-                                <br>Look at <strong>"With Functions Add-on"</strong> tabs in examples to see how easy it becomes with this add-on
+                                <br>Look at <strong>"With Functions Add-On"</strong> tabs in examples to see how easy it becomes with this add-on
                             </p>
                         </li>
                         <li>
-                            <strong><a href="https://en.store.owebia.com/magento2-module-adv-ship-universal-setting-addon.html">Universal Setting Add-on</a></strong>
+                            <strong><a href="https://en.store.owebia.com/magento2-module-adv-ship-universal-setting-addon.html">Universal Setting Add-On</a></strong>
                             <p>Hide or change price of methods regardless the shipping module</p>
                         </li>
                     </ul>
@@ -620,7 +620,7 @@ code.hljs.red{color:red;background:#f2dede}
                             'price'      => 10
                         ]);
                         //---
-                        /* With Functions Add-on */
+                        /* With Functions Add-On */
                         addMethod('__auto__', [
                             'title'      => "If at least one product has the attribute 'name' equal to 'Cat'",
                             'enabled'    => _count(function ($item) {
@@ -896,7 +896,7 @@ code.hljs.red{color:red;background:#f2dede}
                 </article>
 
                 <article id="ref:fn:addon">
-                    <h4>Functions available with Functions Add-On</h4>
+                    <h4>Functions available With Functions Add-On</h4>
 
                     <ul class="doc-fn-list">
                         <li>
@@ -1030,7 +1030,7 @@ code.hljs.red{color:red;background:#f2dede}
                             <div>
                                 Sets option to stop adding methods at first match (must be used at the beginning of the configuration)
                                 <script type="doc/example">
-                                    /* With Functions Add-on */
+                                    /* With Functions Add-On */
                                     _setStopAtFirstMatch(true);
 
                                     addMethod('__auto__', [
@@ -1069,7 +1069,7 @@ code.hljs.red{color:red;background:#f2dede}
                         'price'      => 0,
                     ]);
                     //---
-                    /* With Functions Add-on */
+                    /* With Functions Add-On */
                     addMethod('__auto__', [
                         'title'      => "Free shipping",
                         'price'      => 0,
@@ -1088,7 +1088,7 @@ code.hljs.red{color:red;background:#f2dede}
                         'price'      => 10,
                     ]);
                     //---
-                    /* With Functions Add-on */
+                    /* With Functions Add-On */
                     addMethod('__auto__', [
                         'title'      => "France, Germany, Switzerland, Spain, Italy",
                         'enabled'    => _country('FR', 'DE', 'CH', 'ES', 'IT'),
@@ -1102,7 +1102,7 @@ code.hljs.red{color:red;background:#f2dede}
                         'price'      => 10,
                     ]);
                     //---
-                    /* With Functions Add-on */
+                    /* With Functions Add-On */
                     addMethod('__auto__', [
                         'title'      => "Postcode starting with 25",
                         'enabled'    => _country('FR') && _postcode('/^25/'),
@@ -1116,7 +1116,7 @@ code.hljs.red{color:red;background:#f2dede}
                         'price'      => 10,
                     ]);
                     //---
-                    /* With Functions Add-on */
+                    /* With Functions Add-On */
                     addMethod('__auto__', [
                         'title'      => "Regular expressions allowing postal codes beginning with 'PO' (case insensitive)",
                         'enabled'    => _country('GB') && _postcode('/^PO.*$/i'),
@@ -1138,7 +1138,7 @@ code.hljs.red{color:red;background:#f2dede}
                             'price'      => 10,
                         ]);
                         //---
-                        /* With Functions Add-on */
+                        /* With Functions Add-On */
                         // Regular Expression refusing delivery to France with postal codes
                         // beginning with 97 and 98 (with or without interspersed zeros and spaces)
                         addMethod('__auto__', [
@@ -1164,7 +1164,7 @@ code.hljs.red{color:red;background:#f2dede}
                         'price'      => 10,
                     ]);
                     //---
-                    /* With Functions Add-on */
+                    /* With Functions Add-On */
                     addMethod('__auto__', [
                         'title'      => "Retailer group",
                         'enabled'    => _customerGroup('Retailer'),
@@ -1178,7 +1178,7 @@ code.hljs.red{color:red;background:#f2dede}
                         'price'      => 10,
                     ]);
                     //---
-                    /* With Functions Add-on */
+                    /* With Functions Add-On */
                     addMethod('__auto__', [
                         'title'      => "NOT LOGGED IN or General groups",
                         'enabled'    => _customerGroup('NOT LOGGED IN', 'General'),
@@ -1192,7 +1192,7 @@ code.hljs.red{color:red;background:#f2dede}
                         'price'      => 10,
                     ]);
                     //---
-                    /* With Functions Add-on */
+                    /* With Functions Add-On */
                     addMethod('__auto__', [
                         'title'      => "NOT LOGGED IN or General groups by their ID",
                         'enabled'    => _customerGroup(0, 1),
@@ -1251,7 +1251,7 @@ code.hljs.red{color:red;background:#f2dede}
                                             }),
                         ]);
                         //---
-                        /* With Functions Add-on */
+                        /* With Functions Add-On */
                         // If the package weight is lower or equal to 0.7, the price will be 5.30
                         // If the package weight is lower or equal to 1.0, the price will be 6.50
                         // In others cases, the price will be 7.50
@@ -1273,7 +1273,7 @@ code.hljs.red{color:red;background:#f2dede}
                                             }),
                         ]);
                         //---
-                        /* With Functions Add-on */
+                        /* With Functions Add-On */
                         // You can exclude the upper limit value by adding an argument false
                         addMethod('__auto__', [
                             'title'      => "Shipping",
@@ -1316,7 +1316,7 @@ code.hljs.red{color:red;background:#f2dede}
                             'price'      => 10
                         ]);
                         //---
-                        /* With Functions Add-on */
+                        /* With Functions Add-On */
                         addMethod('__auto__', [
                             'title'      => "If at least one product has the attribute 'name' equal to 'Cat'",
                             'enabled'    => _count(function ($item) {
@@ -1336,7 +1336,7 @@ code.hljs.red{color:red;background:#f2dede}
                             'price'      => 10
                         ]);
                         //---
-                        /* With Functions Add-on */
+                        /* With Functions Add-On */
                         addMethod('__auto__', [
                             'title'      => "If all items have the option 'Size' greater or equal to 1",
                             'enabled'    => _count(function ($item) {
@@ -1358,7 +1358,7 @@ code.hljs.red{color:red;background:#f2dede}
                             'price'      => 10
                         ]);
                         //---
-                        /* With Functions Add-on */
+                        /* With Functions Add-On */
                         addMethod('__auto__', [
                             'title'      => "More than 3 sku differents",
                             'enabled'    => count(
@@ -1390,7 +1390,7 @@ code.hljs.red{color:red;background:#f2dede}
                             'price'      => 10
                         ]);
                         //---
-                        /* With Functions Add-on */
+                        /* With Functions Add-On */
                         addMethod('__auto__', [
                             'title'      => "Minimum price excluding tax without discount is greater to 10",
                             'enabled'    => _min(function ($item) {
@@ -1413,7 +1413,7 @@ code.hljs.red{color:red;background:#f2dede}
                             'price'      => 10
                         ]);
                         //---
-                        /* With Functions Add-on */
+                        /* With Functions Add-On */
                         addMethod('__auto__', [
                             'title'      => "Maximum value of the option 'Size' is lower than 50",
                             'enabled'    => _max(function ($item) {
@@ -1441,7 +1441,7 @@ code.hljs.red{color:red;background:#f2dede}
                             'price'      => 10
                         ]);
                         //---
-                        /* With Functions Add-on */
+                        /* With Functions Add-On */
                         addMethod('__auto__', [
                             'title'      => "Sum of all options 'Size' is greater than 30",
                             'enabled'    => _sum(function ($item) {
@@ -1464,7 +1464,7 @@ code.hljs.red{color:red;background:#f2dede}
                                             ),
                         ]);
                         //---
-                        /* With Functions Add-on */
+                        /* With Functions Add-On */
                         addMethod('__auto__', [
                             'title'      => "Calculate shipping fees by product",
                             'price'      => _sum(function ($item) {
@@ -1488,7 +1488,7 @@ code.hljs.red{color:red;background:#f2dede}
                                             ) * 5.0,
                         ]);
                         //---
-                        /* With Functions Add-on */
+                        /* With Functions Add-On */
                         addMethod('__auto__', [
                             'title'      => "5 x weight of products that are in categories 2 or 3",
                             'price'      => _sum(function ($item) {
@@ -1525,7 +1525,7 @@ code.hljs.red{color:red;background:#f2dede}
                                         ),
                     ]);
                     //---
-                    /* With Functions Add-on */
+                    /* With Functions Add-On */
                     addMethod('__auto__', [
                         'title'      => "Sum of weight attributes of products in category 12",
                         'price'      => _sum(
@@ -1550,7 +1550,7 @@ code.hljs.red{color:red;background:#f2dede}
                                         ),
                     ]);
                     //---
-                    /* With Functions Add-on */
+                    /* With Functions Add-On */
                     addMethod('__auto__', [
                         'title'      => "Sum of weight attributes of products in categories whose id is 11 and 12",
                         'price'      => _sum(
@@ -1575,7 +1575,7 @@ code.hljs.red{color:red;background:#f2dede}
                                         ),
                     ]);
                     //---
-                    /* With Functions Add-on */
+                    /* With Functions Add-On */
                     addMethod('__auto__', [
                         'title'      => "Sum of weights of products having for first category id 12",
                         'price'      => _sum(
@@ -1617,7 +1617,7 @@ code.hljs.red{color:red;background:#f2dede}
                         ]);
                     }
                     //---
-                    /* With Functions Add-on */
+                    /* With Functions Add-On */
                     if (_country('US')) {
                         addMethod('__auto__', [
                             'title'      => "If destination country is US",
