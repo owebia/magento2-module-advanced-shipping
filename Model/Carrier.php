@@ -131,7 +131,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
 
         $config = $this->getConfig($request);
 
-        // $stopToFirstMatch = (boolean)$this->getConfigData('stop_to_first_match');
+        // $stopToFirstMatch = $this->getConfigFlag('stop_to_first_match');
 
         /** @var \Magento\Shipping\Model\Rate\Result $result */
         $result = $this->rateFactory->create();
@@ -194,7 +194,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
         $wrapper,
         $msg
     ) {
-        if (empty($wrapper->id) || $this->getConfigData('showmethod') != 0) {
+        if (empty($wrapper->id) || $this->getConfigFlag('showmethod')) {
             $error = $this->_rateErrorFactory->create();
             $error->setCarrier($this->_code);
             $error->setCarrierTitle($this->getConfigData('title'));
@@ -266,7 +266,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
                 $configString,
                 $this->registryHelper,
                 $callbackHandler,
-                (bool) $this->getConfigData('debug')
+                $this->getConfigFlag('debug')
             );
             $config = $callbackHandler->getParsingResult();
         } catch (\Exception $e) {
@@ -286,7 +286,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
      */
     protected function isDebugEnabled()
     {
-        return (bool) $this->getConfigData('debug');
+        return $this->getConfigFlag('debug');
     }
 
     /**

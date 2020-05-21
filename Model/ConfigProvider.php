@@ -21,7 +21,7 @@ class ConfigProvider implements \Magento\Checkout\Model\ConfigProviderInterface
         $this->scopeConfig = $scopeConfig;
     }
 
-    private function getConfigValue($key)
+    private function getConfigData($key)
     {
         return $this->scopeConfig->getValue('carriers/owsh1/' . $key);
     }
@@ -38,7 +38,7 @@ class ConfigProvider implements \Magento\Checkout\Model\ConfigProviderInterface
                 ],
             ],
         ];
-        $requiredFields = explode(',', (string) $this->getConfigValue('required_fields'));
+        $requiredFields = explode(',', (string) $this->getConfigData('required_fields'));
         foreach ($requiredFields as $field) {
             $config['owebia']['advanced_shipping']['validation_rules'][$field] = [ 'required' => true ];
         }
