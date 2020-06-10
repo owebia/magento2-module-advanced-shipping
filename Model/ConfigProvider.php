@@ -31,17 +31,17 @@ class ConfigProvider implements \Magento\Checkout\Model\ConfigProviderInterface
      */
     public function getConfig()
     {
-        $config = [
+        $validationRules = [];
+        $requiredFields = explode(',', (string) $this->getConfigData('required_fields'));
+        foreach ($requiredFields as $field) {
+            $validationRules[Carrier::CODE][$field] = [ 'required' => true ];
+        }
+        return [
             'owebia' => [
-                'advanced_shipping' => [
-                    'validation_rules' => [],
+                'advancedShipping' => [
+                    'validationRules' => $validationRules,
                 ],
             ],
         ];
-        $requiredFields = explode(',', (string) $this->getConfigData('required_fields'));
-        foreach ($requiredFields as $field) {
-            $config['owebia']['advanced_shipping']['validation_rules'][$field] = [ 'required' => true ];
-        }
-        return $config;
     }
 }

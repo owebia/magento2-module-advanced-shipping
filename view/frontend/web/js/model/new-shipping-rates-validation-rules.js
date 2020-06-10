@@ -4,14 +4,20 @@
  */
 
 /*global define*/
-define(
-    [],
-    function () {
-        "use strict";
+define([
+
+], function (
+
+) {
+    "use strict";
+
+    return function (carrierCode, rules) {
         return {
+            carrierCode: carrierCode,
+
             getRules: function () {
-                return window.checkoutConfig.owebia.advanced_shipping.validation_rules;
+                return rules;
             }
         };
-    }
-);
+    };
+});
