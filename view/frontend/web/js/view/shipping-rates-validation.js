@@ -18,7 +18,7 @@ define([
     defaultShippingRatesValidator,
     defaultShippingRatesValidationRules,
     newShippingRatesValidator,
-    newShippingRatesValidationRules,
+    newShippingRatesValidationRules
 ) {
     "use strict";
 
