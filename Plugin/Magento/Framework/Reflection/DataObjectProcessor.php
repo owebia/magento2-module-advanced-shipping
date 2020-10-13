@@ -21,7 +21,7 @@ class DataObjectProcessor
         $dataObjectType
     ) {
         if ($dataObjectType === 'string[]'
-            && get_class($dataObject) === \Magento\Framework\DataObject::class
+            && $dataObject instanceof \Magento\Framework\DataObject
         ) {
             return array_map(
                 'strval',
