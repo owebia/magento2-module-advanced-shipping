@@ -9,7 +9,6 @@ use Magento\Shipping\Model\Carrier\AbstractCarrier;
 use Magento\Shipping\Model\Carrier\CarrierInterface;
 use Magento\Quote\Model\Quote\Address\RateRequest;
 use Owebia\SharedPhpConfig\Model\Wrapper;
-use Owebia\AdvancedShipping\Model\CallbackHandler;
 use Owebia\AdvancedShipping\Model\Wrapper\RateResult as RateResultWrapper;
 
 class Carrier extends AbstractCarrier implements CarrierInterface
@@ -74,7 +73,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
     protected $callbackHandlerFactory;
 
     /**
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeInterface
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Shipping\Model\Rate\ResultFactory $rateFactory
@@ -90,7 +89,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeInterface,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory,
         \Psr\Log\LoggerInterface $logger,
         \Magento\Shipping\Model\Rate\ResultFactory $rateFactory,
@@ -105,7 +104,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
         \Owebia\AdvancedShipping\Model\CallbackHandlerFactory $callbackHandlerFactory,
         array $data = []
     ) {
-        parent::__construct($scopeInterface, $rateErrorFactory, $logger, $data);
+        parent::__construct($scopeConfig, $rateErrorFactory, $logger, $data);
         $this->rateFactory = $rateFactory;
         $this->rateRequestFactory = $rateRequestFactory;
         $this->rateMethodFactory = $rateMethodFactory;
