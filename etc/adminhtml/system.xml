@@ -10,10 +10,9 @@
         <section id="carriers">
             <group id="owsh1" type="text" sortOrder="-10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label><![CDATA[Advanced Shipping <small style="opacity:.5">by Owebia</small>]]></label>
-                <field id="about" translate="label comment" type="label" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="about" translate="label" type="label" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>About</label>
                     <frontend_model>Owebia\AdvancedShipping\Block\System\Config\Form\Field\About</frontend_model>
-                    <comment><![CDATA[<p>Discover <a href="https://en.store.owebia.com/magento2-module-advanced-shipping-pro.html" target="_blank">Advanced Shipping Pro</a> and our <a href="https://en.store.owebia.com/magento2-module-advanced-shipping-pro.html#description" target="_blank">add-ons for Advanced Shipping</a></p>]]></comment>
                 </field>
                 <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enabled</label>

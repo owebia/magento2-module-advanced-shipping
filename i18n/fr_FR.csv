@@ -1,6 +1,5 @@
 "Advanced Shipping Configuration","Configuration de Advanced Shipping",module,Owebia_AdvancedShipping,Block/System/Config/Form/Field/Config.php
 
-"<p>Discover <a href=""https://en.store.owebia.com/magento2-module-advanced-shipping-pro.html"" target=""_blank"">Advanced Shipping Pro</a> and our <a href=""https://en.store.owebia.com/magento2-module-advanced-shipping-pro.html#description"" target=""_blank"">add-ons for Advanced Shipping</a></p>","<p>Découvrez <a href=""https://fr.store.owebia.com/magento2-module-advanced-shipping-pro.html"" target=""_blank"">Advanced Shipping Pro</a> et nos <a href=""https://fr.store.owebia.com/magento2-module-advanced-shipping-pro.html#description"" target=""_blank"">plugins pour Advanced Shipping</a></p>",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
 About,"À propos",module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
 Configuration,Configuration,module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
 Debug,Débogage,module,Owebia_AdvancedShipping,etc/adminhtml/system.xml
