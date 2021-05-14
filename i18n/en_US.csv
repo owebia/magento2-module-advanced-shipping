@@ -31,5 +31,5 @@ Region/State,Region/State,module,Owebia_AdvancedShipping,Model/Config/Source/Req
 
 "My Shipping Method","My Shipping Method",module,Owebia_AdvancedShipping,view/doc_en_US.html
 
-" is required."," is required.",module,Owebia_AdvancedShipping,view/frontend/web/js/model/shipping-rates-validator.js
-"Field ","Field ",module,Owebia_AdvancedShipping,view/frontend/web/js/model/shipping-rates-validator.js
+" is required."," is required.",module,Owebia_AdvancedShipping,view/frontend/web/js/model/new-shipping-rates-validator.js
+"Field ","Field ",module,Owebia_AdvancedShipping,view/frontend/web/js/model/new-shipping-rates-validator.js
