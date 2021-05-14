@@ -6,9 +6,9 @@ Module: `owebia/magento2-module-advanced-shipping`
 ### 2.8.9 (14 May, 2021)
 - add changelog
 - remove promotional links in `etc/adminhtml/system.xml`
-- udpate documentation
-- udpate copyright year
-- udpate translations
+- update documentation
+- update copyright year
+- update translations
 - update dependencies
   - `owebia/magento2-module-shared-php-config:3.0.4`: add changelog
 
