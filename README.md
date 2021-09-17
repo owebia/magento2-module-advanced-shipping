@@ -41,7 +41,7 @@ php bin/magento setup:static-content:deploy en_US
 
 ## License
 
-Copyright © 2016-2021 Owebia. All rights reserved.
+Copyright © 2016-present Owebia. All rights reserved.
 
 No warranty, explicit or implicit, provided.
 
