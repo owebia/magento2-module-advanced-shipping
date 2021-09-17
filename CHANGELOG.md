@@ -3,6 +3,12 @@
 
 Module: `owebia/magento2-module-advanced-shipping`
 
+### 2.8.10 (17 Sep, 2021)
+- use `present` as copyright ending year
+- update documentation
+- update dependencies
+  - `owebia/magento2-module-shared-php-config:3.0.5`: use `present` as copyright ending year
+
 ### 2.8.9 (14 May, 2021)
 - add changelog
 - remove promotional links in `etc/adminhtml/system.xml`
