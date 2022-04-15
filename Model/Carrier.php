@@ -122,7 +122,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
     /**
      *
      * @param RateRequest $request
-     * @return boolean
+     * @return bool
      */
     public function collectRates(RateRequest $request)
     {
@@ -283,7 +283,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     protected function isDebugEnabled()
     {
