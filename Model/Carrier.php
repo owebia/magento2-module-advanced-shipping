@@ -15,8 +15,7 @@ use Owebia\AdvancedShipping\Model\Wrapper\RateResult as RateResultWrapper;
 
 class Carrier extends AbstractCarrier implements CarrierInterface
 {
-
-    const CODE = 'owsh1';
+    public const CODE = 'owsh1';
 
     /**
      * Do not change variable name
