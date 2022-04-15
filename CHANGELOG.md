@@ -5,6 +5,7 @@ Module: `owebia/magento2-module-advanced-shipping`
 
 ### 2.8.11 (15 Apr, 2022)
 - apply PSR-12 coding standard
+- apply Magento2 coding standard
 - use `bool` instead of `boolean` in PHPDoc
 - fix constant declaration
 - remove support for PHP versions 5.5, 5.6 & 7.0
