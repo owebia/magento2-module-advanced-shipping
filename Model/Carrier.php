@@ -78,11 +78,11 @@ class Carrier extends AbstractCarrier implements CarrierInterface
      * @param \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Shipping\Model\Rate\ResultFactory $rateFactory
+     * @param \Magento\Quote\Model\Quote\Address\RateRequestFactory $rateRequestFactory
+     * @param \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory
      * @param \Magento\Shipping\Model\Tracking\ResultFactory $trackFactory
      * @param \Magento\Shipping\Model\Tracking\Result\ErrorFactory $trackErrorFactory
      * @param \Magento\Shipping\Model\Tracking\Result\StatusFactory $trackStatusFactory
-     * @param \Magento\Quote\Model\Quote\Address\RateRequestFactory $rateRequestFactory
-     * @param \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory
      * @param \Owebia\SharedPhpConfig\Helper\Registry $registryHelper
      * @param \Owebia\SharedPhpConfig\Helper\Config $configHelper
      * @param \Owebia\SharedPhpConfig\Logger\Logger $debugLogger

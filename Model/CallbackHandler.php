@@ -81,6 +81,7 @@ class CallbackHandler extends \Owebia\SharedPhpConfig\Model\CallbackHandler
     }
 
     /**
+     * @param string $message
      * @return RateResultWrapper\Error
      */
     public function appendParsingError($message)
@@ -89,6 +90,8 @@ class CallbackHandler extends \Owebia\SharedPhpConfig\Model\CallbackHandler
     }
 
     /**
+     * @param string $message
+     * @param string|null $id
      * @return RateResultWrapper\Error
      */
     protected function addError($message, $id = null)
@@ -107,6 +110,7 @@ class CallbackHandler extends \Owebia\SharedPhpConfig\Model\CallbackHandler
     }
 
     /**
+     * @param string $message
      * @return RateResultWrapper\Error
      */
     public function addErrorCallback($message)
@@ -115,6 +119,7 @@ class CallbackHandler extends \Owebia\SharedPhpConfig\Model\CallbackHandler
     }
 
     /**
+     * @param bool $onlyEnabled
      * @return array
      */
     public function getMethodsCallback($onlyEnabled = false)
