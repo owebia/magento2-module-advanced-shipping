@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Owebia\AdvancedShipping\Model\Wrapper\RateResult;
 
 class AbstractWrapper extends \Owebia\SharedPhpConfig\Model\Wrapper\ArrayWrapper

@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Owebia\AdvancedShipping\Controller\Adminhtml\Help;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
@@ -10,7 +12,6 @@ use Magento\Framework\Filesystem;
 
 class Display extends \Magento\Backend\App\Action
 {
-
     /**
      * @var \Magento\Framework\Controller\Result\RawFactory
      */

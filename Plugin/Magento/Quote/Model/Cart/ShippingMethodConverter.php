@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Copyright © Owebia. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Owebia\AdvancedShipping\Plugin\Magento\Quote\Model\Cart;
 
 use Magento\Quote\Api\Data\ShippingMethodInterface;

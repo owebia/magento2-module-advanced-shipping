@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Owebia. All rights reserved.
  * See COPYING.txt for license details.
@@ -8,7 +9,6 @@ namespace Owebia\AdvancedShipping\Block\System\Config\Form\Field;
 
 class About extends \Owebia\SharedPhpConfig\Block\System\Config\Form\Field\AbstractField
 {
-
     /**
      * Constructor
      *
