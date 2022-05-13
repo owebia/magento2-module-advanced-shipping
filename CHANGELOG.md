@@ -3,6 +3,10 @@
 
 Module: `owebia/magento2-module-advanced-shipping`
 
+### 2.8.12 (13 May, 2022)
+- update dependencies
+  - `owebia/magento2-module-shared-php-config:3.0.7`: apply Magento2 coding standard
+
 ### 2.8.11 (15 Apr, 2022)
 - apply PSR-12 coding standard
 - apply Magento2 coding standard
