@@ -32,7 +32,7 @@ class AbstractWrapper extends \Owebia\SharedPhpConfig\Model\Wrapper\ArrayWrapper
             case 'id':
                 return $this->id;
             default:
-                return isset($this->data[$key]) ? $this->data[$key] : null;
+                return $this->data[$key] ?? null;
         }
     }
 }
