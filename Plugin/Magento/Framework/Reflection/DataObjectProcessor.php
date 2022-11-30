@@ -26,7 +26,11 @@ class DataObjectProcessor
             && $dataObject instanceof \Magento\Framework\DataObject
         ) {
             return array_map(
-                'strval',
+                function ($item) {
+                    // phpcs:ignore Magento2.Functions.DiscouragedFunction.Discouraged
+                    return is_object($item) || is_array($item) ? 'unsupported type ' . gettype($item)
+                        : (string)$item;
+                },
                 $dataObject->toArray()
             );
         } else {
