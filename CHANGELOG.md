@@ -3,6 +3,11 @@
 
 Module: `owebia/magento2-module-advanced-shipping`
 
+### 2.8.13 (30 Nov, 2022)
+- fix custom data retrieval issue
+- improve handling of custom data in `\Magento\Framework\Reflection\DataObjectProcessor` to avoid errors with unsupported types
+- improve code quality
+
 ### 2.8.12 (13 May, 2022)
 - update dependencies
   - `owebia/magento2-module-shared-php-config:3.0.7`: apply Magento2 coding standard
