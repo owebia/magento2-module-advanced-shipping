@@ -9,6 +9,8 @@ namespace Owebia\AdvancedShipping\Model\Wrapper\RateResult;
 
 class Method extends AbstractWrapper
 {
+    private const CUSTOM_DATA_PREFIX = 'custom.'; // Do not use '/' to avoid path access issue
+
     /**
      * @param string $name
      * @param mixed $value
@@ -16,7 +18,7 @@ class Method extends AbstractWrapper
      */
     public function set($name, $value)
     {
-        return $this->setData('custom/' . $name, $value);
+        return $this->setData(self::CUSTOM_DATA_PREFIX . $name, $value);
     }
 
     /**
@@ -37,7 +39,7 @@ class Method extends AbstractWrapper
      */
     public function get($name)
     {
-        return $this->getData('custom/' . $name);
+        return $this->getData(self::CUSTOM_DATA_PREFIX . $name);
     }
 
     /**
@@ -57,8 +59,8 @@ class Method extends AbstractWrapper
     {
         $dataObject = $this->objectManager->create(\Magento\Framework\DataObject::class);
         foreach ($this->data as $name => $value) {
-            if (substr($name, 0, 7) === 'custom/') {
-                $dataObject->setData(substr($name, 7), $value);
+            if (substr($name, 0, strlen(self::CUSTOM_DATA_PREFIX)) === self::CUSTOM_DATA_PREFIX) {
+                $dataObject->setData(substr($name, strlen(self::CUSTOM_DATA_PREFIX)), $value);
             } elseif ($name == 'description') {
                 $dataObject->setData($name, $value);
             }
