@@ -4,13 +4,28 @@
 Module: `owebia/magento2-module-advanced-shipping`
 
 ### 6.0.0-beta (04 Feb, 2023)
-- ⚠️ breaking changes: many class constructors
+- ⚠️ breaking changes: internal classes refactored
+- ✨ new api:
+  - `Api\Data\MethodCollectionInterface`
+  - `Api\Data\MethodInterface`
 - improve code quality
 - use `ParserContextInterface`
-- new api `Api\Data\MethodCollectionInterface`
-- new api `Api\Data\MethodInterface`
 - update dependencies
-  - #owebia/magento2-module-shared-php-config:6.0.0-beta
+  - `owebia/magento2-module-shared-php-config:6.0.0-beta`:
+    - ⚠️ breaking changes:
+      - remove support for PHP < 7.4
+      - internal classes refactored
+    - ✨ new api:
+      - `Api\FunctionProviderInterface`
+      - `Api\FunctionProxyInterface`
+      - `Api\ParserContextInterface`
+      - `Api\RegistryInterface`
+      - `Api\RequiresParserContextInterface`
+    - improve code quality:
+      - add php doc
+      - type enforced
+      - use modern syntax
+      - reduce class dependencies
 
 ### 2.8.13 (30 Nov, 2022)
 - fix custom data retrieval issue
