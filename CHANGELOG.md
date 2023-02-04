@@ -3,6 +3,19 @@
 
 Module: `owebia/magento2-module-advanced-shipping`
 
+### 6.0.0-beta (04 Feb, 2023)
+- breaking changes: many class constructors
+- improve code quality: remove support for PHP < 7.4
+- improve code quality: add php doc
+- improve code quality: add type declarations
+- improve code quality: use modern syntax
+- improve code quality: reduce class dependencies
+- use `ParserContext`
+- new api `Api\Data\MethodCollectionInterface`
+- new api `Api\Data\MethodInterface`
+- update dependencies
+  - #owebia/magento2-module-shared-php-config:6.0.0-beta
+
 ### 2.8.13 (30 Nov, 2022)
 - fix custom data retrieval issue
 - improve handling of custom data in `\Magento\Framework\Reflection\DataObjectProcessor` to avoid errors with unsupported types
