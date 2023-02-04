@@ -14,7 +14,7 @@ class ShippingMethodConverter
     /**
      * @var \Magento\Quote\Api\Data\ShippingMethodExtensionFactory
      */
-    protected $shippingMethodExtensionFactory;
+    private $shippingMethodExtensionFactory;
 
     /**
      * Product constructor.
@@ -32,7 +32,7 @@ class ShippingMethodConverter
      * @param callable $proceed
      * @param \Magento\Quote\Model\Quote\Address\Rate $rateModel
      * @param string $quoteCurrencyCode
-     * @return \Magento\Quote\Api\Data\ShippingMethodInterface
+     * @return ShippingMethodInterface
      */
     public function aroundModelToDataObject(
         \Magento\Quote\Model\Cart\ShippingMethodConverter $subject,
@@ -40,7 +40,7 @@ class ShippingMethodConverter
         \Magento\Quote\Model\Quote\Address\Rate $rateModel,
         $quoteCurrencyCode
     ) {
-        /** @var \Magento\Quote\Api\Data\ShippingMethodInterface $shippingMethod */
+        /** @var ShippingMethodInterface $shippingMethod */
         $shippingMethod = $proceed($rateModel, $quoteCurrencyCode);
 
         if ($customData = $rateModel->getCustomData()) {

@@ -5,6 +5,8 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Owebia\AdvancedShipping\Model;
 
 use Magento\Store\Model\ScopeInterface;
@@ -24,8 +26,11 @@ class ConfigProvider implements \Magento\Checkout\Model\ConfigProviderInterface
     ) {
         $this->scopeConfig = $scopeConfig;
     }
-
-    private function getConfigData($key)
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    private function getConfigData(string $key)
     {
         return $this->scopeConfig->getValue('carriers/owsh1/' . $key, ScopeInterface::SCOPE_STORE);
     }

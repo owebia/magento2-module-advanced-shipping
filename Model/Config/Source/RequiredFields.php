@@ -5,6 +5,8 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Owebia\AdvancedShipping\Model\Config\Source;
 
 class RequiredFields implements \Magento\Framework\Option\ArrayInterface
