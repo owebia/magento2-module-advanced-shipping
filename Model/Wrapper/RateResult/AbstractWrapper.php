@@ -5,6 +5,8 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Owebia\AdvancedShipping\Model\Wrapper\RateResult;
 
 class AbstractWrapper extends \Owebia\SharedPhpConfig\Model\Wrapper\ArrayWrapper
@@ -12,7 +14,7 @@ class AbstractWrapper extends \Owebia\SharedPhpConfig\Model\Wrapper\ArrayWrapper
     /**
      * @var string
      */
-    protected $id;
+    private $id;
 
     /**
      * @param string $id
@@ -23,10 +25,10 @@ class AbstractWrapper extends \Owebia\SharedPhpConfig\Model\Wrapper\ArrayWrapper
     }
 
     /**
-     * {@inheritDoc}
-     * @see \Owebia\SharedPhpConfig\Model\Wrapper\AbstractWrapper::loadData()
+     * @param string $key
+     * @return mixed
      */
-    protected function loadData($key)
+    protected function loadData(string $key)
     {
         switch ($key) {
             case 'id':
