@@ -5,12 +5,14 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Owebia\AdvancedShipping\Model;
 
+use Magento\Quote\Model\Quote\Address\RateRequest;
 use Magento\Shipping\Model\Carrier\AbstractCarrier;
 use Magento\Shipping\Model\Carrier\CarrierInterface;
-use Magento\Quote\Model\Quote\Address\RateRequest;
-use Owebia\SharedPhpConfig\Model\Wrapper;
+use Owebia\AdvancedShipping\Model\CarrierContext;
 use Owebia\AdvancedShipping\Model\Wrapper\RateResult as RateResultWrapper;
 
 class Carrier extends AbstractCarrier implements CarrierInterface
@@ -24,11 +26,6 @@ class Carrier extends AbstractCarrier implements CarrierInterface
     protected $_code = self::CODE;
 
     /**
-     * @var \Magento\Shipping\Model\Rate\ResultFactory
-     */
-    protected $rateFactory = null;
-
-    /**
      * @var \Magento\Quote\Model\Quote\Address\RateRequestFactory
      */
     protected $rateRequestFactory;
@@ -36,7 +33,12 @@ class Carrier extends AbstractCarrier implements CarrierInterface
     /**
      * @var \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory
      */
-    protected $rateMethodFactory = null;
+    protected $rateMethodFactory;
+
+    /**
+     * @var \Magento\Shipping\Model\Rate\ResultFactory
+     */
+    protected $rateFactory;
 
     /**
      * @var \Magento\Shipping\Model\Tracking\ResultFactory
@@ -54,68 +56,32 @@ class Carrier extends AbstractCarrier implements CarrierInterface
     protected $trackStatusFactory;
 
     /**
-     * @var \Owebia\SharedPhpConfig\Helper\Registry
+     * @var \Owebia\AdvancedShipping\Model\ParserContextFactory
      */
-    protected $registryHelper = null;
+    private $parserContextFactory;
 
     /**
-     * @var \Owebia\SharedPhpConfig\Helper\Config
-     */
-    protected $configHelper = null;
-
-    /**
-     * @var \Owebia\SharedPhpConfig\Logger\Logger
-     */
-    protected $debugLogger = null;
-
-    /**
-     * @var \Owebia\AdvancedShipping\Model\CallbackHandlerFactory
-     */
-    protected $callbackHandlerFactory;
-
-    /**
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Magento\Shipping\Model\Rate\ResultFactory $rateFactory
-     * @param \Magento\Quote\Model\Quote\Address\RateRequestFactory $rateRequestFactory
-     * @param \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory
-     * @param \Magento\Shipping\Model\Tracking\ResultFactory $trackFactory
-     * @param \Magento\Shipping\Model\Tracking\Result\ErrorFactory $trackErrorFactory
-     * @param \Magento\Shipping\Model\Tracking\Result\StatusFactory $trackStatusFactory
-     * @param \Owebia\SharedPhpConfig\Helper\Registry $registryHelper
-     * @param \Owebia\SharedPhpConfig\Helper\Config $configHelper
-     * @param \Owebia\SharedPhpConfig\Logger\Logger $debugLogger
-     * @param \Owebia\AdvancedShipping\Model\CallbackHandlerFactory $callbackHandlerFactory
+     * @param CarrierContext $carrierContext
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory,
-        \Psr\Log\LoggerInterface $logger,
-        \Magento\Shipping\Model\Rate\ResultFactory $rateFactory,
-        \Magento\Quote\Model\Quote\Address\RateRequestFactory $rateRequestFactory,
-        \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory,
-        \Magento\Shipping\Model\Tracking\ResultFactory $trackFactory,
-        \Magento\Shipping\Model\Tracking\Result\ErrorFactory $trackErrorFactory,
-        \Magento\Shipping\Model\Tracking\Result\StatusFactory $trackStatusFactory,
-        \Owebia\SharedPhpConfig\Helper\Registry $registryHelper,
-        \Owebia\SharedPhpConfig\Helper\Config $configHelper,
-        \Owebia\SharedPhpConfig\Logger\Logger $debugLogger,
-        \Owebia\AdvancedShipping\Model\CallbackHandlerFactory $callbackHandlerFactory,
+        CarrierContext $carrierContext,
         array $data = []
     ) {
-        parent::__construct($scopeConfig, $rateErrorFactory, $logger, $data);
-        $this->rateFactory = $rateFactory;
-        $this->rateRequestFactory = $rateRequestFactory;
-        $this->rateMethodFactory = $rateMethodFactory;
-        $this->trackFactory = $trackFactory;
-        $this->trackErrorFactory = $trackErrorFactory;
-        $this->trackStatusFactory = $trackStatusFactory;
-        $this->registryHelper = $registryHelper;
-        $this->configHelper = $configHelper;
-        $this->debugLogger = $debugLogger;
-        $this->callbackHandlerFactory = $callbackHandlerFactory;
+        $this->rateFactory = $carrierContext->getRateFactory();
+        $this->rateRequestFactory = $carrierContext->getRateRequestFactory();
+        $this->rateMethodFactory = $carrierContext->getRateMethodFactory();
+        $this->trackFactory = $carrierContext->getTrackFactory();
+        $this->trackErrorFactory = $carrierContext->getTrackErrorFactory();
+        $this->trackStatusFactory = $carrierContext->getTrackStatusFactory();
+        $this->trackStatusFactory = $carrierContext->getTrackStatusFactory();
+        $this->parserContextFactory = $carrierContext->getParserContextFactory();
+        parent::__construct(
+            $carrierContext->getScopeConfig(),
+            $carrierContext->getRateErrorFactory(),
+            $carrierContext->getLogger(),
+            $data
+        );
     }
 
     /**
@@ -226,25 +192,11 @@ class Carrier extends AbstractCarrier implements CarrierInterface
         $allowedMethods = [];
         foreach ($config as $index => $item) {
             if ($item instanceof RateResultWrapper\Method) {
-                $allowedMethods[$index] = isset($item->title) ? $item->title : 'N/A';
+                $allowedMethods[$index] = $item->title ?? 'N/A';
             }
         }
 
         return $allowedMethods;
-    }
-
-    public function initRegistry(RateRequest $request = null)
-    {
-        $this->registryHelper->init($request);
-        $this->registryHelper->register(
-            'info',
-            $this->registryHelper->create(
-                Wrapper\Info::class,
-                [
-                    'carrierCode' => $this->getCarrierCode()
-                ]
-            )
-        );
     }
 
     /**
@@ -253,40 +205,18 @@ class Carrier extends AbstractCarrier implements CarrierInterface
      */
     public function getConfig(RateRequest $request = null)
     {
-        if ($this->isDebugEnabled()) {
-            $this->debugLogger->collapseOpen("Carrier[{$this->_code}].getConfig", 'panel-primary');
-        }
-        $config = null;
-        try {
-            $this->initRegistry($request);
-            $configString = $this->getConfigData('config');
-            $callbackHandler = $this->callbackHandlerFactory->create();
-            $callbackHandler->setRegistry($this->registryHelper);
-            $this->configHelper->parse(
-                $configString,
-                $this->registryHelper,
-                $callbackHandler,
-                $this->getConfigFlag('debug')
-            );
-            $config = $callbackHandler->getParsingResult();
-        } catch (\Exception $e) {
-            $this->_logger->debug($e);
-            if ($this->isDebugEnabled()) {
-                $this->debugLogger->debug("Carrier[{$this->_code}].getConfig - Error - " . $e->getMessage());
-            }
-        }
-        if ($this->isDebugEnabled()) {
-            $this->debugLogger->collapseClose();
-        }
-        return $config;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isDebugEnabled()
-    {
-        return $this->getConfigFlag('debug');
+        /** @var ParserContext $parserContext */
+        $parserContext = $this->parserContextFactory->create([
+            'request' => $request,
+            'debugPrefix' => "Carrier[{$this->_code}].getConfig",
+        ]);
+        return $parserContext->parse(
+            $this->getConfigData('config'),
+            $this->getConfigFlag('debug'),
+            [
+                'carrierCode' => $this->getCarrierCode()
+            ]
+        );
     }
 
     /**
