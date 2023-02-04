@@ -6,6 +6,13 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Owebia\AdvancedShipping\Model\FunctionProxy">
+        <arguments>
+            <argument name="functionProviders" xsi:type="array">
+                <item name="Owebia_AdvancedShipping_Model_FunctionProvider" xsi:type="object">Owebia\AdvancedShipping\Model\FunctionProvider</item>
+            </argument>
+        </arguments>
+    </type>
     <type name="Magento\Framework\Reflection\DataObjectProcessor">
         <plugin sortOrder="10"
             name="Owebia_AdvancedShipping_Plugin_Magento_Framework_Reflection_DataObjectProcessor"
