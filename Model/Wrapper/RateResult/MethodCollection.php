@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Owebia\AdvancedShipping\Model\Wrapper\RateResult;
 
-use Owebia\AdvancedShipping\Api\Data\MethodCollectionInterface;
+use Owebia\AdvancedShipping\Api\MethodCollectionInterface;
 use Owebia\SharedPhpConfig\Model\Wrapper\ArrayWrapper;
 
 class MethodCollection extends ArrayWrapper implements MethodCollectionInterface

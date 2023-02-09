@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Owebia\AdvancedShipping\Model\Wrapper\RateResult;
 
-use Owebia\AdvancedShipping\Api\Data\MethodInterface;
+use Owebia\AdvancedShipping\Api\MethodInterface;
 
 class Method extends AbstractWrapper implements MethodInterface
 {

@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Owebia\AdvancedShipping\Api\Data;
+namespace Owebia\AdvancedShipping\Api;
 
-use Countable;
-
-interface MethodCollectionInterface extends Countable
+interface MethodInterface
 {
+    public const CUSTOM_DATA_PREFIX = 'custom.'; // Do not use '/' to avoid path access issue
+
     /**
      * @param string $name
      * @param mixed $value
@@ -21,10 +21,21 @@ interface MethodCollectionInterface extends Countable
     public function set(string $name, $value): self;
 
     /**
+     * @param string $name
+     * @return mixed
+     */
+    public function get(string $name);
+
+    /**
      * @param string $value
      * @return $this
      */
     public function setTitle($value): self;
+
+    /**
+     * @return string
+     */
+    public function getTitle(): ?string;
 
     /**
      * @param bool $value
@@ -33,14 +44,29 @@ interface MethodCollectionInterface extends Countable
     public function setEnabled($value): self;
 
     /**
+     * @return bool
+     */
+    public function getEnabled(): bool;
+
+    /**
      * @param float $value
      * @return $this
      */
     public function setPrice($value): self;
 
     /**
+     * @return float|null
+     */
+    public function getPrice(): ?float;
+
+    /**
      * @param string $value
      * @return $this
      */
     public function setDescription($value): self;
+
+    /**
+     * @return string|null
+     */
+    public function getDescription(): ?string;
 }
