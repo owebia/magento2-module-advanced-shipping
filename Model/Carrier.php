@@ -10,10 +10,16 @@ declare(strict_types=1);
 namespace Owebia\AdvancedShipping\Model;
 
 use Magento\Quote\Model\Quote\Address\RateRequest;
+use Magento\Quote\Model\Quote\Address\RateRequestFactory;
+use Magento\Quote\Model\Quote\Address\RateResult;
 use Magento\Shipping\Model\Carrier\AbstractCarrier;
 use Magento\Shipping\Model\Carrier\CarrierInterface;
+use Magento\Shipping\Model\Tracking;
 use Owebia\AdvancedShipping\Model\CarrierContext;
+use Owebia\AdvancedShipping\Model\RegistryFactory;
 use Owebia\AdvancedShipping\Model\Wrapper\RateResult as RateResultWrapper;
+use Owebia\SharedPhpConfig\Api\ParserInterface;
+use Owebia\SharedPhpConfig\Api\ParserContextInterfaceFactory;
 
 class Carrier extends AbstractCarrier implements CarrierInterface
 {
@@ -26,39 +32,54 @@ class Carrier extends AbstractCarrier implements CarrierInterface
     protected $_code = self::CODE;
 
     /**
-     * @var \Magento\Quote\Model\Quote\Address\RateRequestFactory
+     * @var RateRequestFactory
      */
-    protected $rateRequestFactory;
+    protected RateRequestFactory $rateRequestFactory;
 
     /**
-     * @var \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory
+     * @var RateResult\MethodFactory
      */
-    protected $rateMethodFactory;
+    protected RateResult\MethodFactory $rateMethodFactory;
 
     /**
      * @var \Magento\Shipping\Model\Rate\ResultFactory
      */
-    protected $rateFactory;
+    protected \Magento\Shipping\Model\Rate\ResultFactory $rateFactory;
 
     /**
-     * @var \Magento\Shipping\Model\Tracking\ResultFactory
+     * @var Tracking\ResultFactory
      */
-    protected $trackFactory;
+    protected Tracking\ResultFactory $trackFactory;
 
     /**
-     * @var \Magento\Shipping\Model\Tracking\Result\ErrorFactory
+     * @var Tracking\Result\ErrorFactory
      */
-    protected $trackErrorFactory;
+    protected Tracking\Result\ErrorFactory $trackErrorFactory;
 
     /**
-     * @var \Magento\Shipping\Model\Tracking\Result\StatusFactory
+     * @var Tracking\Result\StatusFactory
      */
-    protected $trackStatusFactory;
+    protected Tracking\Result\StatusFactory $trackStatusFactory;
 
     /**
-     * @var \Owebia\AdvancedShipping\Model\ParserContextFactory
+     * @var MainFunctionProviderFactory
      */
-    private $parserContextFactory;
+    private MainFunctionProviderFactory $mainFunctionProviderFactory;
+
+    /**
+     * @var RegistryFactory
+     */
+    private RegistryFactory $registryFactory;
+
+    /**
+     * @var ParserInterface
+     */
+    private ParserInterface $parser;
+
+    /**
+     * @var ParserContextInterfaceFactory
+     */
+    private ParserContextInterfaceFactory $parserContextFactory;
 
     /**
      * @param CarrierContext $carrierContext
@@ -75,6 +96,9 @@ class Carrier extends AbstractCarrier implements CarrierInterface
         $this->trackErrorFactory = $carrierContext->getTrackErrorFactory();
         $this->trackStatusFactory = $carrierContext->getTrackStatusFactory();
         $this->trackStatusFactory = $carrierContext->getTrackStatusFactory();
+        $this->mainFunctionProviderFactory = $carrierContext->getMainFunctionProviderFactory();
+        $this->registryFactory = $carrierContext->getRegistryFactory();
+        $this->parser = $carrierContext->getParser();
         $this->parserContextFactory = $carrierContext->getParserContextFactory();
         parent::__construct(
             $carrierContext->getScopeConfig(),
@@ -97,15 +121,13 @@ class Carrier extends AbstractCarrier implements CarrierInterface
 
         $config = $this->getConfig($request);
 
-        // $stopToFirstMatch = $this->getConfigFlag('stop_to_first_match');
-
-        /** @var \Magento\Shipping\Model\Rate\Result $result */
-        $result = $this->rateFactory->create();
-
         if (!isset($config) || !is_array($config)) {
             $this->_logger->debug("Owebia_AdvancedShipping : Invalid config");
             return false;
         }
+
+        /** @var \Magento\Shipping\Model\Rate\Result $result */
+        $result = $this->rateFactory->create();
 
         foreach ($config as $index => $item) {
             if ($item instanceof RateResultWrapper\Error) {
@@ -115,8 +137,6 @@ class Carrier extends AbstractCarrier implements CarrierInterface
                     $rate = $this->createMethod($index, $item);
                     $result->append($rate);
                 }
-
-                // if ($stopToFirstMatch) break;
             } else {
                 $this->appendError($result, $item, "Invalid parsing result");
             }
@@ -128,24 +148,20 @@ class Carrier extends AbstractCarrier implements CarrierInterface
     /**
      * @param string $methodId
      * @param RateResultWrapper\Method $method
-     * @return \Magento\Quote\Model\Quote\Address\RateResult\Method
+     * @return RateResult\Method
      */
-    protected function createMethod($methodId, RateResultWrapper\Method $method)
+    protected function createMethod(string $methodId, RateResultWrapper\Method $method): RateResult\Method
     {
-        /** @var \Magento\Quote\Model\Quote\Address\RateResult\Method $rate */
+        /** @var RateResult\Method $rate */
         $rate = $this->rateMethodFactory->create();
         $rate->setCarrier($this->_code);
         $rate->setCarrierTitle($this->getConfigData('title'));
         $rate->setMethod($methodId);
-        $title = $method->title;
-        $rate->setMethodTitle($title ? $title : 'N/A');
-        $description = $method->description ? $method->description : null;
-        $rate->setMethodDescription($description);
+        $rate->setMethodTitle($method->title ?: 'N/A');
+        $rate->setMethodDescription($method->description ?: null);
         $rate->setCost($method->price);
         $rate->setPrice($method->price);
-
         $rate->setCustomData($method->getCustomData());
-
         return $rate;
     }
 
@@ -153,13 +169,13 @@ class Carrier extends AbstractCarrier implements CarrierInterface
      * @param \Magento\Shipping\Model\Rate\Result $result
      * @param mixed $wrapper
      * @param string $msg
-     * @return \Owebia\AdvancedShipping\Model\Carrier
+     * @return $this
      */
     protected function appendError(
         \Magento\Shipping\Model\Rate\Result $result,
         $wrapper,
-        $msg
-    ) {
+        string $msg
+    ): self {
         if (empty($wrapper->id) || $this->getConfigFlag('showmethod')) {
             $error = $this->_rateErrorFactory->create();
             $error->setCarrier($this->_code);
@@ -205,18 +221,21 @@ class Carrier extends AbstractCarrier implements CarrierInterface
      */
     public function getConfig(RateRequest $request = null)
     {
-        /** @var ParserContext $parserContext */
-        $parserContext = $this->parserContextFactory->create([
-            'request' => $request,
-            'debugPrefix' => "Carrier[{$this->_code}].getConfig",
-        ]);
-        return $parserContext->parse(
-            $this->getConfigData('config'),
-            $this->getConfigFlag('debug'),
-            [
-                'carrierCode' => $this->getCarrierCode()
-            ]
+        /** @var MainFunctionProvider $mainFunctionProvider */
+        $mainFunctionProvider = $this->mainFunctionProviderFactory->create();
+        $this->parser->parse(
+            $this->parserContextFactory->create([
+                'mainFunctionProvider' => $mainFunctionProvider,
+                'registry' => $this->registryFactory->createFromRateRequest(
+                    $request,
+                    ['carrierCode' => $this->getCarrierCode()]
+                ),
+                'debugPrefix' => "Carrier[{$this->_code}].getConfig",
+                'debug' => $this->getConfigFlag('debug'),
+            ]),
+            $this->getConfigData('config')
         );
+        return $mainFunctionProvider->getParsingResult();
     }
 
     /**
@@ -239,12 +258,8 @@ class Carrier extends AbstractCarrier implements CarrierInterface
     public function getTrackingInfo($tracking)
     {
         $result = $this->getTracking($tracking);
-
-        if ($result instanceof \Magento\Shipping\Model\Tracking\Result) {
-            $trackings = $result->getAllTrackings();
-            if ($trackings) {
-                return $trackings[0];
-            }
+        if ($result instanceof Tracking\Result) {
+            return $result->getAllTrackings()[0] ?? false;
         } elseif (is_string($result) && !empty($result)) {
             return $result;
         }

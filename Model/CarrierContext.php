@@ -9,81 +9,113 @@ declare(strict_types=1);
 
 namespace Owebia\AdvancedShipping\Model;
 
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Quote\Model\Quote\Address\RateRequestFactory;
+use Magento\Quote\Model\Quote\Address\RateResult;
+use Magento\Shipping\Model\Rate;
+use Magento\Shipping\Model\Tracking;
+use Owebia\AdvancedShipping\Model\MainFunctionProviderFactory;
+use Owebia\AdvancedShipping\Model\RegistryFactory;
+use Owebia\SharedPhpConfig\Api\ParserInterface;
+use Owebia\SharedPhpConfig\Api\ParserContextInterfaceFactory;
+use Psr\Log\LoggerInterface;
+
 class CarrierContext
 {
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var ScopeConfigInterface
      */
     private $scopeConfig;
 
     /**
-     * @var \Magento\Quote\Model\Quote\Address\RateRequestFactory
+     * @var RateRequestFactory
      */
-    private $rateRequestFactory;
+    private RateRequestFactory $rateRequestFactory;
 
     /**
-     * @var \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory
+     * @var RateResult\ErrorFactory
      */
-    private $rateErrorFactory;
+    private RateResult\ErrorFactory $rateErrorFactory;
 
     /**
-     * @var \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory
+     * @var RateResult\MethodFactory
      */
-    private $rateMethodFactory;
+    private RateResult\MethodFactory $rateMethodFactory;
 
     /**
-     * @var \Magento\Shipping\Model\Rate\ResultFactory
+     * @var Rate\ResultFactory
      */
-    private $rateFactory;
+    private Rate\ResultFactory $rateFactory;
 
     /**
-     * @var \Magento\Shipping\Model\Tracking\ResultFactory
+     * @var Tracking\ResultFactory
      */
-    private $trackFactory;
+    private Tracking\ResultFactory $trackFactory;
 
     /**
-     * @var \Magento\Shipping\Model\Tracking\Result\ErrorFactory
+     * @var Tracking\Result\ErrorFactory
      */
-    private $trackErrorFactory;
+    private Tracking\Result\ErrorFactory $trackErrorFactory;
 
     /**
-     * @var \Magento\Shipping\Model\Tracking\Result\StatusFactory
+     * @var Tracking\Result\StatusFactory
      */
-    private $trackStatusFactory;
+    private Tracking\Result\StatusFactory $trackStatusFactory;
 
     /**
-     * @var \Owebia\AdvancedShipping\Model\ParserContextFactory
+     * @var MainFunctionProviderFactory
      */
-    private $parserContextFactory;
+    private MainFunctionProviderFactory $mainFunctionProviderFactory;
 
     /**
-     * @var \Psr\Log\LoggerInterface
+     * @var RegistryFactory
      */
-    private $logger;
+    private RegistryFactory $registryFactory;
 
     /**
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param \Magento\Quote\Model\Quote\Address\RateRequestFactory $rateRequestFactory
-     * @param \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory
-     * @param \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory
-     * @param \Magento\Shipping\Model\Rate\ResultFactory $rateFactory
-     * @param \Magento\Shipping\Model\Tracking\ResultFactory $trackFactory
-     * @param \Magento\Shipping\Model\Tracking\Result\ErrorFactory $trackErrorFactory
-     * @param \Magento\Shipping\Model\Tracking\Result\StatusFactory $trackStatusFactory
-     * @param \Owebia\AdvancedShipping\Model\ParserContextFactory $parserContextFactory
-     * @param \Psr\Log\LoggerInterface $logger
+     * @var ParserInterface
+     */
+    private ParserInterface $parser;
+
+    /**
+     * @var ParserContextInterfaceFactory
+     */
+    private ParserContextInterfaceFactory $parserContextFactory;
+
+    /**
+     * @var LoggerInterface
+     */
+    private LoggerInterface $logger;
+
+    /**
+     * @param ScopeConfigInterface $scopeConfig
+     * @param RateRequestFactory $rateRequestFactory
+     * @param RateResult\ErrorFactory $rateErrorFactory
+     * @param RateResult\MethodFactory $rateMethodFactory
+     * @param Rate\ResultFactory $rateFactory
+     * @param Tracking\ResultFactory $trackFactory
+     * @param Tracking\Result\ErrorFactory $trackErrorFactory
+     * @param Tracking\Result\StatusFactory $trackStatusFactory
+     * @param MainFunctionProviderFactory $mainFunctionProviderFactory
+     * @param RegistryFactory $registryFactory
+     * @param ParserInterface $parser
+     * @param ParserContextInterfaceFactory $parserContextFactory
+     * @param LoggerInterface $logger
      */
     public function __construct(
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Quote\Model\Quote\Address\RateRequestFactory $rateRequestFactory,
-        \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory,
-        \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory,
-        \Magento\Shipping\Model\Rate\ResultFactory $rateFactory,
-        \Magento\Shipping\Model\Tracking\ResultFactory $trackFactory,
-        \Magento\Shipping\Model\Tracking\Result\ErrorFactory $trackErrorFactory,
-        \Magento\Shipping\Model\Tracking\Result\StatusFactory $trackStatusFactory,
-        \Owebia\AdvancedShipping\Model\ParserContextFactory $parserContextFactory,
-        \Psr\Log\LoggerInterface $logger
+        ScopeConfigInterface $scopeConfig,
+        RateRequestFactory $rateRequestFactory,
+        RateResult\ErrorFactory $rateErrorFactory,
+        RateResult\MethodFactory $rateMethodFactory,
+        Rate\ResultFactory $rateFactory,
+        Tracking\ResultFactory $trackFactory,
+        Tracking\Result\ErrorFactory $trackErrorFactory,
+        Tracking\Result\StatusFactory $trackStatusFactory,
+        MainFunctionProviderFactory $mainFunctionProviderFactory,
+        RegistryFactory $registryFactory,
+        ParserInterface $parser,
+        ParserContextInterfaceFactory $parserContextFactory,
+        LoggerInterface $logger
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->rateRequestFactory = $rateRequestFactory;
@@ -93,87 +125,114 @@ class CarrierContext
         $this->trackFactory = $trackFactory;
         $this->trackErrorFactory = $trackErrorFactory;
         $this->trackStatusFactory = $trackStatusFactory;
+        $this->mainFunctionProviderFactory = $mainFunctionProviderFactory;
+        $this->registryFactory = $registryFactory;
+        $this->parser = $parser;
         $this->parserContextFactory = $parserContextFactory;
         $this->logger = $logger;
     }
 
     /**
-     * @return \Magento\Framework\App\Config\ScopeConfigInterface
+     * @return ScopeConfigInterface
      */
-    public function getScopeConfig()
+    public function getScopeConfig(): ScopeConfigInterface
     {
         return $this->scopeConfig;
     }
 
     /**
-     * @return \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory
+     * @return RateRequestFactory
      */
-    public function getRateErrorFactory()
-    {
-        return $this->rateErrorFactory;
-    }
-
-    /**
-     * @return \Psr\Log\LoggerInterface
-     */
-    public function getLogger()
-    {
-        return $this->logger;
-    }
-
-    /**
-     * @return \Magento\Shipping\Model\Rate\ResultFactory
-     */
-    public function getRateFactory()
-    {
-        return $this->rateFactory;
-    }
-
-    /**
-     * @return \Magento\Quote\Model\Quote\Address\RateRequestFactory
-     */
-    public function getRateRequestFactory()
+    public function getRateRequestFactory(): RateRequestFactory
     {
         return $this->rateRequestFactory;
     }
 
     /**
-     * @return \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory
+     * @return RateResult\ErrorFactory
      */
-    public function getRateMethodFactory()
+    public function getRateErrorFactory(): RateResult\ErrorFactory
+    {
+        return $this->rateErrorFactory;
+    }
+
+    /**
+     * @return RateResult\MethodFactory
+     */
+    public function getRateMethodFactory(): RateResult\MethodFactory
     {
         return $this->rateMethodFactory;
     }
 
     /**
-     * @return \Magento\Shipping\Model\Tracking\ResultFactory
+     * @return Rate\ResultFactory
      */
-    public function getTrackFactory()
+    public function getRateFactory(): Rate\ResultFactory
+    {
+        return $this->rateFactory;
+    }
+
+    /**
+     * @return Tracking\ResultFactory
+     */
+    public function getTrackFactory(): Tracking\ResultFactory
     {
         return $this->trackFactory;
     }
 
     /**
-     * @return \Magento\Shipping\Model\Tracking\Result\ErrorFactory
+     * @return Tracking\Result\ErrorFactory
      */
-    public function getTrackErrorFactory()
+    public function getTrackErrorFactory(): Tracking\Result\ErrorFactory
     {
         return $this->trackErrorFactory;
     }
 
     /**
-     * @return \Magento\Shipping\Model\Tracking\Result\StatusFactory
+     * @return Tracking\Result\StatusFactory
      */
-    public function getTrackStatusFactory()
+    public function getTrackStatusFactory(): Tracking\Result\StatusFactory
     {
         return $this->trackStatusFactory;
     }
 
     /**
-     * @return \Owebia\AdvancedShipping\Model\ParserContextFactory
+     * @return MainFunctionProviderFactory
      */
-    public function getParserContextFactory()
+    public function getMainFunctionProviderFactory(): MainFunctionProviderFactory
+    {
+        return $this->mainFunctionProviderFactory;
+    }
+
+    /**
+     * @return RegistryFactory
+     */
+    public function getRegistryFactory(): RegistryFactory
+    {
+        return $this->registryFactory;
+    }
+
+    /**
+     * @return ParserInterface
+     */
+    public function getParser(): ParserInterface
+    {
+        return $this->parser;
+    }
+
+    /**
+     * @return ParserContextInterfaceFactory
+     */
+    public function getParserContextFactory(): ParserContextInterfaceFactory
     {
         return $this->parserContextFactory;
+    }
+
+    /**
+     * @return LoggerInterface
+     */
+    public function getLogger(): LoggerInterface
+    {
+        return $this->logger;
     }
 }
