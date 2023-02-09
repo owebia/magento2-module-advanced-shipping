@@ -3,13 +3,13 @@
 
 Module: `owebia/magento2-module-advanced-shipping`
 
-### 6.0.0-beta (04 Feb, 2023)
+### 6.0.0-beta (09 Feb, 2023)
 - ⚠️ breaking changes: internal classes refactored
 - ✨ new api:
-  - `Api\Data\MethodCollectionInterface`
-  - `Api\Data\MethodInterface`
+  - `Api\MethodCollectionInterface`
+  - `Api\MethodInterface`
 - improve code quality
-- use `ParserContextInterface`
+- use `\Owebia\SharedPhpConfig\Api\FunctionProviderInterface`
 - update dependencies
   - `owebia/magento2-module-shared-php-config:6.0.0-beta`:
     - ⚠️ breaking changes:
