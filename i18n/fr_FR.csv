@@ -23,11 +23,11 @@ Region/State,Région/État,module,Owebia_AdvancedShipping,Model/Config/Source/Re
 "VAT number","Numéro de TVA",module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
 "ZIP/Postal Code","Code postal",module,Owebia_AdvancedShipping,Model/Config/Source/RequiredFields.php
 
-"Invalid arguments count for %1 FuncCall","Nombre d'arguments invalide lors de l'appel à %1",module,Owebia_AdvancedShipping,Model/ParserContext.php
-"Invalid first argument for %1 FuncCall: the first argument must be a string and match the following pattern: %2","Premier argument invalide lors de l'appel à %1 : le premier argument doit être une chaîne de caractères qui suit le modèle suivant : %2",module,Owebia_AdvancedShipping,Model/ParserContext.php
-"Invalid price","Prix invalide",module,Owebia_AdvancedShipping,Model/ParserContext.php
-"Invalid second argument for addMethod FuncCall: the second argument must be an array","Second argument invalide lors de l'appel à addMethod : le second argument doit être un tableau",module,Owebia_AdvancedShipping,Model/ParserContext.php
-"The method %1 already exists","La méthode %1 existe déjà",module,Owebia_AdvancedShipping,Model/ParserContext.php
+"Invalid arguments count for %1 FuncCall","Nombre d'arguments invalide lors de l'appel à %1",module,Owebia_AdvancedShipping,Model/MainFunctionProvider.php
+"Invalid first argument for %1 FuncCall: the first argument must be a string and match the following pattern: %2","Premier argument invalide lors de l'appel à %1 : le premier argument doit être une chaîne de caractères qui suit le modèle suivant : %2",module,Owebia_AdvancedShipping,Model/MainFunctionProvider.php
+"Invalid price","Prix invalide",module,Owebia_AdvancedShipping,Model/MainFunctionProvider.php
+"Invalid second argument for addMethod FuncCall: the second argument must be an array","Second argument invalide lors de l'appel à addMethod : le second argument doit être un tableau",module,Owebia_AdvancedShipping,Model/MainFunctionProvider.php
+"The method %1 already exists","La méthode %1 existe déjà",module,Owebia_AdvancedShipping,Model/MainFunctionProvider.php
 
 "My Shipping Method","My Shipping Method",module,Owebia_AdvancedShipping,view/doc_en_US.html
 
