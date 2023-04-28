@@ -417,7 +417,7 @@ code.hljs.red{color:red;background:#f2dede}
                 </ul>
                 <pre>
                     # You must be in Magento root directory
-                    composer require owebia/magento2-module-advanced-shipping:^2.8.13
+                    composer require owebia/magento2-module-advanced-shipping:^2.8.14
                     php bin/magento cache:clean
                     php bin/magento module:enable Owebia_SharedPhpConfig Owebia_AdvancedShipping
                     php bin/magento setup:upgrade
@@ -634,7 +634,7 @@ code.hljs.red{color:red;background:#f2dede}
                         addMethod('__auto__', [
                             'title'      => "If at least one product has the attribute 'name' equal to 'Cat'",
                             'enabled'    => count(
-                                                array_filter($request->all_items, function ($item) {
+                                                array_filter($request->all_items ?? [], function ($item) {
                                                     return $item->product->name == 'Cat';
                                                 })
                                             ) > 0,
@@ -1330,7 +1330,7 @@ code.hljs.red{color:red;background:#f2dede}
                         addMethod('__auto__', [
                             'title'      => "If at least one product has the attribute 'name' equal to 'Cat'",
                             'enabled'    => count(
-                                                array_filter($request->all_items, function ($item) {
+                                                array_filter($request->all_items ?? [], function ($item) {
                                                     return $item->product->name == 'Cat';
                                                 })
                                             ) > 0,
@@ -1350,7 +1350,7 @@ code.hljs.red{color:red;background:#f2dede}
                         addMethod('__auto__', [
                             'title'      => "If all items have the option 'Size' greater or equal to 1",
                             'enabled'    => count(
-                                                array_filter($request->all_items, function ($item) {
+                                                array_filter($request->all_items ?? [], function ($item) {
                                                     return isset($item->options['Size']) && $item->options['Size']['value'] >= 1;
                                                 })
                                             ) == $request->package_qty,
@@ -1373,7 +1373,7 @@ code.hljs.red{color:red;background:#f2dede}
                                                 array_unique(
                                                     array_map(function ($item) {
                                                         return $item->product->sku;
-                                                    }, $request->all_items)
+                                                    }, $request->all_items ?? [])
                                                 )
                                             ) > 3,
                             'price'      => 10
@@ -1386,7 +1386,7 @@ code.hljs.red{color:red;background:#f2dede}
                                                 array_unique(
                                                     array_map(function ($item) {
                                                         return $item->product->sku;
-                                                    }, $request->all_items)
+                                                    }, $request->all_items ?? [])
                                                 )
                                             ) > 3,
                             'price'      => 10
@@ -1405,7 +1405,7 @@ code.hljs.red{color:red;background:#f2dede}
                                                     function ($item) {
                                                         return $item->base_original_price;
                                                     },
-                                                    $request->all_items
+                                                    $request->all_items ?? []
                                                 )
                                             ) > 10,
                             'price'      => 10
@@ -1428,7 +1428,7 @@ code.hljs.red{color:red;background:#f2dede}
                                                     function ($item) {
                                                         return $item->options['Size']['value'] ?? 0;
                                                     },
-                                                    $request->all_items
+                                                    $request->all_items ?? []
                                                 )
                                             ) < 50,
                             'price'      => 10
@@ -1456,7 +1456,7 @@ code.hljs.red{color:red;background:#f2dede}
                                                     function ($item) {
                                                         return $item->options['Size']['value'] ?? 0;
                                                     },
-                                                    $request->all_items
+                                                    $request->all_items ?? []
                                                 )
                                             ) > 30,
                             'price'      => 10
@@ -1480,7 +1480,7 @@ code.hljs.red{color:red;background:#f2dede}
                                                         // shipping is a custom product attribute
                                                         return $item->product->shipping * $item->qty;
                                                     },
-                                                    $request->all_items
+                                                    $request->all_items ?? []
                                                 )
                                             ),
                         ]);
@@ -1504,7 +1504,7 @@ code.hljs.red{color:red;background:#f2dede}
                                                             ? $item->product->weight * $item->qty
                                                             : 0;
                                                     },
-                                                    $request->all_items
+                                                    $request->all_items ?? []
                                                 )
                                             ) * 5.0,
                         ]);
@@ -1541,7 +1541,7 @@ code.hljs.red{color:red;background:#f2dede}
                                                     return in_array(12, $item->product->category_ids)
                                                         ? $item->product->weight : 0;
                                                 },
-                                                $request->all_items
+                                                $request->all_items ?? []
                                             )
                                         ),
                     ]);
@@ -1566,7 +1566,7 @@ code.hljs.red{color:red;background:#f2dede}
                                                     return count(array_intersect($item->product->category_ids, [11, 12])) >= 1
                                                         ? $item->product->weight : 0;
                                                 },
-                                                $request->all_items
+                                                $request->all_items ?? []
                                             )
                                         ),
                     ]);
@@ -1591,7 +1591,7 @@ code.hljs.red{color:red;background:#f2dede}
                                                     return $item->product->category_id == 12
                                                         ? $item->product->weight : 0;
                                                 },
-                                                $request->all_items
+                                                $request->all_items ?? []
                                             )
                                         ),
                     ]);
