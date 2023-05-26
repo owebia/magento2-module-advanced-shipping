@@ -3,17 +3,21 @@
 
 Module: `owebia/magento2-module-advanced-shipping`
 
-### 6.0.0-beta (09 Feb, 2023)
+### 6.0.1 (26 May, 2023)
+- add support for PHP 8.2
 - ⚠️ breaking changes: internal classes refactored
 - ✨ new api:
   - `Api\MethodCollectionInterface`
   - `Api\MethodInterface`
 - improve code quality
 - use `\Owebia\SharedPhpConfig\Api\FunctionProviderInterface`
+- update documentation
 - update dependencies
-  - `owebia/magento2-module-shared-php-config:6.0.0-beta`:
+  - `owebia/magento2-module-shared-php-config:6.0.1`:
+    - add support for PHP 8.2
     - ⚠️ breaking changes:
-      - remove support for PHP < 7.4
+      - drop support for PHP < 7.4
+      - drop support for Magento < 2.2
       - internal classes refactored
     - ✨ new api:
       - `Api\FunctionProviderInterface`
@@ -27,6 +31,11 @@ Module: `owebia/magento2-module-advanced-shipping`
       - type enforced
       - use modern syntax
       - reduce class dependencies
+
+### 2.8.14 (28 Apr, 2023)
+- add support for PHP 8.2
+- update dependencies
+  - `owebia/magento2-module-shared-php-config:3.0.8`: add support for PHP 8.2
 
 ### 2.8.13 (30 Nov, 2022)
 - fix custom data retrieval issue
@@ -42,7 +51,7 @@ Module: `owebia/magento2-module-advanced-shipping`
 - apply Magento2 coding standard
 - use `bool` instead of `boolean` in PHPDoc
 - fix constant declaration
-- remove support for PHP versions 5.5, 5.6 & 7.0
+- drop support for PHP versions 5.5, 5.6 & 7.0
 - add support for PHP versions 8.0 & 8.1
 - update dependencies
   - `owebia/magento2-module-shared-php-config:3.0.6`:
@@ -50,7 +59,7 @@ Module: `owebia/magento2-module-advanced-shipping`
     - use `bool` instead of `boolean` in PHPDoc
     - fix constant declaration and usage
     - fix signature mismatch errors while keeping backward compatibility
-    - remove support for PHP versions 5.5, 5.6 & 7.0
+    - drop support for PHP versions 5.5, 5.6 & 7.0
     - add support for PHP versions 8.0 & 8.1
     - fix phpunit compatibility
 
