@@ -6,7 +6,7 @@
         "owebia/magento2-module-shared-php-config": "^6.0.1"
     },
     "type": "magento2-module",
-    "version": "6.0.0-beta",
+    "version": "6.0.1",
     "license": [
         "proprietary"
     ],
