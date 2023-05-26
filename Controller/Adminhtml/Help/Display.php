@@ -7,7 +7,6 @@
 
 namespace Owebia\AdvancedShipping\Controller\Adminhtml\Help;
 
-use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Filesystem;
 
 class Display extends \Magento\Backend\App\Action
@@ -41,16 +40,10 @@ class Display extends \Magento\Backend\App\Action
             'Owebia_AdvancedShipping'
         );
 
-        $locale = $this->_localeResolver->getLocale();
-
-        $defaultPath = $viewDir . '/doc_en_US.html';
-        $localePath = str_replace('en_US', $locale, $defaultPath);
-
         /** @var Filesystem $filesystem */
         $filesystem = $this->_objectManager->get(Filesystem::class);
-        $readInterface = $filesystem->getDirectoryRead(DirectoryList::ROOT);
-        $docPath = $readInterface->isFile($localePath) ? $localePath : $defaultPath;
-        $docRelativePath = $readInterface->getRelativePath($docPath);
+        $readInterface = $filesystem->getDirectoryReadByPath($viewDir);
+        $docRelativePath = $readInterface->getRelativePath($viewDir . '/doc_en_US.html');
 
         return $this->resultRawFactory->create()
             ->setHttpResponseCode(200)

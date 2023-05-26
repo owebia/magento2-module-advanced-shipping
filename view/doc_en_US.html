@@ -216,6 +216,7 @@ pre code.hljs{background:none;padding:0}
 .config-id .hljs-string{color:#09f}
 .config-attr .hljs-string{color:maroon}
 .config-fn{color:Green;background:rgba(173,255,47,.7);font-weight:bold}
+.config-highlight{background:rgba(255, 255, 0, 0.7);font-weight:bold}
 ul.ventilated>li{padding:.5em 0;}
 .highlight{background:#ffa;padding:4px;line-height:2em;}
 .highlight code{background:#ffa;}
@@ -565,7 +566,9 @@ code.hljs.red{color:red;background:#f2dede}
                     </p>
                     <ul>
                         <li><code class=php>$quote-&gt;subtotal</code>: subtotal (excluding tax)</li>
-                        <li><code class=php>$quote-&gt;subtotal_with_discount</code>: subtotal (excluding tax) with discount</li>
+                        <li><code class="php red">$quote-&gt;subtotal_with_discount</code>: subtotal (excluding tax) with discount
+                            (<a href="#issues:quote:subtotal_with_discount" class=issue>known issues #6</a>,
+                            <span class="red">use <code class="php red">$quote-&gt;getShippingAddress()-&gt;subtotal_with_discount</code> instead</span>)</li>
                         <li><code class="php red">$quote-&gt;grand_total</code>: total (including tax) with discount
                             (<a href="#issues:quote:grand_total" class=issue>known issues #3</a>, <strong class="red">you should avoid using this value</strong>)</li>
                         <li><code class=php>$quote-&gt;base_subtotal</code>: subtotal (excluding tax) in base currency</li>
@@ -1888,6 +1891,57 @@ code.hljs.red{color:red;background:#f2dede}
 
                 <p class="doc-warning">
                     If your translations are defined in a theme, they may not work properly (see <a href="https://github.com/magento/magento2/issues/26333">Magento issue #26333</a>).
+                </p>
+            </article>
+
+            <article id="issues:php81">
+                <h3>Issue #5: Deprecated Functionality Passing null to parameter (PHP 8.1+)</h3>
+
+                <div class="doc-warning">
+                    <p>
+                        When running your store under a version of PHP that is greater or equal to 8.1, you may have errors like this:
+                        <code>`Deprecated Functionality: preg_match(): Passing null to parameter #2 ($subject) of type string is deprecated`</code>
+                    </p>
+                    <p>
+                        This is due to the fact that PHP 8.1+ deprecated passing null to non-nullable parameters of built-in functions
+                        (see <a href="https://www.php.net/manual/en/migration81.deprecated.php">PHP 8.1: Deprecated Features</a>).
+                    </p>
+                    <p>
+                        You can use the coalesce operator <code>??</code> to ensure you have a non-null parameter.
+                    </p>
+                </div>
+                <p class="doc-warning">
+                    Since version 6.0.1 of the module, we ensure that <code class="php">$request-&gt;all_items</code> is an array
+                    and that <code class="php">$request-&gt;dest_postcode</code> is a string but you will have to use <code>??</code> for other variables if necessary.
+                </p>
+                <script type="doc/example">
+                    /* Example */
+
+                    addMethod('__auto__', [
+                        'title'       => "My Shipping Method",
+                        'enabled'     => preg_match('/^PO.*$/i', $request->dest_postcode<span class="config-highlight"> ?? ''</span>),
+                        'price'       => 10,
+                    ]);
+
+                    addMethod('__auto__', [
+                        'title'       => "My Shipping Method",
+                        'enabled'     => count(
+                            array_filter($request->all_items<span class="config-highlight"> ?? []</span>, function ($item) {
+                                return $item->product->name == 'Cat';
+                            })
+                        ) > 0,
+                        'price'       => 10,
+                    ]);
+                </script>
+            </article>
+
+            <article id="issues:quote:subtotal_with_discount">
+                <h3>Issue #6: Quote Subtotal With Discount</h3>
+
+                <p class="doc-warning">
+                    <code class="php">$quote-&gt;subtotal_with_discount</code> value may be inconsistent
+                    (see <a href="https://github.com/owebia/magento2-module-advanced-shipping/issues/114">Issue #114: Inconsistent subtotal_with_discount value</a>).<br>
+                    You can use <code class="php">$quote->getShippingAddress()-&gt;subtotal_with_discount</code> instead.
                 </p>
             </article>
 
