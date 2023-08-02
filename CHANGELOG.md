@@ -3,6 +3,11 @@
 
 Module: `owebia/magento2-module-advanced-shipping`
 
+### 6.0.2 (02 Aug, 2023)
+- fix TypeError: Owebia\SharedPhpConfig\Model\Parser::parse(): Argument #2 ($configuration) must be of type string, null given
+- update dependencies
+  - `owebia/magento2-module-shared-php-config:6.0.2`: fix TypeError: Owebia\SharedPhpConfig\Model\Wrapper\ArrayWrapper::loadData(): Argument #1 ($key) must be of type string, int given
+
 ### 6.0.1 (26 May, 2023)
 - add support for PHP 8.2
 - ⚠️ breaking changes: internal classes refactored
