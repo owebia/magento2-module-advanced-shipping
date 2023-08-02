@@ -233,7 +233,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
                 'debugPrefix' => "Carrier[{$this->_code}].getConfig",
                 'debug' => $this->getConfigFlag('debug'),
             ]),
-            $this->getConfigData('config')
+            $this->getConfigData('config') ?? ''
         );
         return $mainFunctionProvider->getParsingResult();
     }
