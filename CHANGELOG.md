@@ -3,6 +3,17 @@
 
 Module: `owebia/magento2-module-advanced-shipping`
 
+### 6.0.3 (24 Apr, 2024)
+- remove PHP version dependency from composer.json, rely on owebia/magento2-module-shared-php-config
+- fix TypeError: str_replace(): Argument #3 ($subject) must be of type array|string, null given (thanks to @Tomasz-Silpion)
+- fix PHP 8.4 compatibility warnings: Implicitly marking a parameter as nullable is deprecated since PHP 8.4
+- fix Magento2 coding standard warnings: Comment block is missing
+- update dependencies
+  - `owebia/magento2-module-shared-php-config:6.0.3`:
+    - add support for PHP 8.3 & PHP 8.4
+    - fix PHP 8.4 compatibility warnings: Implicitly marking a parameter as nullable is deprecated since PHP 8.4
+    - fix Magento2 coding standard warnings: Comment block is missing
+
 ### 6.0.2 (02 Aug, 2023)
 - fix TypeError: Owebia\SharedPhpConfig\Model\Parser::parse(): Argument #2 ($configuration) must be of type string, null given
 - update dependencies
