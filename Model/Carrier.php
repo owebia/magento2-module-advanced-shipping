@@ -286,7 +286,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
                         str_replace(
                             '{{trackingNumber}}',
                             $tracking,
-                            $this->getConfigData('tracking_url')
+                            (string) $this->getConfigData('tracking_url')
                         )
                     )
             );
