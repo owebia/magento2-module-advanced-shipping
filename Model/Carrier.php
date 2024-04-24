@@ -219,7 +219,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
      * @param RateRequest|null $request
      * @return mixed|null
      */
-    public function getConfig(RateRequest $request = null)
+    public function getConfig(?RateRequest $request = null)
     {
         /** @var MainFunctionProvider $mainFunctionProvider */
         $mainFunctionProvider = $this->mainFunctionProviderFactory->create();

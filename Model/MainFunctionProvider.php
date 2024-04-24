@@ -176,7 +176,7 @@ class MainFunctionProvider implements FunctionProviderInterface, RequiresParserC
      * @param Wrapper\AbstractWrapper $wrapper
      * @param string|null $id
      */
-    private function addResult(Wrapper\AbstractWrapper $wrapper, string $id = null): void
+    private function addResult(Wrapper\AbstractWrapper $wrapper, ?string $id = null): void
     {
         if (isset($id)) {
             $this->parsingResult[$id] = $wrapper;
