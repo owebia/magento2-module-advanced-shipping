@@ -2,10 +2,10 @@
     "name": "owebia/magento2-module-advanced-shipping",
     "description": "N/A",
     "require": {
-        "owebia/magento2-module-shared-php-config": "^6.0.3"
+        "owebia/magento2-module-shared-php-config": "^6.1.1"
     },
     "type": "magento2-module",
-    "version": "6.0.3",
+    "version": "6.1.1",
     "license": [
         "proprietary"
     ],

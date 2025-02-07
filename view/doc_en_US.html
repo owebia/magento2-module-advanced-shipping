@@ -245,6 +245,12 @@ code.hljs.red{color:red;background:#f2dede}
 
 .doc-fn-list{padding-left:0;list-style:none}
 .doc-fn-list > li+li{margin-top:1em}
+
+span.breadcrumb{display:inline;padding:0 1em;background:none}
+span.breadcrumb > .breadcrumb-item{display:inline-block;background-color:#e9ecef;padding:.25rem .5rem .10rem;margin:3px 0;border-radius:3px;white-space:nowrap}
+span.breadcrumb > .breadcrumb-item+.breadcrumb-item{margin-left:1.4em}
+span.breadcrumb > .breadcrumb-item+.breadcrumb-item::before{position:relative;display:inline-block;color:#212529;content:"→";left:-1.9em;width:0;padding:0}
+span.breadcrumb > .breadcrumb-item.m2-menu{background:#373330;color:#f7f3eb}
 </style>
 </head>
 <body>
@@ -418,7 +424,7 @@ code.hljs.red{color:red;background:#f2dede}
                 </ul>
                 <pre>
                     # You must be in Magento root directory
-                    composer require owebia/magento2-module-advanced-shipping:^6.0.3
+                    composer require owebia/magento2-module-advanced-shipping:^6.1.1
                     php bin/magento cache:clean
                     php bin/magento module:enable Owebia_SharedPhpConfig Owebia_AdvancedShipping
                     php bin/magento setup:upgrade
@@ -431,6 +437,26 @@ code.hljs.red{color:red;background:#f2dede}
                 <ul>
                     <li>If you are logged to Magento backend, logout from Magento backend and login again</li>
                 </ul>
+            </article>
+
+            <article id="quick_start:how-to-start">
+                <h3>How to start?</h3>
+
+                <p>
+                    To configure the module, navigate in Magento backend to<br>
+                    <span class="breadcrumb">
+                        <span class="breadcrumb-item m2-menu">STORES</span>
+                        <span class="breadcrumb-item m2-menu">Configuration</span>
+                        <span class="breadcrumb-item m2-next">SALES</span>
+                        <span class="breadcrumb-item">Delivery Methods</span>
+                        <span class="breadcrumb-item">Advanced Shipping by Owebia</span>
+                    </span><br>
+                    and click on the "Edit" icon (
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000" style="vertical-align:middle">
+                        <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"></path>
+                    </svg>
+                    ) to edit the configuration.
+                </p>
             </article>
 
             <article id="quick_start:config">

@@ -3,6 +3,16 @@
 
 Module: `owebia/magento2-module-advanced-shipping`
 
+### 6.1.1 (07 Feb, 2025)
+- add `How to start?` section in the documentation
+- fix Magento2 coding standard error: Avoid using self-closing tag with non-void html element
+- update dependencies
+  - `owebia/magento2-module-shared-php-config:6.1.1`: fix display help icon on configuration field only when available
+  - `owebia/magento2-module-shared-php-config:6.1.0`:
+    - fix compatibility with magento 2.4.7-p1
+    - add support for nikic/php-parser ^5.0.0
+    - drop support for nikic/php-parser <4.18
+
 ### 6.0.3 (24 Apr, 2024)
 - remove PHP version dependency from composer.json, rely on owebia/magento2-module-shared-php-config
 - fix TypeError: str_replace(): Argument #3 ($subject) must be of type array|string, null given (thanks to @Tomasz-Silpion)
