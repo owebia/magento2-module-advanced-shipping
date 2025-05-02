@@ -3,6 +3,13 @@
 
 Module: `owebia/magento2-module-advanced-shipping`
 
+### 6.1.2 (02 May, 2025)
+- fix unexpected totals recalculation on quote retrieval
+- update dependencies
+  - `owebia/magento2-module-shared-php-config:6.1.2`:
+    - fix Declaration of Owebia\SharedPhpConfig\Logger\Handler::write(array $record): void must be compatible with Magento\Framework\Logger\Handler\Base::write(Monolog\LogRecord $record): void
+    - fix unexpected totals recalculation on quote retrieval
+
 ### 6.1.1 (07 Feb, 2025)
 - add `How to start?` section in the documentation
 - fix Magento2 coding standard error: Avoid using self-closing tag with non-void html element
