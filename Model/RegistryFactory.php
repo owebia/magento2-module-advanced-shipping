@@ -55,8 +55,8 @@ class RegistryFactory
         $registry->register('info', $wrap(Wrapper\Info::class, ['data' => $data]));
         $registry->register('app', $wrap(Wrapper\App::class));
         $registry->register('quote', $wrap(Wrapper\Quote::class, $withRequest));
-        $registry->register('customer', $wrap(Wrapper\Customer::class));
-        $registry->register('customer_group', $wrap(Wrapper\CustomerGroup::class));
+        $registry->register('customer', $wrap(Wrapper\Customer::class, $withRequest));
+        $registry->register('customer_group', $wrap(Wrapper\CustomerGroup::class, $withRequest));
         $registry->register('variable', $wrap(Wrapper\Variable::class, $withRequest));
         $registry->register('store', $wrap(Wrapper\Store::class, $withRequest));
 
