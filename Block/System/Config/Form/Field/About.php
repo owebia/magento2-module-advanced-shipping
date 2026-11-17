@@ -10,6 +10,11 @@ namespace Owebia\AdvancedShipping\Block\System\Config\Form\Field;
 class About extends \Owebia\SharedPhpConfig\Block\System\Config\Form\Field\AbstractField
 {
     /**
+     * @var \Magento\Framework\Module\PackageInfo
+     */
+    public $packageInfo;
+
+    /**
      * Constructor
      *
      * @param \Magento\Backend\Block\Template\Context $context
@@ -22,7 +27,7 @@ class About extends \Owebia\SharedPhpConfig\Block\System\Config\Form\Field\Abstr
         parent::__construct($context);
         $this->packageInfo = $packageInfoFactory->create();
     }
-        
+
     /**
      * Retrieve element HTML markup
      *
